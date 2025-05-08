@@ -1,0 +1,25 @@
+Backend Enhancements & Fixes Summary:
+
+This document details recent efforts to address and improve backend functionality, primarily focusing on the "Add Restaurant" feature.
+
+Key Areas of Investigation & Improvement:
+
+1.  "Add Restaurant" Feature Debugging (`app/restaurants/add/page.tsx`):
+    *   Problem: Users were unable to add new restaurants successfully.
+    *   Investigation:
+        *   Reviewed the client-side form submission logic in `app/restaurants/add/page.tsx`.
+        *   Checked authentication flow, form state management, and data payload construction.
+        *   Cross-referenced the payload with the `Restaurant` type definition in `lib/types.ts`.
+    *   Identified Discrepancy: The `Restaurant` type defines an `image_url: string | null` field. The "Add Restaurant" form was not collecting this field, and the Supabase `insert` operation was not including it.
+    *   Hypothesis: If the `image_url` column in the `restaurants` database table is `NOT NULL` and lacks a default value, the insert operation would fail. This was identified as the most probable cause of the issue.
+    *   Initial Proposed Fix: Modified the `handleSubmit` function to include `image_url: null` in the data sent to Supabase. This aligns with the type definition (which allows null) and should satisfy a `NOT NULL` constraint if present. (Note: This fix has been discussed but not yet applied pending user confirmation or further debugging based on browser console errors).
+
+Cohesive Design Rationale:
+
+Reliable backend functionality is a cornerstone of a cohesive and trustworthy application:
+*   Data Integrity: Ensuring that data submitted from the front-end aligns with the backend (Supabase) schema (e.g., providing all required fields like `image_url`) is critical for preventing errors and maintaining data integrity. The investigation into the "Add Restaurant" feature directly addresses this.
+*   User Trust: When core features like adding new data work seamlessly, it builds user trust in the platform. Failures in such basic operations can quickly lead to frustration and abandonment.
+*   Developer Experience: Clear and correct interactions between the frontend and backend, guided by type definitions and schema understanding, lead to a more maintainable and robust codebase. This allows for easier future development and troubleshooting.
+*   System Stability: Addressing backend issues like potential database insert failures contributes to the overall stability and reliability of the Restaurant-REX platform.
+
+**Overall Goal:** These backend changes focus on making the application smarter (AI integration), more flexible in its data handling (structured responses, dynamic queries), and more extensible (adding new restaurants, logging recommendations). 

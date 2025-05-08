@@ -1,0 +1,4210 @@
+[
+  {
+    "restaurants": [
+      {
+        "bio": "This Bengali spot is just a few blocks from Villa Brazil on the border of Astoria and Dutch Kills. They do tea, snacks, and of course sweets, but Khan recommends diving deep into the menu. Our food is extremely different from the Indian cuisine you find in most restaurants. We focus more on stews, stir fries, and fish. Mustard oil is our best friend and we use it on everything. Check out Aladdin—one of the oldest and best Bangladeshi restaurants in the city. Get the chicken roll as an appetizer, the curry beef, ANY of the fresh fish available that day, and don't forget the tehari! I actually think it's better than biryani.",
+        "name": "Aladdin Sweets and Restaurant",
+        "address": "29-6 36th Ave, Astoria, NY 11106",
+        "scenario_tags": [
+          "brunch",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "It's hard not to be in a good mood at this neon-lit, 24-hour Colombian diner.",
+        "name": "Cositas Ricas",
+        "address": "Jackson Heights, NY",
+        "scenario_tags": [
+          "group",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A Colombian coffee shop with great empanadas.",
+        "name": "Salento",
+        "address": "Washington Heights, NY",
+        "scenario_tags": [
+          "group",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "At Arepa Lady in Jackson Heights, you eat arepas. Get at least one with queso.",
+        "name": "Arepa Lady",
+        "address": "Jackson Heights, NY",
+        "scenario_tags": [
+          "group",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If your definition of a sandwich is “large amount of meat on bread,” head up to Pastrami Queen, located just a block from the 77th Street 6 stop. This kosher deli makes pastrami sandwiches that rival Katz’s. The corned beef and roast turkey are great too, as is the matzo ball soup, but that’s a weird thing to eat in the park.",
+        "name": "Pastrami Queen",
+        "address": "1125 Lexington Ave New York, NY 10075",
+        "scenario_tags": [
+          "quick bite",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7734,
+          "longitude": -73.9563
+        }
+      },
+      {
+        "bio": "You grabbed your blanket from your couch and filled your cooler. Now you just need to pick up some food and you’ll finally be one of those people who comes to Central Park prepared. Stop by Zabar’s - a gourmet deli and grocer on the Upper West Side - and get some seriously good pastrami sandwiches, or go for a baguette with a few different cheeses and cured meats.",
+        "name": "Zabar's",
+        "address": "2245 Broadway New York, NY 10024",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7851,
+          "longitude": -73.9814
+        }
+      },
+      {
+        "bio": "Our only complaints with this Upper East Side spot are the spotty service and the high prices of their non-sandwich menu items. Bypass both of these issues by grabbing some really good paninis to-go, and taking them to the park a block away. The sandwiches here, like the one with prosciutto and shrimp, are excellent and come wrapped tightly in tin foil, so they’ll stay warm and toasty until you find your perfect plot of grass.",
+        "name": "Via Quadronno",
+        "address": "25 E. 73rd St. New York, NY 10021",
+        "scenario_tags": [
+          "breakfast",
+          "coffee & a light bite",
+          "dinner with the parents",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7735,
+          "longitude": -73.9655
+        }
+      },
+      {
+        "bio": "Your plan was to find an open park bench and get through an entire Sunday Times, but you’re already running behind and that piece on two startup founders trying to find a $2000 two-bedroom in Soho isn’t going to read itself. One of your best quick options is Breads - a bakery and cafe less than a block off the park on the Upper West Side. Grab coffee and a breakfast sandwich, and definitely try the chocolate babka.",
+        "name": "Breads Bakery",
+        "address": "1890 Broadway New York, NY 10023",
+        "scenario_tags": [
+          "coffee & a light bite",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7725,
+          "longitude": -73.9833
+        }
+      },
+      {
+        "bio": "While it would probably be worth waiting in line at Russ & Daughters’ shop on Houston and transporting everything uptown for a bagel and lox feast, you could save a couple hours by popping into their lesser-known location in the basement of the Jewish Museum just off the park on the UES. Just know you can’t do takeout or walk in for a meal on Saturdays (when it’s prepaid- and reservation-only due to Shabbat), and they’re closed on Wednesdays.",
+        "name": "Russ & Daughters At The Jewish Museum",
+        "address": "1109 5th Ave New York, NY 10128",
+        "scenario_tags": [
+          "breakfast",
+          "brunch",
+          "coffee & a light bite",
+          "kids",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7812,
+          "longitude": -73.9583
+        }
+      },
+      {
+        "bio": "All you’ve had to eat since getting to the park is a street cart hot dog and a bag of Ruffles. If you want some high-quality food close by in a place that still feels casual, get one of the outdoor tables at The East Pole. This Upper East Side spot serves a bunch of healthy options all day, along with a very good bacon cheeseburger with duck fat steak fries.",
+        "name": "The East Pole",
+        "address": "133 E. 65th St. New York, NY 10065",
+        "scenario_tags": [
+          "brunch",
+          "keeping it kind of healthy",
+          "private dining",
+          "see & be seen",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7655,
+          "longitude": -73.9651
+        }
+      },
+      {
+        "bio": "After a long day of sun, rowboats, and avoiding horsesh*t, you may want to turn things up a notch with spicy margaritas and buckets of beer. Playa Betty’s is a fun spot on the Upper West Side where you can roll in wearing grass-stained shorts, and eat tacos and guacamole with a big group.",
+        "name": "Playa Betty's",
+        "address": "320 Amsterdam Ave New York, NY 10023",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "brunch",
+          "day drinking",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7755,
+          "longitude": -73.9815
+        }
+      },
+      {
+        "bio": "Blue Ribbon Brasserie is a little restaurant on Sullivan Street with white tablecloths and a menu that has everything from steak and lobster to chicken wings and matzoh ball soup. It’s open until 2am every day, and if we could only put one place on this list, this would be it. Blue Ribbon is the rare restaurant that gets even better after midnight.",
+        "name": "Blue Ribbon Brasserie",
+        "address": "97 Sullivan St New York, NY 10012",
+        "scenario_tags": [
+          "late night",
+          "dinner",
+          "date",
+          "casual"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -74.0025
+        }
+      },
+      {
+        "bio": "You can eat some of the best Thai food in NYC after midnight. Isan Thai specialist Zaab Zaab is open until 1am daily, and they have two locations. The Williamsburg space is bigger and more convenient for anyone who’s spending a night out on one of the many dance floors in the area.",
+        "name": "Zaab Zaab",
+        "address": "208 Grand St Brooklyn, NY 11211",
+        "scenario_tags": [
+          "late night",
+          "dinner",
+          "casual"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7111,
+          "longitude": -73.9572
+        }
+      },
+      {
+        "bio": "Laser Wolf is hard to get into, but if you’re willing to eat at 11:30pm, you can achieve your dream of eating grilled meats on the roof of a Williamsburg hotel. This Israeli skewer house is open until 1am Thursday through Saturday.",
+        "name": "Laser Wolf",
+        "address": "97 Wythe Ave Brooklyn, NY 11249",
+        "scenario_tags": [
+          "late night",
+          "dinner",
+          "date",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7211,
+          "longitude": -73.9563
+        }
+      },
+      {
+        "bio": "Double Chicken Please is half restaurant, half bar, so it makes sense that this place is open late. They serve a small menu of fried chicken sandwiches until midnight on weekends.",
+        "name": "Double Chicken Please",
+        "address": "115 Allen St New York, NY 10002",
+        "scenario_tags": [
+          "late night",
+          "quick bite",
+          "drinks"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7205,
+          "longitude": -73.9863
+        }
+      },
+      {
+        "bio": "With their late-night menu and festive, neon-lit dining room, this Park Slope restaurant is the ideal place to hang out and enjoy a bunch of food after midnight.",
+        "name": "Medusa The Greek",
+        "address": "133 5th Ave New York, NY 10003",
+        "scenario_tags": [
+          "late night",
+          "brunch",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7372,
+          "longitude": -73.9925
+        }
+      },
+      {
+        "bio": "Hidden behind a secret door in a Soho taqueria, this subterranean restaurant feels like a dark dungeon where people go to drink margaritas. It’s been around for over a decade now, and it’s still pretty fun.",
+        "name": "La Esquina Brasserie",
+        "address": "114 Kenmare St. New York, NY 10012",
+        "scenario_tags": [
+          "late night",
+          "dinner",
+          "date"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7202,
+          "longitude": -73.9972
+        }
+      },
+      {
+        "bio": "This bistro near Union Square operates until 4am on Fridays and Saturdays, and it serves classic French dishes like escargots and some of the best french onion soup in the city.",
+        "name": "L'Express",
+        "address": "249 Park Ave. S New York, NY 10003",
+        "scenario_tags": [
+          "late night",
+          "brunch",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7375,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "Jongro is one of our favorite Korean barbecue spots, and it’s pretty much always busy. They’re open until 1am on weekends.",
+        "name": "Jongro BBQ",
+        "address": "22 W 32nd St Fl 2 New York, NY 10001",
+        "scenario_tags": [
+          "late night",
+          "big groups",
+          "birthdays"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7471,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "After an encore performance of karaoke, get a late meal at Pocha 32 (open until at least 2am every night). You won’t be the only ones here.",
+        "name": "Pocha 32",
+        "address": "15 W 32nd St New York, NY 10001",
+        "scenario_tags": [
+          "late night"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7471,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "If you’re out at a bar in the East Village and you suddenly feel inspired to sit down and eat pasta, go to Lil Frankie’s. It’s a big cash-only Italian restaurant open until 2am daily.",
+        "name": "Lil Frankies",
+        "address": "19 1st Ave New York, NY 10003",
+        "scenario_tags": [
+          "late night",
+          "brunch",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -73.9812
+        }
+      },
+      {
+        "bio": "Uva is a neighborhood Italian restaurant that’s perfect for date night on the Upper East Side, and it’s open until 1am every day except Monday.",
+        "name": "Uva",
+        "address": "1486 2nd Ave New York, NY 10075",
+        "scenario_tags": [
+          "late night",
+          "brunch",
+          "date"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7735,
+          "longitude": -73.9553
+        }
+      },
+      {
+        "bio": "A romantic getaway to some alpine destination where you can say “chalet” unironically probably isn’t in the cards right now. But The Greens is a pretty strong substitute. Reserve a private cabin on the rooftop of Pier 17 at the Seaport during lunch or dinner, and share fondue and hot toddies while checking out your own virtual fireplace or the floor-to-ceiling views of the Brooklyn Bridge.",
+        "name": "The Greens",
+        "address": "89 South St New York, NY 10038",
+        "scenario_tags": [
+          "big groups",
+          "impressing out of towners",
+          "sitting outside",
+          "watching sports"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7061,
+          "longitude": -74.0022
+        }
+      },
+      {
+        "bio": "Peaches Hot House is one of the many Peaches offshoots that specializes in Nashville hot chicken. Come here when you need a reminder about why hot sauce matters, are craving a side of mac and cheese to your order, or just want to have a meal in one of their private greenhouses along their sidewalk.",
+        "name": "Peaches Hothouse",
+        "address": "415 Tompkins Ave. Brooklyn, NY 11216",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6782,
+          "longitude": -73.9434
+        }
+      },
+      {
+        "bio": "There are only a few great dinner spots that could both fit on this guide and work for a night out with a few friends, a casual date, or dinner with your roommate. Haenyeo is one of them. The menu ranges from scallion pancakes and bibimbap to KBBQ that comes out on sizzling platters, and they’ve got heated, enclosed pods on their outdoor patio where Cyndi Lauper apparently likes to have lunch.",
+        "name": "Haenyeo",
+        "address": "239 5th Ave Brooklyn, NY 11215",
+        "scenario_tags": [
+          "birthdays",
+          "casual dinners",
+          "date nights",
+          "dinner with the parents",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6704,
+          "longitude": -73.9814
+        }
+      },
+      {
+        "bio": "The food alone at Crown Shy makes it one of the best restaurants in NYC. But now that this American spot in Fidi has festively-decorated private yurts running along Pine Street, it’s also one of the best outdoor dining experiences you can have anywhere in the city this winter.",
+        "name": "Crown Shy",
+        "address": "70 Pine St New York, NY 10005",
+        "scenario_tags": [
+          "corporate cards",
+          "dinner with the parents",
+          "drinking great cocktails",
+          "eating at the bar",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7074,
+          "longitude": -74.0102
+        }
+      },
+      {
+        "bio": "We’d like to think tailgating has prepared us for our current situation of huddling in the cold watching sports, but we’ll still take some heat lamps. Which is exactly what’s being offered at this new outdoor sports bar in Williamsburg. Along with heated cabanas, they’re always serving up specials, like their “Puppybowl brunch” they hosted on the day of the Super Bowl.",
+        "name": "TailGate Outdoor Sports Bar",
+        "address": "86 N 11th St Brooklyn, NY 11249",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7209,
+          "longitude": -73.9524
+        }
+      },
+      {
+        "bio": "The Lower East Side location of this casual Italian restaurant has a couple of bubble tables on Grand Street available for lunch and dinner. They’re just big enough for two people, which means you’ll only have to share your pizza, garlic knot sliders, and chicken wings with one other person.",
+        "name": "Saluggi's East",
+        "address": "399 Grand St New York, NY 10002",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7155,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "After renovating the entire restaurant himself, the head chef and owner of Leland Eating & Drinking House opened this Prospect Heights spot on a quiet corner just off of Washington Avenue. On the sidewalk patio, you’ll see a few private, heated outdoor shacks they’re calling “cozy cabins,” but there’s also a takeout window where you can pick up a pastry, bottle of wine, or cocktail to go.",
+        "name": "Leland Eating & Drinking House",
+        "address": "755 Dean Street Brooklyn, NY 11238",
+        "scenario_tags": [
+          "date nights",
+          "eating at the bar",
+          "brunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6765,
+          "longitude": -73.9572
+        }
+      },
+      {
+        "bio": "Mika is a beer bar with a space in Bushwick that could easily handle a wedding in the before times. It’s massive. Their outdoor area has a few spaced-out tables, as well as two plastic tents where you can use wifi to get work done or have drinks. You’ll have to go through Mika’s indoor area to get to the backyard, and they will check your temperature and ask for contact info for tracing purposes.",
+        "name": "Mika",
+        "address": "25 Thames St Brooklyn, NY 11206",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7035,
+          "longitude": -73.9335
+        }
+      },
+      {
+        "bio": "This French bistro on the UWS installed clear plastic domes to cover each of their outdoor tables. So, instead of wind gusts and rain, moule frites, wine, live jazz, and friends or a date will have your full attention. These domes can be reserved through the restaurant’s website.",
+        "name": "Cafe Du Soleil",
+        "address": "2723 Broadway New York, NY 10025",
+        "scenario_tags": [
+          "brunch",
+          "dinner with the parents",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8031,
+          "longitude": -73.9645
+        }
+      },
+      {
+        "bio": "Honey Badger in Prospect Lefferts Gardens has fully committed to creating new outdoor architecture: they built a chic, wooden lean-to house where you can stay dry and warm while you eat. The experimental tasting menu here changes often, but it’s always focused on whatever is in season.",
+        "name": "Honey Badger",
+        "address": "67 Fenimore Street Brooklyn, NY 11225",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.6555,
+          "longitude": -73.9523
+        }
+      },
+      {
+        "bio": "Industry Kitchen has installed a few personal table coverings to block undesirable weather. Unlike Cafe Du Soleil’s bubble domes, this pizza and salad spot on the East River has table tents that look more like tiny clear houses.",
+        "name": "Industry Kitchen",
+        "address": "70 South St New York, NY 10005",
+        "scenario_tags": [
+          "big groups",
+          "day drinking",
+          "drinks & a light bite",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7061,
+          "longitude": -74.0022
+        }
+      },
+      {
+        "bio": "Hane Sushi in Stuytown has both enclosed bubbles over individual tables as well as an area with a large outdoor tent with flaps on all sides. You can stop by for a spicy yellowtail roll or $21 sushi combo platter for lunch or dinner every day.",
+        "name": "Hane Sushi",
+        "address": "346 1st Ave New York, NY 10009",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7275,
+          "longitude": -73.9772
+        }
+      },
+      {
+        "bio": "If you’re looking for another option right on the water (without water being the thing that actually ruins your meal) consider Estuary in Brooklyn Bridge Park. They have private table coverings which we’re formally going to start calling “table houses.”",
+        "name": "Estuary",
+        "address": "159 Bridge Park Dr Brooklyn, NY 11201",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7035,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "This rooftop restaurant in FiDi opened back in July, and each of their outdoor tables has its own clear hut. You have to call to reserve one of their enclosed outdoor tables at least seven days in advance.",
+        "name": "Ampia",
+        "address": "100 Broad St Fl 2 New York, NY 10004",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7074,
+          "longitude": -74.0102
+        }
+      },
+      {
+        "bio": "Another UWS restaurant with table houses is Lucciola. This Italian restaurant has an eight-person maximum for their fully-covered tables.",
+        "name": "Lucciola",
+        "address": "621 Amsterdam Ave New York, NY 10024",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": 40.7851,
+          "longitude": -73.9795
+        }
+      },
+      {
+        "bio": "Ridgewood has many solid slice shops and sit-down pizza joints. Eat at all of them, but start at Mano’s. The counter-service spot on the north end of Forest Ave. has only been open since 2021, but it’s already established itself as one of NYC’s best. Fermented for days, the crust on their pies is thin and crackly, with big pockets of air.",
+        "name": "Mano's Pizzeria",
+        "address": "6298 Forest Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Mama Yoshi Mini Mart, a Japanese-inspired konbini, is a newer entry in the field, and it makes an incredible fried chicken katsu sandwich. Get the spicy version, which comes with an enormous cutlet that crunches and burns as it goes down.",
+        "name": "Mama Yoshi Mini Mart",
+        "address": "17-11 Grove St New York, NY 11385",
+        "scenario_tags": [
+          "lunch",
+          "cheap eats",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "For a hearty meal that’ll run you less than $20 per person, choose Rico Pollo every time. The casual Dominican restaurant serves some of the crispiest pernil in the city, as well as thick chicharron that has an impeccable crunch.",
+        "name": "Rico Pollo",
+        "address": "5537 Myrtle Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "casual dinners",
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This wood-fired restaurant founded by a few Gramercy Tavern alums seems casual, but Rolo’s is actually a very serious restaurant that pumps out seriously tasty, detail-oriented food.",
+        "name": "Rolo's",
+        "address": "853 Onderdonk Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "date nights",
+          "birthdays",
+          "people watching"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Momos in paratha shouldn’t work. The concept sounds too carb-heavy, but Mount Everest Deli & Grocery pulls it off exquisitely.",
+        "name": "Everest Grocery & Deli",
+        "address": "5609 Myrtle Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "cheap eats",
+          "breakfast",
+          "lunch",
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Pupusas Ridgewood can fit, at most, two people (standing) at one time. The closet-sized counter-service spot serves over 10 different kinds of pupusas.",
+        "name": "Pupusas Ridgewood",
+        "address": "7120 Fresh Pond Rd New York, NY 11385",
+        "scenario_tags": [
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Venezuelan street food specialist Cachapas y Mas does patacones, arepas, yoyos, pepitos, and cachapas as well.",
+        "name": "Cachapas y Mas",
+        "address": "678 Seneca Ave Ridgewood, NY 11385",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This old-school Italian spot has been perfecting its chicken marsala recipe since 1982.",
+        "name": "Joe's Restaurant",
+        "address": "6611 Forest Ave New York, New York",
+        "scenario_tags": [
+          "big groups",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Should you need a perfect, crunchy Sicilian slice—or maybe a round pie topped with chicken parm—Joe & John’s is the answer.",
+        "name": "Joe & John's Pizzeria",
+        "address": "5910 Myrtle Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If you’re in the market for a can of kajmak or a pound of kielbasa, Hetman Polish Deli can help with that.",
+        "name": "Hetman Polish Deli and Foods",
+        "address": "6665 Forest Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "There are many reasons to spend time at Aunt Ginny’s, but if we had to pick one, it would be I Like Food.",
+        "name": "I Like Food",
+        "address": "652 Woodward Ave New York, NY 11385",
+        "scenario_tags": [
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "While In Kathmandu is a neighborhood clubhouse catering to those who’d rather not spend over $30 on dinner.",
+        "name": "While in Kathmandu",
+        "address": "758 Seneca Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Decades is a pizza parlor for people who remember dining at Pizza Hut back in the day.",
+        "name": "Decades",
+        "address": "690 Woodward Ave Queens, NY 11385",
+        "scenario_tags": [
+          "first dates",
+          "date nights",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Rudy’s makes a mean bienenstich. The place was, after all, founded as a German bakery in the 1930s.",
+        "name": "Rudy's Bakery and Cafe",
+        "address": "905 Seneca Ave Ridgewood, NY 11385",
+        "scenario_tags": [],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "The breakfast burrito at Mama Yoshi is a very decent choice, but Norma’s is the first spot you should think of.",
+        "name": "Norma's",
+        "address": "59-02 Catalpa Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "breakfast",
+          "coffee & a light bite",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If it’s specifically quesadillas you’re after—and it should be—head to Las Chilangas.",
+        "name": "Las Chilangas",
+        "address": "766 Seneca Ave New York, NY 11385",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Before there was Rolo’s, there was Ltauha. The original Ridgewood American bistro.",
+        "name": "Ltauha",
+        "address": "5550 Myrtle Ave Ridgewood, NY 11385",
+        "scenario_tags": [
+          "date nights",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Ecuadorian food is a big part of Ridgewood. There are a lot of good street vendors and sit-down spots.",
+        "name": "M&S Bakery",
+        "address": "819 Seneca Ave New York, New York 11385",
+        "scenario_tags": [
+          "breakfast",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "The glasses of wine at Antica Trattoria start around $9, and the pastas are all under $20.",
+        "name": "Antica Trattoria",
+        "address": "6810 Fresh Pond Rd Ridgewood, NY 11385",
+        "scenario_tags": [
+          "date nights",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Hellbender gets some flack for being one of the more expensive options in the area.",
+        "name": "Hellbender",
+        "address": "68-22 Forest Ave New York, New York 11385",
+        "scenario_tags": [
+          "drinks & a light bite",
+          "drinking great cocktails",
+          "first dates"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Harry’s Italian in Battery Park is serving its red-sauce Italian dishes, pizzas, and calzones for pickup and delivery. It’s also offering family-style dinners that include your choice of salad or appetizer, pasta, and entree for $59.95 per person.",
+        "name": "Harry's Italian Pizza Bar",
+        "address": "225 Murray St, New York, NY 10282",
+        "scenario_tags": [
+          "pickup",
+          "delivery",
+          "family-style",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7153,
+          "longitude": -74.0158
+        }
+      },
+      {
+        "bio": "You could eat the leftover baby spinach salad for lunch. Or you could order sushi rolls and pork katsu from Sushi Damo on UberEats every day starting at noon.",
+        "name": "Sushi Damo",
+        "address": "330 W 58th St, New York, NY 10019",
+        "scenario_tags": [
+          "quick bite",
+          "business",
+          "brunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7653,
+          "longitude": -73.9815
+        }
+      },
+      {
+        "bio": "The makers of one of our favorite burgers in New York City have set up shop in Sag Harbor. Like Red Hook Tavern, they’ll have American classics like steaks and a thick, hockey puck-like burger at the new spot Out East. And because it’s the Hamptons, they’ll likely have a higher density of seafood dishes than they have back in Brooklyn.",
+        "name": "Sag Harbor Tavern",
+        "address": "26 Bay St, Sag Harbor, New York 11963",
+        "scenario_tags": [
+          "group",
+          "business",
+          "brunch",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This new seafood spot is located right on the water, and it’s one of the only places in the area where you can dock your boat (or your rich friend’s boat) and dine on the umbrella-covered patio. In typical Montauk fashion, the menu is full of crudos and other oceanic treats, like dungeness crab ravioli.",
+        "name": "N'amo",
+        "address": "474 W Lake Dr, Montauk, New York 11954",
+        "scenario_tags": [
+          "date",
+          "group",
+          "business",
+          "brunch",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "I've gone through all the phases. When Chop't opened, I was obsessed. Who knew you could eat such a volume of salad? They're huge, and they're amazing. And, of course, I did Sweetgreen too. Right now I'm really loving Just Salad. I don't order one that's on the menu. I make my own. It probably has a thousand calories, and it has everything in it from pumpkin seeds to almonds, tortilla chips, chickpeas, quinoa, carrots—like, all the things. And then sometimes, if I order it to the office, I'll make my own dressing because I'm so particular. But other times I just get their balsamic vinaigrette and their creamy Caesar and I do three parts balsamic vinaigrette and a little creamy Caesar and it's so good.",
+        "name": "Just Salad",
+        "address": "334 W 34th St, New York, NY 10001",
+        "scenario_tags": [
+          "quick bite",
+          "business",
+          "brunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7505,
+          "longitude": -73.9934
+        }
+      },
+      {
+        "bio": "Every Saturday and Sunday between noon and 5pm, this South Bronx spot hosts bottomless brunch with live DJs or drummers (like this incredible drummer named Anthony Anderson) as well as unlimited mimosas and sangria for $24.",
+        "name": "Beatstro",
+        "address": "135 Alexander Ave, Bronx, NY 10454",
+        "scenario_tags": [
+          "brunch",
+          "live music",
+          "group"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Almost everything at this Greenpoint taqueria is modeled after Mexico City’s legendary eateries, complete with colorful plastic plates and a comal custom-made in CDMX. Their tacos range from shredded suadero and al pastor, to longaniza with bright orange porky juices.",
+        "name": "Taqueria Ramirez",
+        "address": "94 Franklin St New York, NY 11222",
+        "scenario_tags": [
+          "dining solo",
+          "first dates",
+          "impressing out of towners",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Across from Corona Plaza, in the shadow of the 7 train tracks, there’s a street cart selling tlayudas wider than a steering wheel. We’re talking a crisp layer of freshly griddled masa, topped with cheese, beans, shredded lettuce, and your choice of meat.",
+        "name": "Tlayuda Oaxaqueña Sr San Pablo",
+        "address": "102-25 Roosevelt Ave New York, New York 11368",
+        "scenario_tags": [
+          "serious takeout operation",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Everything at Ensenada is good, and we don’t make that statement lightly. This beachy seafood spot in Williamsburg makes buttery tuna tostadas, saucy shrimp tacos, and three types of aguachile.",
+        "name": "Ensenada",
+        "address": "168 Borinquen Pl New York, Brooklyn 11211",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "happy hours"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This Tijuana-style spot is a New York City landmark, like the Statue of Liberty, except it’s a truck under the subway track in Jackson Heights. Birria-Landia now has four other locations from the Bronx to the Lower East Side.",
+        "name": "Birria-Landia",
+        "address": "77-99 Roosevelt Ave New York, NY 11372",
+        "scenario_tags": [
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Carnitas Ramirez—the carnitas-only East Village sequel to Taqueria Ramirez—is an education in just how many different, pleasurable textures can be derived from one animal.",
+        "name": "Carnitas Ramirez",
+        "address": "210 E 3rd St New York, New York 10009",
+        "scenario_tags": [
+          "lunch",
+          "walk-ins",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "For a food truck that sees the most action after midnight, El Jalapeño doesn’t need to be as good as it is. You can’t go wrong with any order, but the spicy pork burrito is our favorite.",
+        "name": "El Jalapeño",
+        "address": "204 W Fourth St New York, New York 10014",
+        "scenario_tags": [
+          "late nights",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Chalupas Poblanas El Tlecuile is a cash-only chalupa stand in Jackson Heights that operates outside of a Chipotle, of all places.",
+        "name": "Chalupas Poblanas El Tlecuile",
+        "address": "37-47 Junction Blvd New York, NY 11368",
+        "scenario_tags": [
+          "casual dinners",
+          "cheap eats",
+          "impressing out of towners",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "We love all the seafood at this restaurant in Jackson Heights, but a meal here is incomplete without an order of Submarino ceviche.",
+        "name": "Mariscos El Submarino",
+        "address": "88-05 Roosevelt Ave Jackson Heights, NY 11372",
+        "scenario_tags": [
+          "casual dinners",
+          "dining solo",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Filled with jet black accents and dim spotlights above each table, this upscale Flatiron restaurant works best for special occasions.",
+        "name": "Cosme",
+        "address": "35 E. 21st St. New York, NY 10010",
+        "scenario_tags": [
+          "date nights",
+          "fine dining",
+          "first dates",
+          "private dining",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Painted an unmissable, electric Frida Kahlo-blue, this little restaurant in Hamilton Heights grew out of a pandemic supper club run by couple Karina Garcia and Lalo Rodriguez.",
+        "name": "Cocina Consuelo",
+        "address": "130 Hamilton Pl New York, New York 10031",
+        "scenario_tags": [
+          "breakfast",
+          "date nights",
+          "eating at the bar"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A tidy scoop of refried beans topped with queso fresco. A jiggly sunny-side-up egg submerged in chunky salsa roja.",
+        "name": "Ánimo",
+        "address": "1004 2nd Ave New York, New York 10022",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "brunch",
+          "coffee & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "You should, of course, order the al pastor tacos at Taqueria Al Pastor, a counter-service spot in Bushwick.",
+        "name": "Taqueria Al Pastor",
+        "address": "128 Wyckoff Ave Brooklyn, NY 11237",
+        "scenario_tags": [
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "For All Things Good runs on masa, but you won’t find any tacos at this minimalist Bed-Stuy spot that looks like a coffee shop.",
+        "name": "For All Things Good",
+        "address": "343 Franklin Ave Brooklyn, NY 11238",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "casual dinners",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "La Morada in Mott Haven is in one lavender room with the lighting scheme of a dental office.",
+        "name": "La Morada",
+        "address": "308 Willis Ave Bronx, NY 10454",
+        "scenario_tags": [
+          "casual dinners",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "El Kallejon in East Harlem looks like the mercado of your dreams—Huichol cats, rainbow piñatas.",
+        "name": "El Kallejon",
+        "address": "209 E 117th St New York, NY 10035",
+        "scenario_tags": [
+          "first dates"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This Tijuana-style taco shop started in Chelsea Market in 2013, and you’ll still consistently find lines there any time you go.",
+        "name": "Los Tacos No. 1",
+        "address": "75 9th Ave. New York, NY 10011",
+        "scenario_tags": [
+          "cheap eats",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This Long Island City restaurant made waves when it first opened in 2012, and everything from the ceviche to the chile relleno served in a little pool of mildly sweet sauce is still excellent there.",
+        "name": "Casa Enrique",
+        "address": "5-48 49th Ave. Queens, NY 11101",
+        "scenario_tags": [
+          "birthdays",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If you’ve been searching for a Mexican restaurant in Park Slope that you can get excited about, you can stop.",
+        "name": "Casa Azul",
+        "address": "369 7th Ave New York, NY 11215",
+        "scenario_tags": [
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Some things at Oxomoco in Greenpoint are optional. Starting out with a margarita or giant frozen cocktail is not.",
+        "name": "Oxomoco",
+        "address": "128 Greenpoint ave New York, NY 11222",
+        "scenario_tags": [
+          "birthdays",
+          "date nights",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Tacos El Bronco operates two trucks and a brick-and-mortar location in Sunset Park with a long dining room with a mural of broncos.",
+        "name": "Tacos El Bronco",
+        "address": "4324 4th Ave. Brooklyn, NY 11232",
+        "scenario_tags": [
+          "cheap eats",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "From the daily brunch to mezcal flights, Ruta Oaxaca takes the maximalist approach at every turn.",
+        "name": "Ruta Oaxaca",
+        "address": "35-03 Broadway Astoria, NY 11106",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "date nights",
+          "drinking great cocktails",
+          "happy hours",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "On any given night, you may find us closing our eyes and pretending we’re sitting at Claro’s outdoor bar underneath some twinkly lights.",
+        "name": "Claro",
+        "address": "284 3rd Ave New York, NY 11215",
+        "scenario_tags": [
+          "brunch",
+          "date nights",
+          "eating at the bar",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Conceived as a steakhouse but for fish, this Nomad restaurant from the Crown Shy/Saga team serves inventive, special-occasion seafood that won't leave you missing red meat. The halibut pithivier, a stunning undersea wellington in burnished puff pastry, is destined for your Instagram grid.",
+        "name": "Time And Tide",
+        "address": "48 E 26th St New York, New York 10010",
+        "scenario_tags": [
+          "special occasions",
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7401,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "If you're looking for the city's best lobster roll, this East Village spot from a Claud alum wins. Saucy, rich, and filled with cubes of lobster so tender they're almost raw.",
+        "name": "Smithereens",
+        "address": "414 E 9th St New York, New York 10009",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7295,
+          "longitude": -73.9812
+        }
+      },
+      {
+        "bio": "Sitting in Crevette’s big dining room, slurping down oysters with coriander mignonette and mussels with a smoky brava sauce, you could easily be convinced that you’re somewhere in the south of France.",
+        "name": "Crevette",
+        "address": "10 Downing St New York, New York 10014",
+        "scenario_tags": [
+          "date nights",
+          "dinner with the parents",
+          "birthdays"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7402,
+          "longitude": -74.0059
+        }
+      },
+      {
+        "bio": "The Williamsburg Mexican seafood oasis works for just about any occasion—a third date, a solo Happy Hour at the bar, your dad’s birthday.",
+        "name": "Ensenada",
+        "address": "168 Borinquen Pl New York, Brooklyn 11211",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "happy hours"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7111,
+          "longitude": -73.9524
+        }
+      },
+      {
+        "bio": "At Penny in the East Village, the Argentinian shrimp are a finger long, a little sweet, cost $4.50 each—and we ordered three more immediately after the first round.",
+        "name": "Penny",
+        "address": "90 E 10th St New York, New York 10003",
+        "scenario_tags": [
+          "first dates",
+          "date nights",
+          "drinking great wine"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7306,
+          "longitude": -73.9925
+        }
+      },
+      {
+        "bio": "Dry-aged branzino tastes better when roasted in a charcoal oven and served in a beige room best described as desert chic.",
+        "name": "Theodora",
+        "address": "7 Greene Ave New York, New York 11238",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6851,
+          "longitude": -73.9515
+        }
+      },
+      {
+        "bio": "For your next anniversary, book a table at Le Bernardin. The Midtown fine-dining staple serves a bit of filet mignon here and there, but otherwise it’s pretty much all seafood.",
+        "name": "Le Bernardin",
+        "address": "W 51st Street New York City, New York 10019",
+        "scenario_tags": [
+          "birthdays",
+          "special occasions",
+          "fine dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7615,
+          "longitude": -73.9819
+        }
+      },
+      {
+        "bio": "Quique Crudo only seats around 20 at a bar and a few small counters. This is the rare West Village establishment that hasn't been hyped to death.",
+        "name": "Quique Crudo",
+        "address": "27 Bedford St New York, New York 10014",
+        "scenario_tags": [
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7309,
+          "longitude": -74.0022
+        }
+      },
+      {
+        "bio": "This stall in Flushing’s bustling New York Food Court puts crab roe—a Shanghainese specialty—front and center in many of its incredible dishes.",
+        "name": "Xie Bao",
+        "address": "133-35 Roosevelt Ave, Flushing, NY New York, NY 11354",
+        "scenario_tags": [
+          "casual dinners",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "This New Orleans-inspired spot in Fort Greene serves oysters five ways and offers shrimp in states ranging from cocktail to remoulade.",
+        "name": "Strange Delight",
+        "address": "63 Lafayette Ave New York, New York 11217",
+        "scenario_tags": [
+          "eating at the bar",
+          "drinks & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6885,
+          "longitude": -73.9735
+        }
+      },
+      {
+        "bio": "British seafood isn’t just fish and chips. At Dame in Greenwich Village, it also means smoked whitefish croquettes and tuna tartare on toast.",
+        "name": "Dame",
+        "address": "85 MacDougal Street New York, NY 10012",
+        "scenario_tags": [
+          "date nights",
+          "dinner with the parents",
+          "drinking great wine"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7305,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "This counter-service spot tucked into the side of Chelsea Market serves fantastic fish tacos, ceviche, and aguachile.",
+        "name": "Los Mariscos",
+        "address": "409 West 15th St New York, NY 10011",
+        "scenario_tags": [
+          "cheap eats",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7401,
+          "longitude": -74.0031
+        }
+      },
+      {
+        "bio": "At Chuan Tian Xia, the fish breathe fire. You’ll see a lot of whole fish here, like groupers and tilapias, skin on with their mouths agape.",
+        "name": "Chuan Tian Xia",
+        "address": "5502 7th Ave Brooklyn, NY 11220",
+        "scenario_tags": [
+          "date nights",
+          "dinner with the parents",
+          "impressing out of towners",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6285,
+          "longitude": -74.0015
+        }
+      },
+      {
+        "bio": "Cervo’s is where you can eat Spanish and Portuguese seafood while you take in a candlelit scene.",
+        "name": "Cervo's",
+        "address": "43 Canal St New York, NY 10002",
+        "scenario_tags": [
+          "sitting outside",
+          "eating at the bar"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7135,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "Ganjang gejang, raw soy-marinated crab, is a classic Korean dish that’s rarely a primary focus for restaurants.",
+        "name": "Rice Thief",
+        "address": "39-37 30th St New York, New York 11101",
+        "scenario_tags": [
+          "impressing out of towners",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.9255
+        }
+      },
+      {
+        "bio": "Astoria Seafood combines a BYOB experience with the thrills of grocery shopping.",
+        "name": "Astoria Seafood",
+        "address": "3710 33rd St Long Island City, NY 11101",
+        "scenario_tags": [
+          "big groups",
+          "byob",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7575,
+          "longitude": -73.9255
+        }
+      },
+      {
+        "bio": "Get in a car (or hop on a bus) and make your way to this City Island institution, where you can dive into a pile of fried shrimp.",
+        "name": "Johnny's Reef",
+        "address": "2 City Island Ave Bronx, NY 10464",
+        "scenario_tags": [
+          "impressing out of towners",
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8731,
+          "longitude": -73.7865
+        }
+      },
+      {
+        "bio": "Plan a group meal at Wu’s Wonton King on the border of Chinatown and the Lower East Side.",
+        "name": "Wu's Wonton King",
+        "address": "165 E Broadway New York, NY 10002",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "byob"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7128,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "Abuqir is similar to Astoria Seafood, with a few key differences: it’s Egyptian, and there isn't much seating.",
+        "name": "Abuqir",
+        "address": "24-19 Steinway St New York, NY 11103",
+        "scenario_tags": [
+          "casual dinners",
+          "dining solo",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.9255
+        }
+      },
+      {
+        "bio": "Across the street from Central Park, Marea specializes in housemade pastas accessorized with lobster, shrimp, and other ingredients that were recently dragged from the sea.",
+        "name": "Marea",
+        "address": "240 Central Park S. New York, NY 10019",
+        "scenario_tags": [
+          "corporate cards",
+          "dinner with the parents",
+          "fine dining",
+          "private dining",
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.9815
+        }
+      },
+      {
+        "bio": "It’s been too long since you visited Grand Central Oyster Bar. We get it—subjecting yourself to a Grand Central Terminal visit without a train to catch feels wrong.",
+        "name": "Grand Central Oyster Bar",
+        "address": "89 E. 42nd St. New York, NY 10017",
+        "scenario_tags": [
+          "classic establishment",
+          "dining solo",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7527,
+          "longitude": -73.9763
+        }
+      },
+      {
+        "bio": "There are a lot of places to eat raw seafood in NYC, but not many of them are so close to the water that you could eat a raw clam and then throw your shell into the sea.",
+        "name": "Randazzo's Clam Bar",
+        "address": "2017 Emmons Ave Brooklyn, NY 11235",
+        "scenario_tags": [
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.5865,
+          "longitude": -73.9435
+        }
+      },
+      {
+        "bio": "There are several ways to approach a meal at Bunna, a lowkey Bushwick cafe that’s consistently packed. The easiest route is The Feast: a giant plate of everything main on the menu, like miser wot, gomen, shiro, and kale salad with avocado. Everyone gets their own personal pile of injera so no need to fight anyone for the last piece.",
+        "name": "Bunna Cafe",
+        "address": "1084 Flushing Ave Brooklyn, NY 11237",
+        "scenario_tags": [
+          "casual dinners",
+          "first dates",
+          "keeping it kind of healthy"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This vegan Ethiopian restaurant—with a second location in Greenwich Village—has a Biggie Smalls-heavy soundtrack, impressively colorful murals, and crowd-pleasing platters of spongy injera, topped with things like creamy ground chickpeas, and crispy green beans. It’s great for a group dinner that will satisfy both vegans and people who have never tried a chickpea before, or a casual catch-up with a friend.",
+        "name": "Ras Plant Based",
+        "address": "739 Franklin Ave Brooklyn, NY 11238",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "An offshoot of Ethiopian/Eritrean institution Massawa, this Morningside Heights restaurant is a good place to get coffee and work, then get a glass of South African wine and pretend to work, and then share a tibs quesadilla with a friend and give up on work altogether. You can get extra-soft injera covered with a solid, steaming assortment of meat and lentil dishes, but dipping into the snacky portion of the menu for things like berbere wings is a good idea too.",
+        "name": "Cafe Massawa",
+        "address": "3153 broadway New York, New York",
+        "scenario_tags": [
+          "lunch",
+          "drinks & a light bite",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "On Avenue B, Haile is the kind of place that instantly makes you feel like you’re at your best friend’s house. There’s a lot of seating, and even though there’s almost always a small crowd of regulars, it never gets annoyingly busy. This is a restaurant you’ll return to often, not just for the exceptional shiro wot, which coats everything it meets with garlicky creaminess, but to say hi to your favorite host again.",
+        "name": "Haile",
+        "address": "182 Avenue B New York, NY 10009",
+        "scenario_tags": [
+          "casual dinners",
+          "date nights",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "With white tablecloths and perfect sambusas, this Upper West Side classic is a great option for a special occasion group dinner when you don’t want to spend hundreds of dollars on an outstanding meal, but still want to have a memorable night. But Awash works equally well for a lowkey date night or a solo meal with an order of their excellent kitfo.",
+        "name": "Awash Ethiopian Restaurant",
+        "address": "947 Amsterdam Ave New York, NY 10025",
+        "scenario_tags": [
+          "date nights",
+          "casual dinners",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Near Jackie Robinson Park in Harlem, Benyam is a charming, art-filled family-run spot with a couple of outdoor seats, affordable bottles of wine, and mitmita that comes to your table along with a wink and a warning to watch out for the spice mix. The injera here is especially tangy (you can get it gluten-free if you call them in advance), and the mixed platter with kitfo is a great choice.",
+        "name": "Benyam",
+        "address": "2795 Frederick Douglass Blvd New York, NY 10039",
+        "scenario_tags": [
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Abyssinia in Harlem is an ideal spot to bring a friend or go on a date once you get to the phase in your relationship where you don’t mind sharing some excellent spicy beef stew off of the same plate. The food here is extremely good, and all of the vegetable dishes are fully vegan. Get the meat or vegetable combo, and between the different stews, injera bread and vegetable sides, you’ll have a ton of food for around $30 per person.",
+        "name": "Abyssinia",
+        "address": "268 W 135th St. New York, New York 10030",
+        "scenario_tags": [
+          "date nights",
+          "first dates",
+          "keeping it kind of healthy",
+          "vegans",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This casual spot on the border of Park Slope and Gowanus is a reliable choice for group dinners, especially if there are vegans in the mix. Big windows let light in under a faux-thatched ceiling, and booths make it easy to get cozy around a bunch of delicious food. We always go for the combinations here—the vegan option is $99 for four people and comes with four stews—because it’s such a good deal.",
+        "name": "Ghenet",
+        "address": "348 Douglass St Brooklyn, NY 11217",
+        "scenario_tags": [
+          "date nights",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Whether your friend group is fully vegetarian, or it’s the one vegan’s turn to choose, Bersi is a plant-based Ethiopian restaurant that everyone will enjoy. Stewed vegetables and spiced lentils make this cuisine one of our go-to’s for a vegetarian meal—but the best dishes at Bersi are actually the ones traditionally made with meat, like mushroom tibs and red lentil kitfo. Everything comes on one big round of injera, and the best part of the meal is sharing the spongy, spice-soaked bread at the end.",
+        "name": "Bersi",
+        "address": "1049 Manhattan Ave Brooklyn, New York 11222",
+        "scenario_tags": [
+          "big groups",
+          "vegetarians",
+          "vegans"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Dame got its start as a beloved pandemic-era fish and chips pop-up, and at their brick-and-mortar on MacDougal Street, you can get those, plus a bunch of other precious-feeling seafood plates.",
+        "name": "Dame",
+        "address": "85 MacDougal Street New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "dinner",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "If you're looking for a spendy special occasion spot in Greenwich Village, there's no better option than Minetta Tavern.",
+        "name": "Minetta Tavern",
+        "address": "113 Macdougal St New York, NY 10012",
+        "scenario_tags": [
+          "people watching",
+          "dining solo",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "The closest thing us New Yorkers have to The Devonshire in London, Lord’s is a very fancy pub that comes from the team behind Dame.",
+        "name": "Lord's",
+        "address": "506 LaGuardia Pl New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "drinking great cocktails",
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Da Toscano stands out among the many Italian restaurants in lower Manhattan.",
+        "name": "Da Toscano",
+        "address": "24 Minetta Ln New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "special occasions",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Acru’s $95 tasting menu incorporates Australian, Scandinavian, and Korean cooking styles into dishes.",
+        "name": "Acru",
+        "address": "79 MacDougal St New York, New York 10012",
+        "scenario_tags": [
+          "date",
+          "fine dining",
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Loring Place is one of those restaurants that will make you feel really excited about broccoli.",
+        "name": "Loring Place",
+        "address": "21 W 8th St New York, NY 10011",
+        "scenario_tags": [
+          "brunch",
+          "corporate cards",
+          "date"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Shmoné is the only restaurant where we’ve ordered another bottle of wine after finishing dessert.",
+        "name": "Shmoné",
+        "address": "61 W 8th St New York, NY 10011",
+        "scenario_tags": [
+          "date",
+          "eating at the bar"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Bar Moga is a Japanese spot where you can pair your impeccably-made cocktail with a pork katsu sando.",
+        "name": "Bar Moga",
+        "address": "128 W Houston St New York, NY 10012",
+        "scenario_tags": [
+          "casual dinners",
+          "drinks & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Carbone’s reputation precedes itself. It's one of the most divisive restaurants in NYC.",
+        "name": "Carbone",
+        "address": "181 Thompson St. New York, NY 10012",
+        "scenario_tags": [
+          "people watching",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "The Dao Kou chicken at this tiny Chinese spot on Bleeker simmers in a hot five-spice broth jacuzzi for several hours.",
+        "name": "Cauldron Chicken",
+        "address": "190 Bleecker St New York, New York 10012",
+        "scenario_tags": [
+          "dining solo",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Ras Plant Based is a vegan Ethiopian restaurant, but it’s got the sort of crowd-pleasing menu that will satisfy even the friend who is single-handedly keeping the red meat industry afloat.",
+        "name": "Ras Plant Based",
+        "address": "170 Bleecker St New York, New York 10012",
+        "scenario_tags": [
+          "vegans",
+          "date",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Dante is a restaurant where the main reason to come is to sit outside and drink.",
+        "name": "Dante",
+        "address": "79-81 MacDougal St. New York, NY 10012",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "drinks & a light bite",
+          "first dates"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Kazumi is notable for a meal that tastes more expensive than it is.",
+        "name": "Kazumi Omakase",
+        "address": "31 W Eighth St New York, New York 10011",
+        "scenario_tags": [
+          "eating at the bar",
+          "dining solo"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Old Tbilisi Garden is elbow-deep in their gooey cheese-laden ajaruli khachapuri.",
+        "name": "Old Tbilisi Garden",
+        "address": "174 Bleecker St New York, NY 10012",
+        "scenario_tags": [
+          "casual dinners",
+          "big groups",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Thelewala is a kathi roll and chaat counter where you can grab something portable to eat.",
+        "name": "Thelewala",
+        "address": "112 Macdougal St New York, NY 10012",
+        "scenario_tags": [
+          "late nights",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Il Cantinori is where to drink an espresso martini in Greenwich Village.",
+        "name": "Il Cantinori",
+        "address": "32 E 10th St New York, NY 10003",
+        "scenario_tags": [
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Tomo21 has a steady stream of takeout orders, but it’s worth waiting to dine in.",
+        "name": "Tomo21 Sushi",
+        "address": "172 Thompson St New York, NY 10012",
+        "scenario_tags": [
+          "casual dinners",
+          "BYOB"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Gene’s opened in 1919, and it’s not just Sarah Jessica Parker’s favorite restaurant.",
+        "name": "Gene's Restaurant",
+        "address": "73 W 11th St New York, NY 10011",
+        "scenario_tags": [
+          "eating at the bar",
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Bar Pitti is a constant scene, and it's not necessarily due to the food being great.",
+        "name": "Bar Pitti",
+        "address": "268 6th Ave. New York, NY 10014",
+        "scenario_tags": [
+          "people watching",
+          "see & be seen",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Butter Smashburgers doesn’t reinvent the wheel, but they are a one-stop-shop for crispy smashburgers.",
+        "name": "Butter Smashburgers",
+        "address": "106 MacDougal St New York, New York 10012",
+        "scenario_tags": [
+          "late nights",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "Villa Mosconi dances to its own tune, several steps out of time with the rest of the neighborhood.",
+        "name": "Villa Mosconi",
+        "address": "69 MacDougal St New York, NY 10012",
+        "scenario_tags": [
+          "big groups",
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.99541
+        }
+      },
+      {
+        "bio": "From the team behind Rezdôra, Massara is a two-story restaurant that uses everything at its disposal to place you in Southern Italy. It’s a fun party trick, and it works. The floors are travertine flagstone, the olive-green walls are hung with vintage paintings, and the intricate food is inspired by Campania.",
+        "name": "Massara",
+        "address": "913 Broadway New York, New York",
+        "scenario_tags": [
+          "date",
+          "special occasion"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Gramercy Tavern’s upscale dining room in the back is where you can eat their tasting menu for $175. If you want a special-occasion spot that feels like someone’s very nice home in Aspen, that’s where you should sit.",
+        "name": "Gramercy Tavern",
+        "address": "42 E. 20th St. New York, NY 10003",
+        "scenario_tags": [
+          "eating at the bar",
+          "private dining",
+          "special occasion",
+          "fine dining"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "The Mexican food scene in NYC has changed enormously since Cosme opened in 2014, but this place still feels fresh and new. Budget around $100 per person, and come by for some chunky herb guacamole and the uni tostada with bone marrow salsa.",
+        "name": "Cosme",
+        "address": "35 E. 21st St. New York, NY 10010",
+        "scenario_tags": [
+          "date",
+          "fine dining",
+          "first date",
+          "private dining",
+          "see and be seen"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Cote, a cross between a steakhouse and a Korean barbecue joint, remains impossible to get into, and there’s a reason for that. The quality of the beef is fantastic, and the $78 prix fixe is a great deal for what you get.",
+        "name": "Cote",
+        "address": "16 W 22nd St New York, NY 10010",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "At London import Hawksmoor, you can enjoy all of those things in a green leather booth beneath arched ceilings. The filet is our cut of choice at this British steakhouse, but you should also try the charcoal-roasted lobster.",
+        "name": "Hawksmoor NYC",
+        "address": "109 East 22nd Street New York, NY 10010",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "corporate cards",
+          "dinner with the parents",
+          "eating at the bar",
+          "special occasion"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "From the chef behind Moono, this restaurant serves a seven-course, $140 tasting menu in a space with brick walls and scuffed concrete floors.",
+        "name": "Jua",
+        "address": "36 E 22nd St New York, NY 10010",
+        "scenario_tags": [
+          "corporate cards",
+          "date",
+          "dinner with the parents",
+          "fine dining"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Coqodaq offers a set meal, which costs $42 per person and comes with banchan, cold noodles, and two types of ultra crunchy, gluten-free fried chicken.",
+        "name": "Coqodaq",
+        "address": "12 E 22nd St New York, New York 10010",
+        "scenario_tags": [
+          "special occasion",
+          "big groups",
+          "see and be seen"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Rezdôra excels at pasta, specifically those of Emilia-Romagna. The little brick-walled spot has built a strong following with its meaty modenese ragu and wallet-sized raviolo topped with black truffle.",
+        "name": "Rezdôra",
+        "address": "27 E 20th St New York, NY 10010",
+        "scenario_tags": [
+          "date",
+          "drinking great wine",
+          "eating at the bar"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This elegant Korean restaurant looks a little like a nightclub. You can order a la carte at the bar, but the $150 prix fixe is the only format available in the dining room.",
+        "name": "Oiji Mi",
+        "address": "17 W 19th St New York, NY 10011",
+        "scenario_tags": [
+          "special occasion",
+          "date"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "S&P stayed true to the old-school spirit of its predecessor, offering an expansive menu of lunchtime staples in its pretty much unchanged, narrow, diner-like space.",
+        "name": "S&P",
+        "address": "174 5th Ave New York, NY 10010",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "cheap eats",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Dinner at this lush, leafy-wallpapered Indian restaurant is like picnicking in a meadow at dusk—if that meadow happened to serve excellent cocktails.",
+        "name": "Passerine",
+        "address": "36 E 20th St New York, NY 10003",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "special occasion"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Mari Vanna looks like something out of a Dickens novel, and has a devoted following among those who have strong feelings toward chicken kiev.",
+        "name": "Mari Vanna",
+        "address": "41 E 20th St New York, NY 10003",
+        "scenario_tags": [
+          "big groups",
+          "birthdays"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Upland works for everything. Dinner, lunch, brunch—the American restaurant does it all, and has room for every single member of your book club or extended family.",
+        "name": "Upland",
+        "address": "345 Park Avenue South New York, NY 10010",
+        "scenario_tags": [
+          "brunch",
+          "dinner with the parents",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "With its tiled floors, high ceilings, and tidy, cushioned booths, Stretch looks like a slightly nicer version of your average pizza parlor.",
+        "name": "Stretch Pizza",
+        "address": "331 Park Ave S New York, NY 10010",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Rebel is a Haitian spot on the Lower East Side that always makes you feel like you're at a house party.",
+        "name": "Rebel Restaurant and Bar",
+        "address": "29 Clinton St, New York, NY 10002",
+        "scenario_tags": [
+          "big groups",
+          "casual dinners",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7209,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "Stag’s Head looks like it’s going to be a bro scene, largely due to its Turtle Bay location. But it’s really more of a beer scene. Stag’s Head excels at going beyond the typical roster of Ballast Point taps, so if you’re into deep cuts of craft beer, you’ll be happy here.",
+        "name": "The Stag's Head",
+        "address": "252 E 51st St, New York, NY 10022",
+        "scenario_tags": [
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7577,
+          "longitude": -73.9704
+        }
+      },
+      {
+        "bio": "Think you can’t get a best-in-class meal in midtown? You are wrong, and Ippudo’s here to prove it. The ramen here is just as impressive as the Rockettes’ high kicking – we promise.",
+        "name": "Ippudo Westside",
+        "address": "321 W. 51st St. New York, NY 10019",
+        "scenario_tags": [
+          "dining solo",
+          "eating at the bar",
+          "lunch",
+          "pre-theater"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7591,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "Exhibit B: the burger from Burger Joint is another best-in-category food item within walking distance of Radio City. Though this place is hidden behind a red curtain at Le Parker Meridien hotel, it’s not a secret, and the lines here can get a little out of hand – best not to come dangerously hangry.",
+        "name": "Burger Joint",
+        "address": "119 W 56th St New York, NY 10019",
+        "scenario_tags": [
+          "cheap eats",
+          "lunch",
+          "unique dining experiences",
+          "wasting your time & money"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7631,
+          "longitude": -73.9815
+        }
+      },
+      {
+        "bio": "If your concert tickets have left your wallet feeling light, Halal Guys is your best cheap eats option in the area. Don’t be intimidated by the line – it moves quickly and this tasty street food (particularly the lamb) is worth it.",
+        "name": "The Halal Guys",
+        "address": "53rd St. & 6th Ave. New York, NY",
+        "scenario_tags": [
+          "cheap eats",
+          "late nights",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.758,
+          "longitude": -73.9817
+        }
+      },
+      {
+        "bio": "Toloache offers a vibrant atmosphere and delicious Mexican cuisine, making it a great choice for a pre-theater meal.",
+        "name": "Toloache",
+        "address": "251 W. 50th St. New York, NY 10019",
+        "scenario_tags": [
+          "pre-theater",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7592,
+          "longitude": -73.9883
+        }
+      },
+      {
+        "bio": "If you’re coming from a show at Radio City, particularly around the holidays, there’s a good chance you’re with an out-of-towner (i.e. your dad) that “wants a good steak.” As long as your dad doesn’t mind a slightly rowdy vibe, you should bring him to Quality Meats.",
+        "name": "Quality Meats",
+        "address": "57 W. 58th Street New York, NY 10019",
+        "scenario_tags": [
+          "corporate cards",
+          "pre-theater",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7612,
+          "longitude": -73.9819
+        }
+      },
+      {
+        "bio": "If your dad doesn’t want steak, he probably wants Italian. The Quality people have dad-friendly (and really just everyone-friendly) food and big, visually impressive environments down pat.",
+        "name": "Quality Italian",
+        "address": "57 W. 57th St. New York, NY 10019",
+        "scenario_tags": [
+          "big groups",
+          "corporate cards",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7613,
+          "longitude": -73.9818
+        }
+      },
+      {
+        "bio": "As much as we like a good performance, we’re often most excited about a trip to Midtown because it means we have a good reason to go to Danji.",
+        "name": "Danji",
+        "address": "346 W. 52nd St. New York, NY 10019",
+        "scenario_tags": [
+          "pre-theater",
+          "casual dinners",
+          "drinking great beer"
+        ],
+        "geospatial_data": {
+          "latitude": 40.759,
+          "longitude": -73.988
+        }
+      },
+      {
+        "bio": "This place feels like a cross between a country club and the Playboy mansion, which makes it perfect for a big time pre or post Radio City meal.",
+        "name": "The Lambs Club",
+        "address": "130 W. 44th St. New York, NY 10036",
+        "scenario_tags": [
+          "corporate cards",
+          "dinner with the parents",
+          "pre-theater",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7565,
+          "longitude": -73.9845
+        }
+      },
+      {
+        "bio": "The National might not be the best restaurant in Midtown, but it might be the most reliable. This brasserie’s eats are always solid, and while they’re not cheap, they’re also not horrifyingly pricey.",
+        "name": "The National",
+        "address": "557 Lexington Ave. New York, NY 10022",
+        "scenario_tags": [
+          "breakfast",
+          "corporate cards",
+          "dinner with the parents",
+          "lunch",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7555,
+          "longitude": -73.9733
+        }
+      },
+      {
+        "bio": "The best seats at this iconic Soho bistro are at the bar, where you'll inevitably wind up sandwiched between a neighborhood regular with stories about Basquiat, and a martini-drunk stranger who's dying to tell you about the Miami crypto scene.",
+        "name": "Raoul's",
+        "address": "180 Prince St. New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "night out",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -74.0022
+        }
+      },
+      {
+        "bio": "From outside, Emilio's Ballato seems generally insufferable. Seven days a week, the Nolita celebrity hotspot ushers A-listers into its not-so-secret back room and feeds them spaghetti.",
+        "name": "Emilio’s Ballato",
+        "address": "55 E Houston New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "special occasions",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7211,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "You don’t come to Wu’s to show off for strangers. You come to hang out with your friends, which makes this Cantonese spot the most wholesome scene of all.",
+        "name": "Wu's Wonton King",
+        "address": "165 E Broadway New York, NY 10002",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "BYOB"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7135,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "It’s impossible to define the scene at this Greenwich Village trattoria. There’s too much going on.",
+        "name": "Bar Pitti",
+        "address": "268 6th Ave. New York, NY 10014",
+        "scenario_tags": [
+          "people watching",
+          "see & be seen",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7375,
+          "longitude": -74.0025
+        }
+      },
+      {
+        "bio": "Around in some form since 1847, this Italian-ish tavern is a legendary spot where Bob Dylan used to hang out.",
+        "name": "Fanelli Cafe",
+        "address": "94 Prince St New York, NY 10012",
+        "scenario_tags": [
+          "classic establishment",
+          "people watching"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7245,
+          "longitude": -73.9985
+        }
+      },
+      {
+        "bio": "You can technically eat a pretty good burger here on a regular Tuesday, but that's not how you should do Jean's.",
+        "name": "Jean's",
+        "address": "415 Lafayette St New York, New York 10003",
+        "scenario_tags": [
+          "see & be seen",
+          "drinking great cocktails",
+          "night on the town"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7295,
+          "longitude": -73.9935
+        }
+      },
+      {
+        "bio": "The steak au poivre at Lucien has a powerful, tingly bite. But if anyone tells you that they come here for the food, they’re lying.",
+        "name": "Lucien",
+        "address": "14 1st Ave New York, NY 10009",
+        "scenario_tags": [
+          "see & be seen",
+          "classic establishment",
+          "night on the town"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -73.9865
+        }
+      },
+      {
+        "bio": "Casino is very Dimes Square, but it’s not Kiki’s Dimes Square. Things are more upscale around here.",
+        "name": "Casino",
+        "address": "171 E Broadway New York, NY 10002",
+        "scenario_tags": [
+          "date nights",
+          "see & be seen",
+          "night on the town"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7135,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "This spot in the bottom of the Mercer Hotel is across from Fanelli on Prince Street.",
+        "name": "Sartiano’s",
+        "address": "99 Prince St New York, NY 10012",
+        "scenario_tags": [
+          "night on the town"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7245,
+          "longitude": -73.9985
+        }
+      },
+      {
+        "bio": "Le Dive was destined to be sceney. It didn’t have a choice.",
+        "name": "Le Dive",
+        "address": "37 Canal St New York, NY 10002",
+        "scenario_tags": [
+          "drinks & a light bite",
+          "drinking great wine",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7135,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "Fouquet’s is not a democratic restaurant. It is not for the people.",
+        "name": "Brasserie Fouquet’s",
+        "address": "456 Greenwich St New York, NY 10013",
+        "scenario_tags": [
+          "big groups",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7195,
+          "longitude": -74.0085
+        }
+      },
+      {
+        "bio": "You can have a nice time at this West Village restaurant, even if it's a little dull.",
+        "name": "American Bar",
+        "address": "33 Greenwich Ave New York, NY 10014",
+        "scenario_tags": [
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7335,
+          "longitude": -74.0025
+        }
+      },
+      {
+        "bio": "BondSt has its charms. (The serviceable sushi, for example.)",
+        "name": "BondSt",
+        "address": "6 Bond St New York, NY 10012",
+        "scenario_tags": [
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -73.9985
+        }
+      },
+      {
+        "bio": "If you wanted to know where Catch currently lands in the culture, it most recently had a moment on RHONY.",
+        "name": "Catch",
+        "address": "21 9th Ave. New York, NY 10014",
+        "scenario_tags": [
+          "see & be seen",
+          "night on the town",
+          "corporate cards"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7405,
+          "longitude": -74.0055
+        }
+      },
+      {
+        "bio": "Endorsed by both Fat Joe and Rosario Dawson, Casa Adela is pretty much synonymous with NYC Puerto Rican food. The beloved neighborhood spot, founded in 1976 by the late Adela Vargas, is a great place to bring a few friends for tostones, mofongo, and chicharrón de pollo with rice and beans.",
+        "name": "Casa Adela",
+        "address": "66 Avenue C New York, NY 10009",
+        "scenario_tags": [
+          "dinner",
+          "casual",
+          "group"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -73.9792
+        }
+      },
+      {
+        "bio": "Weekend afternoons, Angel Jimenez holds court in a cluttered Mott Haven trailer, hacking at roast pig while posing for photos and handing out samples. With thick skin that shatters like peanut brittle, that roast pig is, without a doubt, the best lechón in the city.",
+        "name": "Lechonera La Piraña",
+        "address": "766 E 152nd St Bronx, NY 10455",
+        "scenario_tags": [
+          "lunch",
+          "group"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8181,
+          "longitude": -73.8955
+        }
+      },
+      {
+        "bio": "This Bronx institution is a pork specialist, serving stewed pig ears, crackly chicharrón, and garlicky mofongo mixed with pernil since 1983.",
+        "name": "188 Cuchifritos",
+        "address": "158 E 188th St Bronx, NY 10468",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "group"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8675,
+          "longitude": -73.8955
+        }
+      },
+      {
+        "bio": "Spanish Harlem is one of the Puerto Rican epicenters of New York, and La Fonda Boricua has been one of its most recognizable restaurants for the past 25 years.",
+        "name": "La Fonda Boricua",
+        "address": "169 E 106th St New York, NY 10029",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "dinner"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7942,
+          "longitude": -73.9435
+        }
+      },
+      {
+        "bio": "This East Harlem institution on 116th (with a second location at 188th) is another icon.",
+        "name": "Cuchifritos",
+        "address": "168 E 116th Street New York, NY 10029",
+        "scenario_tags": [
+          "dinner",
+          "lunch",
+          "takeout"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8035,
+          "longitude": -73.9435
+        }
+      },
+      {
+        "bio": "Thanks to its rainbow lights and salsa music, Sofrito feels a bit like a nightclub.",
+        "name": "Sofrito",
+        "address": "679 Riverside Dr New York, NY 10031",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "dinner"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8265,
+          "longitude": -73.9492
+        }
+      },
+      {
+        "bio": "Hit up the Langston Hughes House on 127th Street, then grab lunch at this tiny counter-service spot that’s been around for over 30 years.",
+        "name": "Lechonera La Isla",
+        "address": "254 E 125th St New York, NY 10035",
+        "scenario_tags": [
+          "lunch",
+          "dinner"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8055,
+          "longitude": -73.9355
+        }
+      },
+      {
+        "bio": "Home to some of the best pasteles in the city, The Freakin Rican started as a Puerto Rican food truck.",
+        "name": "The Freakin Rican",
+        "address": "4306 34th Ave New York, NY 11101",
+        "scenario_tags": [
+          "lunch",
+          "dinner"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.9175
+        }
+      },
+      {
+        "bio": "Cuchifritos will obviously be part of your order at this Williamsburg restaurant.",
+        "name": "La Isla Cuchifritos",
+        "address": "1439 Myrtle Ave. Brooklyn, NY 11237",
+        "scenario_tags": [
+          "cheap eats",
+          "solo"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6885,
+          "longitude": -73.9135
+        }
+      },
+      {
+        "bio": "Kiosko 787 serves crispy empanadillas, arroz mamposteao, and big stacks of mofongo with your choice of protein from a streetside counter in Gowanus.",
+        "name": "Kiosko 787",
+        "address": "488 Carroll St Brooklyn, New York 11215",
+        "scenario_tags": [
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6705,
+          "longitude": -73.9935
+        }
+      },
+      {
+        "bio": "Despite the name, this decades-old Soundview restaurant specializes in Puerto Rican staples like pastelillos, chuletas, and chicharrón de pollo.",
+        "name": "The South of France",
+        "address": "1800 Westchester Ave Bronx, NY 10472",
+        "scenario_tags": [
+          "dinner",
+          "casual"
+        ],
+        "geospatial_data": {
+          "latitude": 40.8265,
+          "longitude": -73.8675
+        }
+      },
+      {
+        "bio": "Though technically across the Broome Street border into Nolita, Torrisi in the historic Puck Building feels emblematic of the Italian-American neighborhood. The restaurant is from the people behind Carbone, and while it shares some DNA (impressive design, servers in tuxedos, general pageantry), it’s bigger and more interesting, with inventive dishes (chopped liver with Manischewitz jelly) that are just as good as the classics (spaghetti with lamb amatriciana). If you can’t get a reservation—and you probably can’t—try the walk-in-only bar area for a special night out.",
+        "name": "Torrisi Bar & Restaurant",
+        "address": "275 Mulberry St New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "special occasion",
+          "business"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7201,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "If you told owner Emilio Sr. his restaurant was in Little Italy—it’s just north, on Houston—he might blacklist you from the (constantly long) line forever. But red sauce is a state of mind, and for a classic New York Italian experience, there’s no better option than this vintage 1956 restaurant. Expect a wait at the celebrity-swarmed hotspot, which regularly entertains the likes of Taylor Swift and Barack Obama with big platters of buttery baked clams and off-menu veal parm smothered in vodka sauce.",
+        "name": "Emilio’s Ballato",
+        "address": "55 E Houston New York, NY 10012",
+        "scenario_tags": [
+          "see and be seen",
+          "special occasion",
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7211,
+          "longitude": -73.9969
+        }
+      },
+      {
+        "bio": "Di Palo's is a long-standing specialty grocer on Grand Street, beloved since 1910 for their impressive selection of Italian meats, cheeses, and other pantry treasures. Right next door, the family's romantically lit wine bar, C. Di Palo, serves some of those same excellent products, as well as panini and off-the-beaten-path wines from more than 20 regions of Italy.",
+        "name": "C. Di Palo Wine Bar",
+        "address": "151-153 Mott St New York, NY 10013",
+        "scenario_tags": [
+          "date",
+          "drinking great wine"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7185,
+          "longitude": -73.9961
+        }
+      },
+      {
+        "bio": "Parisi Bakery opened in 1903, and once counted Frank Sinatra among its regulars. The man had taste: They make excellent crusty bread here, and even better sandwiches. From cold cuts to meatball parm, just about every Italian deli standard is available—but The Dennis is the sandwich scribbled at the very top of their chalkboard menu for good reason.",
+        "name": "Parisi Bakery",
+        "address": "198 Mott St New York, NY 10012",
+        "scenario_tags": [
+          "cheap eats",
+          "classic establishment",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7183,
+          "longitude": -73.9963
+        }
+      },
+      {
+        "bio": "Rubirosa, also technically in Nolita, is known for its thin-crust pies and bustling dining room that’s about the width of a subway car. If you need a place for a casual birthday or an impressive group dinner—whether in Little Italy, or any part of town—this restaurant should be near the top of your list.",
+        "name": "Rubirosa",
+        "address": "235 Mulberry St. New York, NY 10012",
+        "scenario_tags": [
+          "big groups",
+          "date",
+          "first date",
+          "gluten-free options"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7203,
+          "longitude": -73.9967
+        }
+      },
+      {
+        "bio": "You go to Pasquale Jones in Nolita for two things: wine and pizza. This Italian restaurant also serves pasta, small plates, and a few proteins cooked in a wood-burning oven—but don’t get distracted. The pizzas are puffy and chewy, with an appropriate amount of char.",
+        "name": "Pasquale Jones",
+        "address": "187 Mulberry St New York, NY 10012",
+        "scenario_tags": [
+          "date",
+          "dinner with the parents",
+          "eating at the bar",
+          "see and be seen",
+          "special occasion"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7205,
+          "longitude": -73.9968
+        }
+      },
+      {
+        "bio": "If you long for a classic Little Italy experience—an old-school Italian joint smack in the middle of the chaos of Mulberry Street—Il Cortile (in operation since 1975) is precisely where you should go.",
+        "name": "Il Cortile",
+        "address": "125 Mulberry St New York, NY 10013",
+        "scenario_tags": [
+          "classic establishment",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7189,
+          "longitude": -73.9962
+        }
+      },
+      {
+        "bio": "Open since 2022, Pep’s On Grand is a newcomer along the geologic timescale of a neighborhood where multiple restaurants have been operating for more than a century.",
+        "name": "Pep's On Grand",
+        "address": "197 Grand St, New York, NY 10013 New York, New York",
+        "scenario_tags": [
+          "lunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7187,
+          "longitude": -73.9964
+        }
+      },
+      {
+        "bio": "There’s no shortage of gelato in Little Italy, but everything served at Figo Il Gelato Italiano is especially creamy and vivid.",
+        "name": "Figo Il Gelato Italiano",
+        "address": "178 Mulberry St New York, New York 10012",
+        "scenario_tags": [
+          "sitting outside"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7201,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "This spacious, rustic Italian restaurant on the corner of Mulberry and Grand is a good option for groups and families, not to mention diners in a rush.",
+        "name": "Gelso & Grand",
+        "address": "186 Grand St New York, NY 10013",
+        "scenario_tags": [
+          "casual dinners",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7188,
+          "longitude": -73.9963
+        }
+      },
+      {
+        "bio": "If you’ve walked through Little Italy even once, you’ve noticed Ferrara Bakery, with its neon signs and enormous ice cream cones mounted above the awning.",
+        "name": "Ferrara Bakery & Cafe",
+        "address": "195 Grand St New York, NY 10013",
+        "scenario_tags": [
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7186,
+          "longitude": -73.9961
+        }
+      },
+      {
+        "bio": "Da Nico hosted the Sopranos 25th anniversary party, which gives them quite a bit of Mulberry Street cred.",
+        "name": "Da Nico",
+        "address": "164 Mulberry St New York, NY 10013",
+        "scenario_tags": [
+          "people watching",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7184,
+          "longitude": -73.996
+        }
+      },
+      {
+        "bio": "A Little Italy fixture since 1891, Caffé Roma is widely acknowledged to be the oldest Italian bakery in New York.",
+        "name": "Caffé Roma",
+        "address": "385 Broome St New York, NY 10013",
+        "scenario_tags": [
+          "classic establishment",
+          "pastries"
+        ],
+        "geospatial_data": {
+          "latitude": 40.719,
+          "longitude": -73.9966
+        }
+      },
+      {
+        "bio": "As long as you don’t have your heart set on a full-service East Village brunch experience, you should try some of the $9 toasts at Smor. This all-day cafe makes a bunch of different open-faced sandwiches with smoked fish and really good rye bread.",
+        "name": "Smor",
+        "address": "441 E 12th St New York, NY 10009",
+        "scenario_tags": [
+          "brunch",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73061,
+          "longitude": -73.98168
+        }
+      },
+      {
+        "bio": "Gertie is another all-day cafe, but in Williamsburg by the JMZ at Marcy Avenue. Eating here is what we imagine it’d be like to live in a really nicely designed makeup bag: bright pastel walls, curved ceilings, and things you want to look at and touch.",
+        "name": "Gertie",
+        "address": "58 Marcy Ave Brooklyn, NY 11211",
+        "scenario_tags": [
+          "brunch",
+          "quick bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.71112,
+          "longitude": -73.95712
+        }
+      },
+      {
+        "bio": "San Marzano’s inexpensive brunch isn’t a secret by any means - but that doesn’t mean it’s not worth coming here when you want $4 mimosas and $8 panini.",
+        "name": "San Marzano",
+        "address": "117 2nd Ave New York, NY 10003",
+        "scenario_tags": [
+          "brunch",
+          "people watching"
+        ],
+        "geospatial_data": {
+          "latitude": 40.72951,
+          "longitude": -73.98667
+        }
+      },
+      {
+        "bio": "Westville - which has seven locations across the city - is a reliable and relatively inexpensive choice. The food is straightforward and mostly healthy, with dishes ranging from benedicts to cobb salads.",
+        "name": "Westville Dumbo",
+        "address": "81 Washington St Brooklyn, NY 11201",
+        "scenario_tags": [
+          "brunch",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.70312,
+          "longitude": -73.99306
+        }
+      },
+      {
+        "bio": "House Of Small Wonder is near the Bedford L Stop in Williamsburg, but you feel a little more like you’re in a treehouse when you eat brunch here.",
+        "name": "House of Small Wonder",
+        "address": "77 N 6th St Brooklyn, NY 11249",
+        "scenario_tags": [
+          "brunch",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": 40.71812,
+          "longitude": -73.95712
+        }
+      },
+      {
+        "bio": "Egg Shop is very committed to the brunch brand, which isn’t a bad thing. It just means that almost everyone eating here is having a casual catch-up with friends.",
+        "name": "Egg Shop",
+        "address": "151 Elizabeth St. New York, NY",
+        "scenario_tags": [
+          "brunch",
+          "late nights"
+        ],
+        "geospatial_data": {
+          "latitude": 40.72012,
+          "longitude": -73.99612
+        }
+      },
+      {
+        "bio": "If you’ve ever waited in line for the fluffy, buttery pancakes at Clinton Street Baking Co., you should know that you can get the same ones at Community Food & Juice in Morningside Heights.",
+        "name": "Community Food & Juice",
+        "address": "2893 Broadway New York, NY",
+        "scenario_tags": [
+          "brunch",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.80512,
+          "longitude": -73.96412
+        }
+      },
+      {
+        "bio": "Maybe your friends are always looking for brunch places where they can drink multiple rounds of mimosas, eat things like chilaquiles or a breakfast burger, and not pay a ton of money for all of that.",
+        "name": "Esperanto",
+        "address": "145 Avenue C New York, NY 10009",
+        "scenario_tags": [
+          "brunch",
+          "day drinking"
+        ],
+        "geospatial_data": {
+          "latitude": 40.72412,
+          "longitude": -73.97912
+        }
+      },
+      {
+        "bio": "If you’re in the Disney World part of Williamsburg and you don’t want to spend as much money as you would at the actual Disney World, Mekelburg’s Domino is your spot.",
+        "name": "Mekelburg’s",
+        "address": "325 Kent Ave New York, NY 11249",
+        "scenario_tags": [
+          "brunch",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.71112,
+          "longitude": -73.96512
+        }
+      },
+      {
+        "bio": "People seem to be mostly unaware of the fact that Al Di La in Park Slope is open for weekday lunch and weekend brunch.",
+        "name": "Al Di La",
+        "address": "248 5th Ave. Brooklyn, NY 11215",
+        "scenario_tags": [
+          "brunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.67012,
+          "longitude": -73.97912
+        }
+      },
+      {
+        "bio": "Le Bonbonniere is one of the last classic diners in lower Manhattan, which means you might see someone famous eating pancakes here.",
+        "name": "La Bonbonniere",
+        "address": "28 8th Ave. New York, NY 10014",
+        "scenario_tags": [
+          "brunch",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73312,
+          "longitude": -74.00212
+        }
+      },
+      {
+        "bio": "Jing Fong is one of our all-time favorite group brunch spots, even when we’re not keeping a close eye on our checking accounts.",
+        "name": "Jing Fong",
+        "address": "202 Centre St New York, NY 10013",
+        "scenario_tags": [
+          "brunch",
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.71812,
+          "longitude": -73.99812
+        }
+      },
+      {
+        "bio": "This is an Israeli restaurant where you can get challah French toast or hummus falafel for $11.",
+        "name": "12 Chairs",
+        "address": "56 Macdougal St New York, NY 10012",
+        "scenario_tags": [
+          "brunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.73012,
+          "longitude": -73.99612
+        }
+      },
+      {
+        "bio": "At Balade in the East Village, all the Lebanese brunch dishes come with homemade bread, salad, and orange juice or coffee.",
+        "name": "Balade",
+        "address": "208 1st Ave. New York, NY 10009",
+        "scenario_tags": [
+          "brunch",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": 40.72612,
+          "longitude": -73.98112
+        }
+      },
+      {
+        "bio": "Maybe it’s one of those Sunday afternoons when you’ve decided you’re too tired to process the week you just had, and also too tired to think about the week ahead.",
+        "name": "J.G. Melon",
+        "address": "1291 3rd Ave. New York, NY 10021",
+        "scenario_tags": [
+          "brunch",
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": 40.76912,
+          "longitude": -73.95612
+        }
+      },
+      {
+        "bio": "Located in Flushing, this place has some of the juiciest Afghan kebabs and largest portions of broth-simmered rice in the city.",
+        "name": "Kabul Kabab House",
+        "address": "4251 Main St Flushing, NY 11355",
+        "scenario_tags": [
+          "big groups",
+          "halal"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This spot specializes in halal versions of classic American dishes, like Southwest egg benedict and Nashville hot fried chicken and waffles.",
+        "name": "Farine Baking Company",
+        "address": "74-24 37th Ave Queens, NY 11372",
+        "scenario_tags": [
+          "halal",
+          "brunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A halal Xinjiang cuisine restaurant known for its cumin sauteed beef and hearty portions.",
+        "name": "Jiang Diner",
+        "address": "309 E 5th St New York, NY 10003",
+        "scenario_tags": [
+          "casual dinners",
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A popular soul food spot in Boerum Hill, known for its oxtail and jerk chicken.",
+        "name": "The Soul Spot",
+        "address": "302 Atlantic Ave Brooklyn, NY 11201",
+        "scenario_tags": [
+          "halal",
+          "late nights",
+          "lunch",
+          "cheap eats",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A Bay Ridge restaurant serving Palestinian classics like hummus and shawarma.",
+        "name": "Ayat",
+        "address": "8504 3rd Ave Brooklyn, NY 11209",
+        "scenario_tags": [
+          "halal",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A go-to for great halal Thai food, known for its pad Thai and grilled skirt steak.",
+        "name": "Top Thai Vintage",
+        "address": "55 Carmine St New York, NY 10014",
+        "scenario_tags": [
+          "halal",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A fully halal establishment known for its cheesesteaks and crispy fries.",
+        "name": "Tony Luke's",
+        "address": "6 Flatbush Ave Brooklyn, NY 11217",
+        "scenario_tags": [
+          "halal",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Specializes in upscale takes on classic soul food, including Cajun-style seafood.",
+        "name": "Black Nile",
+        "address": "592 Nostrand Ave Brooklyn, NY 11216",
+        "scenario_tags": [
+          "halal",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A South African-Portuguese restaurant known for its peri-peri chicken.",
+        "name": "Chicky's",
+        "address": "248-43 Jericho Tpke New York, NY 11426",
+        "scenario_tags": [
+          "halal",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A Bangladeshi restaurant offering a variety of Bengali-style dishes.",
+        "name": "Boishakhi Restaurant",
+        "address": "29-14 36th Ave Astoria, NY 11106",
+        "scenario_tags": [
+          "halal",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A family-owned Guyanese-Chinese restaurant known for its fried chicken fried rice.",
+        "name": "Carifesta Halal Restaurant",
+        "address": "12615 Liberty Ave South Richmond Hill, NY 11419",
+        "scenario_tags": [
+          "halal",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A to-go-style Middle Eastern spot known for its quality meats and platters.",
+        "name": "Duzan",
+        "address": "2411 Steinway St Astoria, NY 11103",
+        "scenario_tags": [
+          "cheap eats",
+          "halal",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Casual Uyghur restaurant specializing in laghman noodles and kebabs.",
+        "name": "Nurlan Uyghur Restaurant",
+        "address": "43-39 Main St Queens, NY 11355",
+        "scenario_tags": [
+          "big groups",
+          "halal",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "A classic Yemeni restaurant known for its lamb haneeth and homemade bread.",
+        "name": "Yemen Cafe",
+        "address": "176 Atlantic Ave Brooklyn, NY 11201",
+        "scenario_tags": [
+          "casual dinners",
+          "halal",
+          "keeping it kind of healthy",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Located in the old Breslin space in the Ace Hotel, Koloman takes the kind of food you’d expect to find at a fancy hotel in Europe, gives it a 21st-century makeover, and then serves it all up in a surprisingly casual setting.",
+        "name": "Koloman",
+        "address": "16 W 29th St New York, NY 10001",
+        "scenario_tags": [
+          "date",
+          "special occasion",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7444,
+          "longitude": -73.9883
+        }
+      },
+      {
+        "bio": "L’Abeille, a high-end French-Japanese restaurant in Tribeca, might just restore your faith in the tasting menu format.",
+        "name": "L'Abeille",
+        "address": "412 Greenwich St New York, NY 10013",
+        "scenario_tags": [
+          "special occasion",
+          "fine dining",
+          "eating at the bar",
+          "drinking great wine",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7205,
+          "longitude": -74.0085
+        }
+      },
+      {
+        "bio": "Kru focuses on reinterpreting century-old Thai recipes, and every dish is a showstopper.",
+        "name": "Kru",
+        "address": "190 N 14th St Brooklyn, NY 11249",
+        "scenario_tags": [
+          "date",
+          "impressing out of towners",
+          "casual dinner"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7202,
+          "longitude": -73.9619
+        }
+      },
+      {
+        "bio": "Masalawala & Sons serves hyper-specific regional Indian food that you’ll describe in great detail to everyone you know for months after you eat it.",
+        "name": "Masalawala & Sons",
+        "address": "365 5th Ave Brooklyn, NY 11215",
+        "scenario_tags": [
+          "sitting outside",
+          "impressing out of towners",
+          "date"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6704,
+          "longitude": -73.9795
+        }
+      },
+      {
+        "bio": "Place des Fêtes is a casual Clinton Hill spot with dishes on par with top fine-dining spots in NYC.",
+        "name": "Place des Fêtes",
+        "address": "212 Greene Ave Brooklyn, NY 11238",
+        "scenario_tags": [
+          "date",
+          "drinking great wine",
+          "drinks & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6885,
+          "longitude": -73.9512
+        }
+      },
+      {
+        "bio": "Dept of Culture serves a four-course menu inspired by the food of North-Central Nigeria.",
+        "name": "Dept. Of Culture",
+        "address": "327 Nostrand Avenue New York, New York 11216",
+        "scenario_tags": [
+          "special occasion",
+          "date",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6785,
+          "longitude": -73.9494
+        }
+      },
+      {
+        "bio": "Laser Wolf offers charcoal-grilled skewers and bottomless mezze with a spectacular view of the Manhattan skyline.",
+        "name": "Laser Wolf",
+        "address": "97 Wythe Ave Brooklyn, NY 11249",
+        "scenario_tags": [
+          "date",
+          "special occasion",
+          "big groups",
+          "sitting outside",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7213,
+          "longitude": -73.9565
+        }
+      },
+      {
+        "bio": "53’s location next to MoMa feels fitting, with an elaborate design and excellent food.",
+        "name": "53",
+        "address": "53 W 53rd St New York, NY 10019",
+        "scenario_tags": [
+          "special occasion",
+          "corporate cards",
+          "impressing out of towners",
+          "drinking great wine"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7615,
+          "longitude": -73.9819
+        }
+      },
+      {
+        "bio": "The Noortwyck gets us excited about eating New American food with consistently excellent dishes.",
+        "name": "The Noortwyck",
+        "address": "289 Bleecker St New York, NY 10014",
+        "scenario_tags": [
+          "date",
+          "special occasion",
+          "dinner with the parents"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7335,
+          "longitude": -74.0022
+        }
+      },
+      {
+        "bio": "Potluck Club does fun, modern takes on Cantonese American cuisine.",
+        "name": "Potluck Club",
+        "address": "133 Chrystie St New York, NY 10002",
+        "scenario_tags": [
+          "casual dinner",
+          "big groups",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7205,
+          "longitude": -73.9883
+        }
+      },
+      {
+        "bio": "Bonnie’s brings Cantonese-American comfort food to a lively corner of Williamsburg.",
+        "name": "Bonnie’s",
+        "address": "398 Manhattan Ave Brooklyn, NY 11211",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "date",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7111,
+          "longitude": -73.9495
+        }
+      },
+      {
+        "bio": "Nudibranch offers a menu influenced by South America, Mexico, and various Asian countries.",
+        "name": "Nudibranch",
+        "address": "125 1st Ave New York, NY 10003",
+        "scenario_tags": [
+          "date",
+          "impressing out of towners",
+          "dining solo",
+          "eating at the bar"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7265,
+          "longitude": -73.9819
+        }
+      },
+      {
+        "bio": "Kjun serves Cajun dishes with subtle Korean twists in a casual setting.",
+        "name": "Kjun",
+        "address": "154 E 39th St New York, NY 10016",
+        "scenario_tags": [
+          "casual dinner",
+          "lunch",
+          "serious takeout operation",
+          "BYOB"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7505,
+          "longitude": -73.9763
+        }
+      },
+      {
+        "bio": "Little Flower Cafe is a cool place to be, serving excellent coffee and comfort food.",
+        "name": "Little Flower Cafe",
+        "address": "25-35 36th Ave New York, NY 11106",
+        "scenario_tags": [
+          "coffee & a light bite",
+          "breakfast",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.9225
+        }
+      },
+      {
+        "bio": "Felina Cucina is a great spot to leisurely eat a sausage and peppers pizza while you wait out a weather delay. Watch your pizza rotate in the giant stone oven, sip a Negroni sbagliato, and make a drinking game out of spotting travelers zooming around the terminal on suitcase scooters.",
+        "name": "Felina Cucina",
+        "address": "3 Brewster Rd Newark, New Jersey 07114",
+        "scenario_tags": [
+          "lunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "The original 1911 Smokehouse in Trenton is known for heaping platters of smoked meat, and you can also get their pulled pork sandwiches and wings in Terminal A. The crispy rib tips are great for appeasing your grumpy sibling who just started a carnivore diet, and the vegan wings and black bean empanadas will satisfy just about everyone else.",
+        "name": "Smokehouse BBQ",
+        "address": "3 Brewster Rd Newark, New Jersey 07114",
+        "scenario_tags": [
+          "lunch",
+          "kids",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "City Rub Cafe is small enough that you might walk by without noticing it, but it’s one of the best places to eat in the terminal. The seared ahi tuna salad and coconut shrimp are the perfect light snacks, and the crispy and moist chicken sandwich is cozy and satisfying without being too salty or rich.",
+        "name": "City Rub Cafe",
+        "address": "3 Brewster Rd Newark, New Jersey 07114",
+        "scenario_tags": [
+          "lunch",
+          "drinks & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Nothing is guaranteed when it comes to air travel—except people standing up as soon as the seatbelt sign turns off. But one thing you can count on is Carlitos for some excellent tacos on fresh made tortillas at the airport.",
+        "name": "Carlitos",
+        "address": "3 Brewster Rd Newark, New Jersey 07114",
+        "scenario_tags": [
+          "lunch",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Terminal A has a small business corridor highlighting local Jersey bakers and sweet shops, so definitely explore the area if you need a pick-me-up after getting a tub of homemade tiramisu confiscated by TSA.",
+        "name": "Bang Cookies",
+        "address": "3 Brewster Rd Newark, New Jersey 07114",
+        "scenario_tags": [
+          "dessert"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Stick to the pizza and stromboli at this grab-and-go counter in Terminal B. Go for the Jersey Devil with pepperoni and cherry hot peppers, or the Garden State, which is loaded up with zucchini, yellow squash, artichokes, and roasted red peppers.",
+        "name": "Little Tony's Pizzeria",
+        "address": "Terminal B Newark, NJ 07114",
+        "scenario_tags": [
+          "lunch",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "These small but mighty fridges are scattered through various airports, typically filled with healthy grain bowls, salads, and wraps that cost about $10.",
+        "name": "Farmer's Fridge",
+        "address": "3 Brewster Road Newark, NJ 07114",
+        "scenario_tags": [
+          "keeping it kind of healthy",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Terminal C is pretty massive, so if your flight is near gates C120-140, you’ll want to park yourself nearby. Thankfully, Flora is tucked away in this part of the concourse.",
+        "name": "Flora",
+        "address": "Terminal C, near Gate C133 New York, Newark 07114",
+        "scenario_tags": [
+          "casual dinners",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "This ramen bar is located at the center of the main food court, so you can kill a few hours drinking sake, people-watching tourists decked out in sweatshirts they bought on Canal Street, and slurping noodles before your flight.",
+        "name": "Kaedama",
+        "address": "3 Brewster Rd New York, Newark 07114",
+        "scenario_tags": [
+          "eating at the bar",
+          "dining solo"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Little Purse has two locations in Terminal C, a tiny dining room with one central velvet booth near Gate 75, and a larger space closer to Gate 103.",
+        "name": "Little Purse",
+        "address": "Newark International Airport New York, Newark 07114",
+        "scenario_tags": [
+          "casual dinners",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "This tavern near Gate 81 has a huge menu that covers just about every traveler’s needs, minus noise-canceling headphones.",
+        "name": "Vesper Tavern",
+        "address": "3 Brewster Rd New York, Newark 07114",
+        "scenario_tags": [
+          "drinks & a light bite",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Abruzzo is a surprisingly good Italian spot that has enough flatscreens for you to find something to watch from any table.",
+        "name": "Abruzzo Italian Steakhouse",
+        "address": "Terminal C1 Newark, NJ 07114",
+        "scenario_tags": [
+          "lunch",
+          "drinks & a light bite",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "A croque madame is always a good idea, and thankfully Saison serves theirs all day.",
+        "name": "Saison",
+        "address": "Terminal C Newark, NJ 07114",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Daily is one of the few airport restaurants where you might actually forget for a second you’re about to wrestle your rolling bag into an overhead compartment.",
+        "name": "Daily",
+        "address": "Terminal C1 Newark, NJ 07114",
+        "scenario_tags": [
+          "lunch",
+          "keeping it kind of healthy"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6895,
+          "longitude": -74.1745
+        }
+      },
+      {
+        "bio": "Going to Dog Day Afternoon is like stopping by your neighbor’s place for a bite, if your neighbor had a Ms. Pacman machine, a sick vintage record collection, and enough wit to name a hot dog joint after a classic heist movie that was shot in the neighborhood. This standing room-only spot makes excellent Chicago-style hot dogs, sandwiches, and sausage-oriented sides. Everything is best enjoyed with an orange whip, a frozen drink that tastes like hopes, dreams, and the eternal optimism of youth.",
+        "name": "Dog Day Afternoon",
+        "address": "266 Prospect Park W Brooklyn, NY 11215",
+        "scenario_tags": [
+          "cheap eats",
+          "lunch",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Brancaccio’s calls itself a “food shop” because it sells a little bit of everything—from red sauce pasta dishes and roast chickens to homemade pastries and some of Brooklyn’s best Italian sandwiches. When you don’t feel like cooking but want something that tastes homey, the prepared foods behind a small counter are the best option in Windsor Terrace. Have a look at the handwritten menu near the cash register, and note that this is not the kind of place where you ask for substitutions.",
+        "name": "Brancaccio's Food Shop",
+        "address": "3011 Fort Hamilton Pkwy Brooklyn, NY 11218",
+        "scenario_tags": [
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "When you’re planning to hang out with your friends for hours, this ideal neighborhood gastropub has everything you want: a rotating draft list that’s more exciting than it needs to be, a consistently excellent playlist that spans genres and decades, lots of big tables for group hangs, and a giant chalkboard in lieu of a menu for easy ordering. Their “Everything but the Wings” (basically Japanese sweet potatoes given the hot wings treatment) is a destination-worthy dish, and this is the kind of spot where you can get a pint and a salad, knowing that both will be good every time.",
+        "name": "The Double Windsor",
+        "address": "210 Prospect Park W Brooklyn, NY 11215",
+        "scenario_tags": [
+          "casual dinners",
+          "eating at the bar",
+          "late nights"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Terrace Bagels makes the kind of fluffy, flavorful bagel that New York expats dream about after they’ve moved away. The flavors are pretty traditional and there’s nothing too cool or overly fussy about this spot, which is exactly what makes it special. Unlike many bagel shops, there’s actually seating both inside and on the sidewalk—but Terrace Bagels is also very close to the park...and bagels just taste better when you eat them on a green bench under a tree.",
+        "name": "Terrace Bagels",
+        "address": "222 and 222A Prospect West Brooklyn, NY 11215",
+        "scenario_tags": [
+          "breakfast"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Syko is a grab-and-go spot that defies the accepted logic of most restaurants that serve food from two different cultures. There’s no fusion here—instead, half the menu is Korean, and the other half is Syrian. Both halves have standout items, like the Syrian sujok sandwich and the Korean vegetable kimbap. We like either for a quick breakfast or lunch on a nice day, since Syko is a four-minute walk to Prospect Park (we’ve timed it). They also have a shaded outdoor structure with tables if you forgot to bring your picnic blanket.",
+        "name": "Syko",
+        "address": "126 Windsor Pl New York, NY 11215",
+        "scenario_tags": [
+          "serious takeout operation",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Krupa is one of those great all-purpose restaurants that anyone would be lucky to have in their neighborhood. There’s a big, sunny backyard and sidewalk tables out front—unsurprisingly, this place gets busy on nice weekends. It’s an especially kid-friendly restaurant, so no one will side-eye you if you pull a stroller up to a big table. The menu leans Mediterranean, and items like house-made chicken nuggets and a “babycino” (Brooklynese for steamed milk with cinnamon) feel very on brand for the area.",
+        "name": "Krupa Grocery",
+        "address": "231 Prospect Park West Brooklyn, NY 11215",
+        "scenario_tags": [
+          "brunch",
+          "casual dinners",
+          "dinner with the parents",
+          "first dates"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "The sweet potato falafel at this tiny Israeli cafe are excellent, but it’s the eggplant sandwiches (only available on Wednesdays) that will have you rearranging your WFH schedule. There are a few tables inside, a few tables outside, and it’s pretty much always packed with locals. Batata also serves malawach sandwiches for breakfast—one sweet, one savory—and a handful of smoothies. Stop here on your way to the park for a long morning walk, or after you’ve finished an early run.",
+        "name": "Batata Pita Bar",
+        "address": "3021 Fort Hamilton Pkwy Brooklyn, NY 11218",
+        "scenario_tags": [
+          "cheap eats",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If you’re into locally sourced everything, you’ll love Daytime, which sources their coffee from a Red Hook-based roaster, and have a well-curated grab-and-go selection with everything from wine to half-pints of salad and jam. Even simple things like yogurt and granola somehow feel special in this airy space with big windows. Daytime almost always has a line, and it only gets longer on the weekends. To snag one of the few counter stools and camp out with your laptop on a weekday, get there when they open.",
+        "name": "Daytime",
+        "address": "199 Windsor Pl New York, NY 11215",
+        "scenario_tags": [
+          "breakfast",
+          "brunch",
+          "coffee & a light bite",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If you want to feel like you’re leaving Brooklyn entirely, get an outdoor table under a canopy of colorful tapestries in Bedawi Cafe’s backyard garden. This Jordanian spot does classics very well, so you won’t go wrong with a platter of tabbouleh, falafel, foul, and merguez, but the specialty dishes, like chicken ouzi, really shine. Bedawi is perfect for a leisurely lunch or a casual dinner, and is one of our favorite summer date night spots.",
+        "name": "Bedawi Cafe",
+        "address": "266 Prospect Park W Brooklyn, NY 11215",
+        "scenario_tags": [
+          "casual dinners",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "East Wind Snack Shop is your best bet for a solid dim sum-style meal without venturing over to Sunset Park’s Chinatown. The menu, like the space, is concise but well curated. Grab a counter seat and get an order of pan-fried juicy pork buns and Incredible Har Gow, which show up to the party dressed in a lacy skirt with a drizzle of abalone sauce. East Wind is a good local lunch-break spot for days when you need to step away from your screen.",
+        "name": "East Wind Snack Shop",
+        "address": "471 16th St Brooklyn, NY 11215",
+        "scenario_tags": [
+          "big groups",
+          "casual dinners",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "If Italian bakeries were an essential part of your childhood, you’ll get an instant nostalgia-induced serotonin boost from walking into Regina. There’s nowhere to sit, but the entire interior smells like cookies, so you’ll want to linger anyway. Come here for rainbow cookies, sfogliatelle, lobster tails, and every other Italian bakery staple imaginable. They also have a great selection of seasonal baked goods, from iced cookies to highly pigmented buttercream-frosted cupcakes.",
+        "name": "Regina Bakery Inc.",
+        "address": "485 Prospect Ave Brooklyn, NY 11215",
+        "scenario_tags": [
+          "birthdays",
+          "coffee & a light bite"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Take it to Shu Jiao Fu Zhou. Order the saucy peanut noodles for $3.25, and 10 steamed pork-and-chive dumplings for $5.",
+        "name": "Shu Jiao Fu Zhou Cuisine",
+        "address": "295 Grand Street New York, NY 10002",
+        "scenario_tags": [
+          "cheap eats",
+          "dining solo",
+          "impressing out of towners",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7181,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "An East Village restaurant with sister locations in Flushing and Midtown, known for its umami, garlic-heavy dishes.",
+        "name": "Szechuan Mountain House",
+        "address": "23 Saint Marks Pl New York, NY 10003",
+        "scenario_tags": [
+          "impressing out of towners",
+          "big groups",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7295,
+          "longitude": -73.9867
+        }
+      },
+      {
+        "bio": "A popular spot on the lower end of the LES, known for its huge menu and fast service.",
+        "name": "Wu's Wonton King",
+        "address": "165 E Broadway New York, NY 10002",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "BYOB"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7128,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "Serves both Shanghainese and Cantonese classics in a casual setting.",
+        "name": "Liu's Shanghai",
+        "address": "1869 Bath Ave Brooklyn, NY 11214",
+        "scenario_tags": [
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6055,
+          "longitude": -73.9965
+        }
+      },
+      {
+        "bio": "A tiny, takeout-only window in Flushing known for its wontons with hot sauce.",
+        "name": "White Bear",
+        "address": "135-02 Roosevelt Ave Flushing, NY 11354",
+        "scenario_tags": [
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "Brooklyn's answer to White Bear, known for its hot and spicy wontons.",
+        "name": "Mama's Noodle House",
+        "address": "1782 Bay Ridge Ave Brooklyn, NY 11204",
+        "scenario_tags": [
+          "casual dinners",
+          "lunch",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6105,
+          "longitude": -74.0075
+        }
+      },
+      {
+        "bio": "A large, lively restaurant serving nostalgic food with a twist.",
+        "name": "Potluck Club",
+        "address": "133 Chrystie St New York, NY 10002",
+        "scenario_tags": [
+          "casual dinners",
+          "big groups",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7209,
+          "longitude": -73.9934
+        }
+      },
+      {
+        "bio": "A modern homage to Chinatown with inventive Cantonese American food.",
+        "name": "Phoenix Palace",
+        "address": "85 Bowery New York, New York 10002",
+        "scenario_tags": [
+          "big groups",
+          "birthdays"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7151,
+          "longitude": -73.9969
+        }
+      },
+      {
+        "bio": "Known for its variety of soup dumplings.",
+        "name": "Shanghai You Garden",
+        "address": "135-33 40th Rd Flushing, NY 11354",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "casual dinners",
+          "dinner with the parents",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "A hot pot restaurant designed like a rural Chinese village.",
+        "name": "Chong Qing Lao Zao",
+        "address": "37-04 Prince St New York, NY 11354",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "date nights",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "An upscale spot for tender cumin beef and refreshing pork belly.",
+        "name": "Alley 41",
+        "address": "136-45 41st Ave Queens, NY",
+        "scenario_tags": [
+          "casual dinners",
+          "date nights"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "An expansive Cantonese restaurant with a wide variety of dim sum.",
+        "name": "Asian Jewels Seafood Restaurant",
+        "address": "133-30 39th Ave Flushing, NY 11354",
+        "scenario_tags": [
+          "big groups",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "A stall in Flushing's New York Food Court known for its crab roe dishes.",
+        "name": "Xie Bao",
+        "address": "133-35 Roosevelt Ave, Flushing, NY New York, NY 11354",
+        "scenario_tags": [
+          "casual dinners",
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "A Sichuan restaurant known for its grilled fish.",
+        "name": "Chuan Tian Xia",
+        "address": "5502 7th Ave Brooklyn, NY 11220",
+        "scenario_tags": [
+          "date nights",
+          "dinner with the parents",
+          "impressing out of towners",
+          "vegetarians"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6405,
+          "longitude": -74.0015
+        }
+      },
+      {
+        "bio": "Spotlights the seafood dominant cuisine of the region around Shanghai.",
+        "name": "CheLi",
+        "address": "19 Saint Marks Pl New York, NY 10003",
+        "scenario_tags": [
+          "big groups",
+          "birthdays",
+          "casual dinners",
+          "dinner with the parents",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7295,
+          "longitude": -73.9867
+        }
+      },
+      {
+        "bio": "Open since 1982, known for its Shanghainese food.",
+        "name": "Deluxe Green Bo",
+        "address": "66 Bayard Street New York, NY 10013",
+        "scenario_tags": [
+          "casual dinners",
+          "classic establishment",
+          "impressing out of towners",
+          "kids",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7151,
+          "longitude": -73.9969
+        }
+      },
+      {
+        "bio": "A Sichuan restaurant known for its extensive menu.",
+        "name": "Sky Pavilion",
+        "address": "325 W 42nd St New York, New York 10036",
+        "scenario_tags": [
+          "big groups",
+          "pre-theater"
+        ],
+        "geospatial_data": {
+          "latitude": 40.758,
+          "longitude": -73.9934
+        }
+      },
+      {
+        "bio": "Specializes in the seafood-centric cuisine of Ningbo.",
+        "name": "YongChuan",
+        "address": "90 Clinton St New York, NY 10002",
+        "scenario_tags": [
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7209,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "A big, pastel-and-neon wonderland of Hong Kong-style food.",
+        "name": "Kong Sihk Tong",
+        "address": "42-35 Main Street, Ste 1A Flushing, NY 11355",
+        "scenario_tags": [
+          "breakfast",
+          "brunch",
+          "kids"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "Known for its affordable, magnificent food.",
+        "name": "Wah Fung No. 1 Fast Food",
+        "address": "79 Chrystie St New York, NY 10002",
+        "scenario_tags": [
+          "lunch"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7209,
+          "longitude": -73.9934
+        }
+      },
+      {
+        "bio": "Makes some of the freshest dim sum in Chinatown.",
+        "name": "Royal Seafood Restaurant",
+        "address": "103-105 Mott St New York, NY 10013",
+        "scenario_tags": [
+          "big groups",
+          "brunch",
+          "birthdays"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7151,
+          "longitude": -73.9969
+        }
+      },
+      {
+        "bio": "Known for its peking duck.",
+        "name": "Hwa Yuan",
+        "address": "42 E Broadway New York, NY 10002",
+        "scenario_tags": [
+          "big groups",
+          "impressing out of towners",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7128,
+          "longitude": -73.9885
+        }
+      },
+      {
+        "bio": "A new-school Fujianese restaurant in Prospect Heights.",
+        "name": "Nin Hao",
+        "address": "609 Dean St New York, New York 11238",
+        "scenario_tags": [
+          "big groups"
+        ],
+        "geospatial_data": {
+          "latitude": 40.6765,
+          "longitude": -73.9573
+        }
+      },
+      {
+        "bio": "A Cantonese restaurant with a lively dining room.",
+        "name": "Uncle Lou",
+        "address": "73 Mulberry St New York, NY 10013",
+        "scenario_tags": [
+          "big groups",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7151,
+          "longitude": -73.9969
+        }
+      },
+      {
+        "bio": "Specializes in Hong-Kong style noodle soup.",
+        "name": "Maxi’s Noodle",
+        "address": "135-11 38th Ave Flushing, NY 11354",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "cheap eats"
+        ],
+        "geospatial_data": {
+          "latitude": 40.7645,
+          "longitude": -73.8294
+        }
+      },
+      {
+        "bio": "The menu at this Italian restaurant is loaded with hits: mafalda ribbons made one-by-one in the kitchen, fresh-pressed pizzelle that forms the cannolis you’re going to want for dessert, and a linguini nero that has its own following of regulars who come weekly for a fix of the black ink pasta with clams in a complex garlic, chile, and tomato infusion.",
+        "name": "Augustine’s Salumeria",
+        "address": "213 Halstead Ave Mamaroneck, NY 10543",
+        "scenario_tags": [
+          "date",
+          "lunch",
+          "private dining"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Walter’s has been a Mamaroneck institution for over 100 years, and if you’ve never waited in line for hot dogs from a roadside pagoda, this is your chance.",
+        "name": "Walter’s Hot Dog Stand",
+        "address": "937 Palmer Ave Mamaroneck, NY 10543",
+        "scenario_tags": [
+          "classic establishment"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This French spot in a rebuilt farmhouse bordering Connecticut is a good place to watch chefs stir mushrooms into risotto just so, and maybe have a Martha Stewart sighting.",
+        "name": "Cenadou",
+        "address": "721 Titicus Rd North Salem, NY 10560",
+        "scenario_tags": [
+          "drinking great wine",
+          "date nights",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "La Bastide opened in February 2024, in the same farmhouse location as the much-loved Cenadou. It occupies the lower level of the property, and offers multi-course tasting menus at luxury price points.",
+        "name": "La Bastide",
+        "address": "721 Titicus Rd North Salem, New York 10560",
+        "scenario_tags": [
+          "fine dining",
+          "special occasions",
+          "impressing out of towners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Odo has immaculate dinner party vibes. The restaurant glows a little from the street, there’s a happy buzz in the small dining room, and the staff welcomes you like an old friend.",
+        "name": "Odo",
+        "address": "72 Main St Tuckahoe, NY 10707",
+        "scenario_tags": [
+          "date nights",
+          "birthdays",
+          "eating at the bar",
+          "drinking great wine"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "We can’t think of a more 'farm-to-table' restaurant than Blue Hill at Stone Barns, where you drive past your dinner on the way to eating it.",
+        "name": "Blue Hill At Stone Barns",
+        "address": "630 Bedford Rd. Pocantico Hills, NY 10591",
+        "scenario_tags": [
+          "fine dining",
+          "special occasions"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "There’s a lot going on at Goosefeather, a Hong Kong-style Cantonese barbeque and noodle place set in a manor house on an estate in Tarrytown.",
+        "name": "Goosefeather",
+        "address": "49 E Sunnyside Ln Tarrytown, NY 10591",
+        "scenario_tags": [
+          "drinking great cocktails",
+          "people watching"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "The best wings in Westchester are at Candlelight Inn, a roadside bar in Scarsdale.",
+        "name": "Candlelight Inn",
+        "address": "519 Central Park Ave Scarsdale, NY 10583",
+        "scenario_tags": [
+          "late nights",
+          "classic establishment",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Chinese restaurant O Mandarin is perfect for a Sunday night family dinner, a group celebration, or even just some comfort food to-go.",
+        "name": "O Mandarin",
+        "address": "361 N Central Ave Hartsdale, NY 10530",
+        "scenario_tags": [
+          "dinner with the parents",
+          "big groups",
+          "walk-ins"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "At almost 15 years old, The Cookery in Dobbs Ferry is like a punk rock band that’s gone mainstream.",
+        "name": "The Cookery",
+        "address": "39 Chestnut St Dobbs Ferry, NY 10522",
+        "scenario_tags": [
+          "first dates",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "This cash-only, 24/7 deli has been around for 60 years, and rumor has it they haven’t locked the front door or turned off the lights in over 23 years.",
+        "name": "Rocky’s Millwood Deli",
+        "address": "235 Saw Mill River Rd Millwood, NY 10546",
+        "scenario_tags": [
+          "serious takeout operation",
+          "classic establishment",
+          "late nights"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "There are a handful of highly regarded Indian restaurants in Westchester, and our favorite is Chutney Masala in Irvington.",
+        "name": "Chutney Masala",
+        "address": "76 Main St Irvington, NY 10533",
+        "scenario_tags": [
+          "casual dinners",
+          "serious takeout operation"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Everything about Oko in Rye says 'you’ve made it,' from the difficult-to-score prime-time reservations to the luxury items all over the Japanese menu.",
+        "name": "OKO Kitchen",
+        "address": "29 Purchase St Rye, NY 10580",
+        "scenario_tags": [
+          "date nights",
+          "see & be seen"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "You’ll notice two things when you walk into Boro6 in Hastings: the 40-foot-long marble horseshoe bar, and the everyone-knows-your-name welcome from the staff.",
+        "name": "Boro6",
+        "address": "549 Warburton Ave Hastings-on-Hudson, NY 10706",
+        "scenario_tags": [
+          "drinking great wine",
+          "eating at the bar",
+          "casual dinners"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Like a great Disney movie, Mt Kisco Diner works on two levels.",
+        "name": "Mt Kisco Diner",
+        "address": "252 E Main St Mount Kisco, NY 10549",
+        "scenario_tags": [
+          "breakfast",
+          "lunch",
+          "unique dining experiences"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Classic spots like Johnny’s and Sal’s are probably what come to mind first when you think of the pizza scene in Westchester, and they remain beloved.",
+        "name": "Burrata",
+        "address": "425 White Plains Rd Eastchester, NY 10709",
+        "scenario_tags": [
+          "casual dinners",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      },
+      {
+        "bio": "Anyone who’s driven up 95 has undoubtedly noticed the evolution of high-rise developments dotting downtown New Rochelle.",
+        "name": "Town House Kitchen + Drinks",
+        "address": "559 Main St New Rochelle, NY 10801",
+        "scenario_tags": [
+          "first dates",
+          "drinking great cocktails"
+        ],
+        "geospatial_data": {
+          "latitude": null,
+          "longitude": null
+        }
+      }
+    ]
+  }
+]
