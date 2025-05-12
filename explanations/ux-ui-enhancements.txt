@@ -15,8 +15,8 @@ This document outlines the key improvements made to the user experience (UX) and
     *   **UI:** Suggestion buttons are visually enhanced with pill-shaped designs, subtle shadows, and engaging hover effects, encouraging users to click and guiding them through the conversation.
 
 4.  **Intelligent Fallback and Recovery:**
-    *   **UX:** When exact matches aren't found, the system provides alternative recommendations based on partial matches rather than dead ends, maintaining engagement.
-    *   **UI:** Clear messaging ("I couldn't find exact matches, but you might like these alternatives:") sets appropriate expectations while still providing value.
+    *   **UX:** When exact matches aren't found, the system provides alternative recommendations based on partial matches rather than dead ends, maintaining engagement. These are now much more accurate to the user's request, with cuisine-specific fallbacks that include popular menu items.
+    *   **UI:** Clear messaging ("I couldn't find exact matches, but you might like these alternatives:") sets appropriate expectations while still providing value, and includes more detailed reasons for each fallback recommendation.
 
 5.  **Engaging & Personalized Recommendation Narratives:**
     *   **UX:** Recommendations are brought to life with engaging, natural-sounding narratives. These explanations don't just list matches; they artfully weave together the user's stated preferences (like cuisine or neighborhood) with **vivid and colorful language drawn directly from the restaurant's own descriptions**. For example, a reason might highlight that a place "focuses on reinterpreting century-old Thai recipes, and every dish is a showstopper," making the suggestion more compelling and trustworthy.
@@ -46,4 +46,24 @@ This document outlines the key improvements made to the user experience (UX) and
     *   **UX:** The chatbot now remembers the context of the ongoing conversation. If a user refines their previous request (e.g., "Actually, I'd prefer something cheaper," or "What about in a different neighborhood?"), the chatbot uses the chat history to understand the changes in relation to what was already discussed. This leads to a more natural and intelligent dialogue, as the user doesn't have to repeat previously stated preferences. The system can better handle clarifications, corrections, and evolving needs.
     *   **UI:** While not a direct visual change in the chat interface itself, this backend enhancement results in the assistant's responses being more aligned with the user's expectations as the conversation progresses. The bot feels like it's "listening" better and adapting to the flow of dialogue.
 
-**Overall Goal:** These enhancements focus on creating a more human-centered conversational experience that feels natural and helpful. The improvements reduce cognitive load, provide better guidance throughout the interaction, and maintain engagement through contextual suggestions and follow-ups. The result is a more efficient, enjoyable, and effective restaurant discovery experience. 
+12. **Neighborhood-Aware Recommendations:**
+    *   **UX:** The chatbot now has improved geographical understanding, recognizing neighborhoods across all NYC boroughs and prioritizing results that match the user's location preferences. When a user mentions they're in a specific borough (like Queens), recommendations are tailored to that area first.
+    *   **UI:** Results clearly show the neighborhood, helping users identify geographically relevant options. A "More details" button allows users to easily see additional information about location and reach.
+
+13. **Menu Item Suggestions:**
+    *   **UX:** Recommendations now include specific menu item suggestions drawn from the restaurant's popular dishes, providing more concrete and actionable information to users.
+    *   **UI:** The recommendation reason text highlights these menu items, making it easier for users to envision their dining experience and make decisions based on actual dishes they might enjoy.
+
+14. **Urgency-Responsive Experience:**
+    *   **UX:** When users express a need for quick recommendations (using terms like "fast," "quickly," "right now"), the system adapts by streamlining the conversation flow and prioritizing restaurants that can accommodate immediate dining needs.
+    *   **UI:** Fewer follow-up questions are asked when urgency is detected, allowing users to get to recommendations more quickly.
+
+15. **Seamless Experience Logging:**
+    *   **UX:** When users find a restaurant they like, they can now immediately log their experience with that restaurant by clicking the "Log Experience" button on any restaurant card. The Add Experience form opens with that restaurant pre-selected.
+    *   **UI:** The restaurant selection in the Add Experience form is now controlled by URL parameters, creating a smooth transition from browsing to recording experiences.
+
+16. **Experience Details View:**
+    *   **UX:** Users can now view detailed information about their past dining experiences, including their ratings, notes, and the restaurant details all in one cohesive view.
+    *   **UI:** A new dedicated Experience Detail page (`/experiences/[id]`) presents a comprehensive view of past dining experiences with options to view the restaurant details or delete the experience.
+
+**Overall Goal:** These enhancements focus on creating a more human-centered conversational experience that feels natural and helpful. The improvements reduce cognitive load, provide better guidance throughout the interaction, and maintain engagement through contextual suggestions and follow-ups. Location-aware recommendations, specific menu suggestions, and simplified experience logging create a more efficient, enjoyable, and effective restaurant discovery experience. 

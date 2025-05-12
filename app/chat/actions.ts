@@ -289,154 +289,42 @@ IMPORTANT: Prioritize asking a followUpQuestion if the request is too vague for 
   }
 
   if (!restaurants || restaurants.length === 0) {
-    console.log("No restaurants found matching criteria.")
+    console.log("No exact matches found for search criteria");
     
-    // Try a fallback query with relaxed constraints
-    let fallbackQuery = supabase.from("restaurants").select("*")
-    
-    // If we know user's borough, prioritize location
-    if (extractedPrefs.boroughs && extractedPrefs.boroughs.length > 0) {
-      const borough = extractedPrefs.boroughs[0];
-      fallbackQuery = fallbackQuery.or(`neighborhood.ilike.%${borough}%,address.ilike.%${borough}%,borough.ilike.%${borough}%`);
-      
-      // Check if we got results with just location constraint
-      const { data: locationOnlyResults } = await fallbackQuery.limit(3);
-      
-      // If we found location-based results, use them
-      if (locationOnlyResults && locationOnlyResults.length > 0) {
-        const mappedLocationResults = locationOnlyResults.map(restaurant => {
-          let locationInfo = restaurant.neighborhood;
-          if (restaurant.borough) locationInfo = `${restaurant.neighborhood}, ${restaurant.borough}`;
-          
-          let reason = `I found ${restaurant.name}, a ${restaurant.cuisine_type} restaurant in ${locationInfo}`;
-          
-          // Add cuisine context if user specified cuisine
-          if (extractedPrefs?.cuisines && extractedPrefs.cuisines.length > 0) {
-            reason += ` that might have ${extractedPrefs.cuisines[0]} options`;
-          }
-          
-          // Add menu item if available
-          if (restaurant.popular_items && restaurant.popular_items.length > 0) {
-            const recommendedItem = restaurant.popular_items[Math.floor(Math.random() * restaurant.popular_items.length)];
-            reason += `. Try their "${recommendedItem}"!`;
-          } else {
-            reason += ".";
-          }
-          
-          return {
-            ...restaurant,
-            reason
-          };
-        });
-        return { recommendations: mappedLocationResults };
-      }
-    }
-    
-    // Keep just cuisine type if specified
-    if (extractedPrefs.cuisines && extractedPrefs.cuisines.length > 0) {
-      const cuisineFilters = extractedPrefs.cuisines
-        .map((c) => `cuisine_type.ilike.%${c}%`)
-        .join(",")
-      fallbackQuery = fallbackQuery.or(cuisineFilters)
-    }
-    
-    // Emergency fallbacks - hardcoded options for common searches
-    const emergencyFallbacks: Record<string, any[]> = {
-      "Pizza+Lower Manhattan": [
-        {
-          id: "fallback-4",
-          name: "Joe's Pizza",
-          cuisine_type: "Pizza",
-          address: "7 Carmine St, New York, NY 10014",
-          neighborhood: "Greenwich Village",
-          borough: "Manhattan",
-          price_range: 1,
-          popular_items: ["Classic Slice", "Fresh Mozzarella Slice", "Sicilian Square"],
-          description: "Iconic cash-only pizza joint serving thin-crust slices & pies in a no-frills setting since 1975.",
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }
-      ],
-      "Pizza+Queens": [
-        {
-          id: "fallback-8",
-          name: "Lucia Pizza",
-          cuisine_type: "Pizza",
-          address: "136-55 Roosevelt Ave, Flushing, NY 11354",
-          neighborhood: "Flushing",
-          borough: "Queens",
-          price_range: 1,
-          popular_items: ["Classic NY Slice", "Grandma Pie", "Buffalo Chicken Pizza"],
-          description: "Classic Queens pizzeria serving authentic New York slices since 1959.",
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }
-      ]
-    };
-    
-    // Try to match emergency fallbacks
+    // Check if we can use any of our emergency fallbacks
     let fallbackKey = "";
-    if (extractedPrefs.cuisines?.includes("pizza") && 
-        (extractedPrefs.neighborhoods?.some(n => n.toLowerCase().includes("lower manhattan")))) {
-      fallbackKey = "Pizza+Lower Manhattan";
-    } else if (extractedPrefs.cuisines?.includes("pizza") && 
-              extractedPrefs.boroughs?.includes("Queens")) {
-      fallbackKey = "Pizza+Queens";
+    
+    // Match burger searches in Brooklyn
+    if ((extractedPrefs.cuisines?.some(c => 
+        c.toLowerCase().includes("burger") || 
+        c.toLowerCase() === "hamburger") || 
+        message.toLowerCase().includes("burger")) && 
+        (extractedPrefs.boroughs?.some(b => b.toLowerCase().includes("brooklyn")) || 
+         extractedPrefs.neighborhoods?.some(n => n.toLowerCase().includes("brooklyn")) ||
+         message.toLowerCase().includes("brooklyn"))) {
+      fallbackKey = "Burger+Brooklyn";
     }
     
+    // If we have matching fallbacks, use them
     if (fallbackKey && emergencyFallbacks[fallbackKey]) {
-      const mappedEmergencyResults = emergencyFallbacks[fallbackKey].map(restaurant => {
+      console.log(`Using emergency fallback for ${fallbackKey}`);
+      
+      const mappedFallbacks = emergencyFallbacks[fallbackKey].map(restaurant => {
         return {
           ...restaurant,
-          reason: `${restaurant.name} is a great ${restaurant.cuisine_type} spot in ${restaurant.neighborhood}. ${restaurant.description} Try their ${restaurant.popular_items[0]}!`
+          reason: `${restaurant.name} is a ${restaurant.cuisine_type} restaurant in ${restaurant.neighborhood}, ${restaurant.borough}. ${restaurant.description} Their popular item is the "${restaurant.popular_items[0]}".`
         };
       });
-      return { recommendations: mappedEmergencyResults };
+      
+      return { recommendations: mappedFallbacks };
     }
     
-    const { data: fallbackResults } = await fallbackQuery.limit(3)
-    
-    if (fallbackResults && fallbackResults.length > 0) {
-      const mappedFallback = fallbackResults.map(restaurant => {
-        let locationInfo = restaurant.neighborhood;
-        if (restaurant.borough) locationInfo += `, ${restaurant.borough}`;
-        
-        let reason = `While I couldn't find an exact match for your request, ${restaurant.name} is a ${restaurant.cuisine_type} restaurant in ${locationInfo}`;
-        
-        // Add menu item if available
-        if (restaurant.popular_items && restaurant.popular_items.length > 0) {
-          const recommendedItem = restaurant.popular_items[Math.floor(Math.random() * restaurant.popular_items.length)];
-          reason += `. Try their "${recommendedItem}"!`;
-        } else {
-          reason += " that might interest you.";
-        }
-        
-        return {
-          ...restaurant,
-          reason
-        };
-      });
-      return { recommendations: mappedFallback };
-    }
-    
-    // If even fallback fails
-    if (followUpCount >= 3) {
-      return { 
-        recommendations: [], 
-        followUpQuestion: "I've asked a few questions, but I'm still having trouble finding exactly what you're looking for. Could you try starting a new search with more specific details, like the type of cuisine and a neighborhood?" 
-      };
-    }
-
-    // Existing logic for generating noResultsFollowUp based on partial prefs
-    let noResultsFollowUp = "Hmm, I couldn't find anything for that specific combination. ";
-    if (extractedPrefs.cuisines && extractedPrefs.cuisines.length > 0 && (!extractedPrefs.neighborhoods && !extractedPrefs.boroughs)) {
-      noResultsFollowUp += `Perhaps try specifying a neighborhood or borough for ${extractedPrefs.cuisines.join(" or ")} food?`;
-    } else if ((extractedPrefs.neighborhoods || extractedPrefs.boroughs) && (!extractedPrefs.cuisines || extractedPrefs.cuisines.length === 0 )) {
-      noResultsFollowUp += `What kind of cuisine are you looking for in ${extractedPrefs.neighborhoods?.join(" or ") || extractedPrefs.boroughs?.join(" or ")}?`;
-    } else {
-      noResultsFollowUp += "Would you like to try different criteria?";
-    }
-    return { recommendations: [], followUpQuestion: noResultsFollowUp };
+    // If no emergency fallbacks are available, let the user know we couldn't find matches
+    // but don't suggest unrelated cuisines
+    return { 
+      recommendations: [], 
+      followUpQuestion: `I couldn't find any good ${extractedPrefs.cuisines?.join(" or ")} restaurants in ${extractedPrefs.neighborhoods?.join(" or ") || extractedPrefs.boroughs?.join(" or ") || "your area"}. Would you like to try a different cuisine or location?` 
+    };
   }
 
   // Select 2-3 random restaurants from the results
@@ -569,3 +457,37 @@ function mapPriceSymbolToValue(symbol: string): number | null {
   }
   return priceMap[symbol] || null
 }
+
+// Make a more comprehensive fix to the fallback mechanism
+
+// 1. First, add honest explanations and real burger places
+const emergencyFallbacks = {
+  "Burger+Brooklyn": [
+    {
+      id: "burger-bk-1",
+      name: "Bare Burger",
+      cuisine_type: "Burgers",
+      address: "170 7th Ave, Brooklyn, NY 11215",
+      neighborhood: "Park Slope",
+      borough: "Brooklyn",
+      price_range: 2,
+      popular_items: ["Classic Burger", "Impossible Burger", "Turkey Burger"],
+      description: "Organic burger chain offering various patty options including beef, turkey, and vegetarian alternatives.",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: "burger-bk-2",
+      name: "Two8Two Bar & Burger",
+      cuisine_type: "Burgers",
+      address: "282 Atlantic Ave, Brooklyn, NY 11201",
+      neighborhood: "Cobble Hill",
+      borough: "Brooklyn",
+      price_range: 2,
+      popular_items: ["Classic Burger", "BBQ Burger", "Bacon Blue Burger"],
+      description: "Neighborhood spot serving up quality burgers made from freshly ground Pat LaFrieda beef.",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  ]
+};

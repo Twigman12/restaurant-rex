@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2, Calendar, Star } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createClientSupabaseClient } from "@/lib/supabase"
 import type { Restaurant, Scenario } from "@/lib/types"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -31,6 +31,7 @@ export default function AddExperiencePage() {
   const [isSaving, setIsSaving] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClientSupabaseClient()
 
   useEffect(() => {
@@ -63,6 +64,12 @@ export default function AddExperiencePage() {
 
         if (scenariosError) throw scenariosError
         setScenarios(scenariosData || [])
+
+        // Check for restaurant ID in URL parameters and set it if present
+        const restaurantParam = searchParams.get('restaurant')
+        if (restaurantParam) {
+          setRestaurantId(restaurantParam)
+        }
       } catch (error) {
         console.error("Error fetching data:", error)
         toast({
@@ -76,7 +83,7 @@ export default function AddExperiencePage() {
     }
 
     fetchData()
-  }, [user, supabase, toast])
+  }, [user, supabase, toast, searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

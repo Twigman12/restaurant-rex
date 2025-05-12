@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
+import { nycBoroughs } from "@/lib/constants"
 
 // Re-use or define these constants if not centrally located
 const nycNeighborhoods = [
@@ -52,6 +53,7 @@ export default function AddRestaurantPage() {
 
   const [name, setName] = useState("")
   const [neighborhood, setNeighborhood] = useState("")
+  const [borough, setBorough] = useState("")
   const [address, setAddress] = useState("")
   const [cuisine, setCuisine] = useState("")
   const [description, setDescription] = useState("")
@@ -90,28 +92,24 @@ export default function AddRestaurantPage() {
     setIsSaving(true)
 
     try {
-      // Ensure address is sent as empty string if blank, not null, 
-      // assuming the DB column is NOT NULL based on the Restaurant type.
-      // If the DB column *is* nullable, `address || null` is correct.
-      const addressToSend = address || ''; // Send empty string instead of null
+      // Derive borough from neighborhood if not set explicitly
+      const boroughToSend = borough || getBoroughFromNeighborhood(neighborhood) || null;
+      const addressToSend = address || '';
 
       const { data, error } = await supabase
         .from("restaurants")
         .insert({
           name,
           neighborhood,
-          address: addressToSend, // Use the processed address
+          borough: boroughToSend,
+          address: addressToSend,
           cuisine_type: cuisine,
           description: description || null,
           price_range: priceRange,
           dietary_options: selectedDietary.length > 0 ? selectedDietary : null,
-          // Add latitude/longitude if collecting them
-          // latitude: latitude,
-          // longitude: longitude,
-          // Consider who added it? maybe user_id? Depends on schema
         })
-        .select() // Select the newly created record
-        .single() // Expect only one record
+        .select()
+        .single()
 
       if (error) throw error
 
@@ -137,6 +135,29 @@ export default function AddRestaurantPage() {
     } finally {
       setIsSaving(false)
     }
+  }
+
+  // Helper function to guess borough from neighborhood
+  function getBoroughFromNeighborhood(neighborhood: string): string | null {
+    const brooklynNeighborhoods = ["Williamsburg", "Dumbo", "Park Slope", "Bushwick", "Fort Greene", "Crown Heights", "Bed-Stuy"];
+    const queensNeighborhoods = ["Astoria", "Long Island City", "Flushing", "Jackson Heights", "Forest Hills"];
+    const bronxNeighborhoods = ["Bronx"]; // Add more Bronx neighborhoods
+    const statenIslandNeighborhoods = ["Staten Island"]; // Add more Staten Island neighborhoods
+    
+    if (brooklynNeighborhoods.includes(neighborhood)) return "Brooklyn";
+    if (queensNeighborhoods.includes(neighborhood)) return "Queens";
+    if (bronxNeighborhoods.includes(neighborhood)) return "Bronx";
+    if (statenIslandNeighborhoods.includes(neighborhood)) return "Staten Island";
+    
+    // Default to Manhattan for common Manhattan neighborhoods
+    if (["Midtown", "Downtown", "Upper East Side", "Upper West Side", "East Village", 
+         "West Village", "SoHo", "Tribeca", "Chelsea", "Financial District", 
+         "Greenwich Village", "Chinatown", "Little Italy", "Lower East Side", 
+         "Gramercy", "Murray Hill", "Hell's Kitchen", "Times Square", "Flatiron"].includes(neighborhood)) {
+      return "Manhattan";
+    }
+    
+    return null;
   }
 
   if (authLoading) {
