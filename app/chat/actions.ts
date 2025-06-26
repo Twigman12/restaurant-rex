@@ -3,14 +3,18 @@
 import { createServerSupabaseClient } from "@/lib/supabase"
 import type { Restaurant, Scenario } from "@/lib/types"
 import { GoogleGenerativeAI } from "@google/generative-ai"
+import { Client, Place, TextSearchRequest } from "@googlemaps/google-maps-services-js"
 
 // Define the structure for the returned recommendations
 export interface RecommendationResult extends Restaurant {
   reason: string
 }
 
-// Ensure GOOGLE_API_KEY is loaded
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!)
+// Ensure the correct API keys are loaded
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)
+
+// Initialize Google Maps Client
+const googleMapsClient = new Client({})
 
 interface ExtractedPreferences {
   cuisines?: string[]
@@ -66,6 +70,56 @@ function getQueensNeighborhoods(): string[] {
     "Astoria", "Long Island City", "Jackson Heights", "Flushing",
     "Forest Hills", "Jamaica", "Elmhurst", "Woodside", "Richmond Hill"
   ];
+}
+
+// New Function: Search Google Places API
+async function searchGooglePlaces(
+  preferences: ExtractedPreferences,
+): Promise<Place[]> {
+  if (!preferences.cuisines?.length && !preferences.other?.length) {
+    // Not enough information to search
+    return []
+  }
+
+  // Build a query from user preferences
+  const queryParts = [
+    ...(preferences.cuisines || []),
+    ...(preferences.other || []),
+    "restaurant",
+  ]
+  if (preferences.neighborhoods?.length) {
+    queryParts.push(`in ${preferences.neighborhoods.join(" or ")}`)
+  } else if (preferences.boroughs?.length) {
+    queryParts.push(`in ${preferences.boroughs.join(" or ")}`)
+  } else {
+    queryParts.push("in NYC")
+  }
+
+  const query = queryParts.join(" ")
+  console.log("Constructed Google Places Query:", query)
+
+  const searchParams: TextSearchRequest["params"] = {
+    query,
+    key: process.env.GOOGLE_MAPS_API_KEY!,
+    // Add more parameters like 'type', 'region' for better results
+  }
+
+  try {
+    const response = await googleMapsClient.textSearch({ params: searchParams })
+    if (response.data.results) {
+      return response.data.results as Place[]
+    }
+    return []
+  } catch (error: any) {
+    console.error("Google Places API error. Full details below:");
+    if (error.response) {
+      console.error("Response Status:", error.response.status);
+      console.error("Response Data:", JSON.stringify(error.response.data, null, 2));
+    } else {
+      console.error("Error Message:", error.message);
+    }
+    return []
+  }
 }
 
 // Function to get restaurant recommendations using Gemini
@@ -125,52 +179,63 @@ export async function getRecommendations(
       .join("\n")
 
     const prompt = `
-You are a helpful assistant for finding restaurants in New York City.
-Your primary goal is to understand the user's evolving preferences.
+You are REX, a knowledgeable NYC restaurant specialist. 
+Your primary goal is to understand the user's dining preferences and provide tailored restaurant recommendations.
 Analyze the CURRENT USER REQUEST in the context of CHAT HISTORY and FOLLOW_UP_QUESTION_COUNT.
 
 Chat History:
 ${formattedHistory ? formattedHistory : "No previous conversation history."}
-Follow-up Question Count (how many times you've already asked a follow-up for the current line of inquiry): ${followUpCount}
+Follow-up Question Count: ${followUpCount}
 Current User request: "${message}"
 
-First, assess if the Current User Request, in light of Chat History, provides enough information to make concrete recommendations.
-Key information includes at least one of:
-  - Specific cuisine(s) or dish type(s).
-  - A specific NYC neighborhood or borough.
+First, assess if you have enough information to recommend restaurants. You need:
+1. Food preference (cuisine type or specific dish)
+2. Location preference (borough or neighborhood)
 
-IF the request is too vague (e.g., missing both cuisine/dish and location, or is ambiguous like "food") AND followUpQuestionCount < 3:
-  Your task is to ask a clarifying follow-up question.
-  Respond ONLY with a JSON object: { "followUpQuestion": "Your helpful question here." }
-  Example for "I'm hungry" (followUpQuestionCount = 0):
-  {
-    "followUpQuestion": "I can help with that! What kind of food are you in the mood for, or is there a particular neighborhood you're thinking of?"
-  }
+IF the request lacks key information AND followUpQuestionCount < 2:
+  Ask ONE concise, conversational follow-up question focused on the MOST important missing information.
+  For unclear requests like "I'm hungry" or "find me a restaurant", ask about cuisine preferences first.
+  For requests with cuisine but no location, ask specifically about preferred borough or neighborhood.
+  For requests with location but no cuisine, ask about food preferences.
+  
+  Respond ONLY with a JSON object: { "followUpQuestion": "Your specific, friendly question here" }
+  
+  Examples:
+  - For vague requests: { "followUpQuestion": "What kind of food are you craving today?" }
+  - With cuisine only: { "followUpQuestion": "Great choice! Which area of NYC would you prefer to dine in?" }
+  - With location only: { "followUpQuestion": "What type of cuisine would you like to try in that area?" }
 
-ELSE IF (the request is still vague AND followUpQuestionCount >= 3):
-  DO NOT ask another followUpQuestion.
-  Instead, try your best to extract preferences based on ANY partial information available from the history or current vague request. If some preferences can be extracted (even if very broad, like just a borough or a general cuisine category like 'food'), return those.
-  If absolutely no preferences can be extracted that would be useful for a search, return an empty preference object: {}
+ELSE IF urgent keywords detected (e.g., "quick", "fast", "soon", "now", "immediately", "urgent"):
+  Extract ANY available preferences, even if minimal.
+  Skip follow-up questions and do your best with limited information.
+  Respond with a JSON object containing available preferences.
 
-ELSE (there IS enough information OR (it is still vague BUT followUpQuestionCount >=3 and you are attempting to extract broad preferences)):
-  Extract the following for database querying:
-  - cuisines: Array of desired cuisines. Infer from specific dishes.
-  - neighborhoods: Array of specific NYC neighborhoods.
-  - boroughs: Array of desired NYC boroughs (only if no specific neighborhood).
-  - dietary: Array of dietary restrictions (vegan, gluten-free, etc.).
-  - scenario: A single string describing the occasion (e.g., "romantic dinner", "business lunch").
+ELSE (either enough information OR we've already asked enough follow-ups):
+  Extract the following specific preferences:
+  - cuisines: Array of desired cuisines or dishes.
+  - neighborhoods: Array of specific NYC neighborhoods, correctly spelled.
+  - boroughs: Array of NYC boroughs (Manhattan, Brooklyn, Queens, Bronx, Staten Island).
+  - dietary: Array of dietary restrictions (vegan, vegetarian, gluten-free, dairy-free, nut-free, halal, kosher).
+  - scenario: String describing the occasion (e.g., "romantic dinner", "business lunch", "family meal").
   - price: Price range ("$", "$$", "$$$", or "$$$$").
-  - other: Other specific requirements (e.g., "outdoor seating", "good cocktails").
+  - other: Other requirements (e.g., "outdoor seating", "view", "quiet").
 
-Respond ONLY with a valid JSON object.
-Example for "cheap vegetarian in Brooklyn" (enough info):
+  Respond ONLY with a valid JSON object containing these fields.
+
+IMPORTANT:
+- Normalize neighborhood names to match standard NYC terminology
+- Correctly identify cuisines from dish names (e.g., "pizza" → "Italian")
+- When a user mentions a borough like "Brooklyn", include it as a borough, not a neighborhood
+- When in doubt between cuisine variations (e.g., "Chinese" vs "Sichuan"), include both
+- Always prioritize user's explicit preferences over implied ones
+
+Example response for "looking for pasta in Brooklyn for date night":
 {
-  "dietary": ["vegetarian"],
+  "cuisines": ["Italian", "Pasta"],
   "boroughs": ["Brooklyn"],
-  "price": "$"
+  "scenario": "romantic dinner",
+  "price": "$$"
 }
-
-IMPORTANT: Prioritize asking a followUpQuestion if the request is too vague for a good database search. Otherwise, provide the extracted preferences.
 `
 
     const result = await model.generateContent(prompt)
@@ -195,255 +260,100 @@ IMPORTANT: Prioritize asking a followUpQuestion if the request is too vague for 
     return { recommendations: [], followUpQuestion: "I'm sorry, I had a little trouble understanding that. Could you tell me a bit more about what you're looking for, like the type of cuisine or a neighborhood?" };
   }
 
-  // Query for restaurants based on extracted preferences
-  let query = supabase.from("restaurants").select("*")
+  // --- NEW: Integrate Google Places Search ---
+  const googlePlacesResults = await searchGooglePlaces(extractedPrefs)
 
-  // Filter by cuisines if any (using ilike for broader matching)
-  if (extractedPrefs.cuisines && extractedPrefs.cuisines.length > 0) {
-    // Create an OR condition for multiple cuisines
-    const cuisineFilters = extractedPrefs.cuisines
-      .map((c) => `cuisine_type.ilike.%${c}%`)
-      .join(",")
-    query = query.or(cuisineFilters)
-  }
+  // If we have results from Google, use them to generate recommendations
+  if (googlePlacesResults.length > 0) {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
 
-  // Filter by dietary preferences if any
-  if (extractedPrefs.dietary && extractedPrefs.dietary.length > 0) {
-    // Ensure dietary options match the standard terms used in the prompt/DB
-    const validDietary = extractedPrefs.dietary.filter((d) =>
-      ["vegan", "vegetarian", "gluten-free", "dairy-free", "nut-free", "halal", "kosher"].includes(d.toLowerCase()),
-    )
-    if (validDietary.length > 0) {
-      query = query.contains("dietary_options", validDietary)
-    }
-  }
+    const prompt = `
+      You are REX, an expert NYC restaurant recommender.
+      Based on the user's preferences and a list of potential restaurants from Google Maps, your task is to select the top 3-5 best matches and provide a compelling, personalized reason for each recommendation.
 
-  // Filter by NEIGHBORHOODS if any (prefer specific neighborhoods)
-  if (extractedPrefs.neighborhoods && extractedPrefs.neighborhoods.length > 0) {
-    // Normalize neighborhood names
-    const normalizedNeighborhoods = extractedPrefs.neighborhoods.map(n => 
-      n === "Richmond Hills" ? "Richmond Hill" : n
-    );
-    
-    // Fix query syntax - use commas not parentheses
-    const neighborhoodFilters = normalizedNeighborhoods
-      .map((n) => `neighborhood.ilike.%${n}%,address.ilike.%${n}%`)
-      .join(",")
-    query = query.or(neighborhoodFilters)
-  }
-  // ELSE IF no specific neighborhood, filter by BOROUGHS if any
-  else if (extractedPrefs.boroughs && extractedPrefs.boroughs.length > 0) {
-    const borough = extractedPrefs.boroughs[0];
-    const locationFilter = `neighborhood.ilike.%${borough}%,address.ilike.%${borough}%,borough.ilike.%${borough}%`;
-    query = query.or(locationFilter);
-    console.log(`Applying borough filter: ${locationFilter}`);
-  }
+      User Preferences:
+      - Cuisines: ${extractedPrefs.cuisines?.join(", ") || "Any"}
+      - Location: ${[...(extractedPrefs.neighborhoods || []), ...(extractedPrefs.boroughs || [])].join(", ") || "Any"}
+      - Price Range: ${extractedPrefs.price || "Any"}
+      - Vibe/Scenario: ${extractedPrefs.scenario || "Any"}
+      - Dietary Needs: ${extractedPrefs.dietary?.join(", ") || "None"}
+      - Other: ${extractedPrefs.other?.join(", ") || "None"}
 
-  // Filter by price range if any
-  if (extractedPrefs.price && ["$", "$$", "$$$", "$$$$"].includes(extractedPrefs.price)) {
-    const priceMap: Record<string, number> = { $: 1, $$: 2, $$$: 3, $$$$: 4 }
-    query = query.eq("price_range", priceMap[extractedPrefs.price])
-  }
+      Potential Restaurants from Google Places (first 10):
+      ${googlePlacesResults.slice(0, 10).map(p => `
+        - Name: ${p.name}
+        - Address: ${p.vicinity || p.formatted_address}
+        - Rating: ${p.rating} (${p.user_ratings_total} reviews)
+        - Price Level: ${p.price_level} (1-4 scale)
+        - Types: ${p.types?.join(", ")}
+      `).join("")}
 
-  // --- Add Scenario/Other Filtering (using description column) ---
-  const keywords: string[] = [];
-  if (extractedPrefs.scenario) {
-    let scenarioText = "";
-    // Check if scenario is an array and take the first element, otherwise use as string
-    if (Array.isArray(extractedPrefs.scenario) && extractedPrefs.scenario.length > 0) {
-      scenarioText = extractedPrefs.scenario[0];
-    } else if (typeof extractedPrefs.scenario === 'string') {
-      scenarioText = extractedPrefs.scenario;
-    }
+      Your goal is to return a JSON array of recommended restaurants.
+      For each restaurant, include:
+      1. All original fields from the Google Places result.
+      2. A "reason" field: A 1-2 sentence, friendly, and persuasive explanation of WHY this specific restaurant is a great match for the user's stated preferences. Be specific. For example, mention the rating if it's high, or how the vibe fits their scenario.
 
-    if (scenarioText) {
-      // Simple keyword extraction from scenario text
-      keywords.push(...scenarioText.toLowerCase().split(" "));
-    }
-  }
-  if (extractedPrefs.other) {
-    keywords.push(...extractedPrefs.other.map(o => o.toLowerCase()));
-  }
+      Respond ONLY with a valid JSON array in the following format:
+      [
+        {
+          "name": "Restaurant Name",
+          "reason": "This spot is perfect because..."
+        },
+        ...
+      ]
+    `
 
-  // Add basic keyword filters on description (if keywords exist)
-  if (keywords.length > 0) {
-      // Remove common words or very short words if necessary
-      const relevantKeywords = keywords.filter(k => k.length > 2 && !["a", "an", "the", "for", "with", "good"].includes(k));
-      if (relevantKeywords.length > 0) {
-          const descriptionFilters = relevantKeywords.map(k => `description.ilike.%${k}%`).join(",");
-          query = query.or(descriptionFilters);
-          console.log("Applying description filters:", descriptionFilters);
-      }
-  }
-
-  // Get restaurants
-  let { data: restaurantsData, error } = await query.limit(10);
-
-  if (error) {
-    console.error("Error fetching restaurants from Supabase:", error);
-    return { recommendations: [] };
-  }
-
-  if (restaurantsData) {
-    restaurants = restaurantsData;
-  }
-
-  if (!restaurants || restaurants.length === 0) {
-    console.log("No exact matches found for search criteria");
-    
-    // Check if we can use any of our emergency fallbacks
-    let fallbackKey = "";
-    
-    // Match burger searches in Brooklyn
-    if ((extractedPrefs.cuisines?.some(c => 
-        c.toLowerCase().includes("burger") || 
-        c.toLowerCase() === "hamburger") || 
-        message.toLowerCase().includes("burger")) && 
-        (extractedPrefs.boroughs?.some(b => b.toLowerCase().includes("brooklyn")) || 
-         extractedPrefs.neighborhoods?.some(n => n.toLowerCase().includes("brooklyn")) ||
-         message.toLowerCase().includes("brooklyn"))) {
-      fallbackKey = "Burger+Brooklyn";
-    }
-    
-    // If we have matching fallbacks, use them
-    if (fallbackKey && emergencyFallbacks[fallbackKey]) {
-      console.log(`Using emergency fallback for ${fallbackKey}`);
+    try {
+      const result = await model.generateContent(prompt)
+      const response = result.response
+      const text = response.text()
+      console.log("Gemini Raw Response for recommendations:", text)
       
-      const mappedFallbacks = emergencyFallbacks[fallbackKey].map(restaurant => {
+      const match = text.match(/```json\n?([\s\S]*?)\n?```/)
+      const jsonStr = match ? match[1] : text;
+      const geminiRecs = JSON.parse(jsonStr) as Array<{name: string, reason: string}>
+
+      // Map Gemini recommendations back to the full Google Places data
+      const finalRecommendations: RecommendationResult[] = geminiRecs.map(rec => {
+        const placeData = googlePlacesResults.find(p => p.name === rec.name)
         return {
-          ...restaurant,
-          reason: `${restaurant.name} is a ${restaurant.cuisine_type} restaurant in ${restaurant.neighborhood}, ${restaurant.borough}. ${restaurant.description} Their popular item is the "${restaurant.popular_items[0]}".`
-        };
-      });
-      
-      return { recommendations: mappedFallbacks };
+          // Mapping Google Place data to your Restaurant type
+          id: placeData?.place_id || new Date().toISOString(), // Use place_id as a unique ID
+          name: placeData?.name || 'N/A',
+          cuisine_type: placeData?.types?.join(", ") || 'N/A',
+          address: placeData?.vicinity || placeData?.formatted_address || 'N/A',
+          neighborhood: placeData?.vicinity?.split(',')[1]?.trim() || 'N/A',
+          borough: placeData?.vicinity?.split(',')[2]?.trim() || 'N/A',
+          price_range: placeData?.price_level || null,
+          dietary_options: null, // Google Places API doesn't provide this directly
+          description: null, // Not directly available, could be fetched
+          image_url: placeData?.photos?.[0]?.photo_reference || null, // Need another API call for full URL
+          popular_items: null,
+          vibe: null,
+          scenario_tags: null,
+          latitude: placeData?.geometry?.location.lat || null,
+          longitude: placeData?.geometry?.location.lng || null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          reason: rec.reason, // The reason from Gemini
+        }
+      })
+
+      return { recommendations: finalRecommendations }
+
+    } catch (error) {
+      console.error("Error calling Gemini for final recommendations:", error)
+      // Fallback or error handling
+      return { recommendations: [], followUpQuestion: "I found some places but had trouble deciding. Can you tell me more about what's important for you?" }
     }
-    
-    // If no emergency fallbacks are available, let the user know we couldn't find matches
-    // but don't suggest unrelated cuisines
-    return { 
-      recommendations: [], 
-      followUpQuestion: `I couldn't find any good ${extractedPrefs.cuisines?.join(" or ")} restaurants in ${extractedPrefs.neighborhoods?.join(" or ") || extractedPrefs.boroughs?.join(" or ") || "your area"}. Would you like to try a different cuisine or location?` 
-    };
+  }
+  
+  // What if google returns no results? We can fall back to a message.
+  if (!extractedPrefs.followUpQuestion) {
+     return { recommendations: [], followUpQuestion: "I couldn't find any spots matching that criteria. Would you like to try a different neighborhood or cuisine?" }
   }
 
-  // Select 2-3 random restaurants from the results
-  const selectedRestaurants: Restaurant[] = []
-  const restaurantsCopy = [...restaurants]
-
-  // Determine how many restaurants to recommend (up to 3)
-  const numToRecommend = Math.min(3, restaurantsCopy.length)
-
-  for (let i = 0; i < numToRecommend; i++) {
-    const randomIndex = Math.floor(Math.random() * restaurantsCopy.length)
-    selectedRestaurants.push(restaurantsCopy[randomIndex])
-    restaurantsCopy.splice(randomIndex, 1)
-  }
-
-  // Generate reasons for recommendations, enhanced by Gemini context
-  const finalRecommendations: RecommendationResult[] = selectedRestaurants.map((restaurant) => {
-    // Start with location context
-    let locationContext = "";
-    if (extractedPrefs?.boroughs && extractedPrefs.boroughs.length > 0) {
-      const requestedBorough = extractedPrefs.boroughs[0];
-      const restaurantBorough = restaurant.borough || "";
-      
-      if (restaurantBorough && restaurantBorough.toLowerCase() !== requestedBorough.toLowerCase()) {
-        locationContext = ` While it's not in ${requestedBorough}, it's located in ${restaurant.neighborhood}`;
-        if (restaurantBorough) locationContext += ` (${restaurantBorough})`;
-        locationContext += `.`;
-      } else {
-        locationContext = ` Located in ${restaurant.neighborhood}`;
-        if (restaurantBorough) locationContext += ` (${restaurantBorough})`;
-        locationContext += `,`;
-      }
-    } else {
-      locationContext = ` Located in ${restaurant.neighborhood}`;
-      if (restaurant.borough) locationContext += ` (${restaurant.borough})`;
-      locationContext += `,`;
-    }
-    
-    // Start with a more varied introductory phrase
-    const intros = [
-      `${restaurant.name} is a fantastic choice for`,
-      `You might love ${restaurant.name} for`,
-      `I'd recommend ${restaurant.name} for`,
-      `${restaurant.name} stands out as a great option for`,
-    ];
-    const intro = intros[Math.floor(Math.random() * intros.length)];
-    
-    // More varied ways to refer to the user's goal
-    const mealPhrases = [
-      "your dining experience",
-      "your upcoming meal",
-      "a great meal out",
-      "what you're looking for"
-    ];
-    const mealContext = mealPhrases[Math.floor(Math.random() * mealPhrases.length)];
-    
-    // Build a more natural-sounding reason that focuses on what matters to the user
-    let reason = `${intro} ${extractedPrefs?.scenario || mealContext}.${locationContext}`;
-    
-    // Add specifics that match user's request
-    const highlights = [];
-    
-    // If user specified cuisine, highlight that as a match
-    if (extractedPrefs?.cuisines?.some(c => 
-        restaurant.cuisine_type.toLowerCase().includes(c.toLowerCase()))) {
-      highlights.push(`serves authentic ${restaurant.cuisine_type} cuisine`);
-    }
-    
-    // If dietary preferences were mentioned, highlight those matches
-    if (extractedPrefs?.dietary && extractedPrefs.dietary.length > 0) {
-      const applicableDietary = restaurant.dietary_options?.filter((opt) => 
-        extractedPrefs?.dietary?.includes(opt));
-      if (applicableDietary && applicableDietary.length > 0) {
-        highlights.push(`offers ${applicableDietary.join(", ")} options`);
-      }
-    }
-    
-    // Add the highlights to the reason
-    if (highlights.length > 0) {
-      reason += ` it ${highlights.join(" and ")}`;
-    }
-    
-    // Add a relevant feature from the description if available
-    if (restaurant.description) {
-      // Extract a key feature from the description
-      const features = restaurant.description.split('.')[0]; // Just use first sentence
-      reason += `. ${features}`;
-    }
-    
-    // Add a recommended menu item if available
-    if (restaurant.popular_items && restaurant.popular_items.length > 0) {
-      const recommendedItem = restaurant.popular_items[Math.floor(Math.random() * restaurant.popular_items.length)];
-      reason += `. Don't miss their "${recommendedItem}"!`;
-    }
-    
-    return {
-      ...restaurant,
-      reason,
-    }
-  })
-
-  // Save recommendations to database
-  try {
-    await Promise.all(
-      finalRecommendations.map((recommendation) =>
-        supabase.from("recommendations").insert({
-          user_id: userId,
-          restaurant_id: recommendation.id,
-          reason: recommendation.reason,
-          triggering_message: message,
-        }),
-      ),
-    )
-  } catch (dbError) {
-    console.error("Error saving recommendations:", dbError)
-    // Don't fail the whole request, just log the error
-  }
-
-  return { recommendations: finalRecommendations } // Ensure this matches the new return type
+  return { recommendations: [] } // Should be unreachable if logic is correct
 }
 
 // Helper function to map price symbols ("$", "$$", etc.) to numeric values (1-4)
@@ -491,3 +401,77 @@ const emergencyFallbacks = {
     }
   ]
 };
+
+// Improved recommendation generation with better context and personalization
+function generateReasonForRestaurant(restaurant: Restaurant, extractedPrefs: ExtractedPreferences): string {
+  // Base location context
+  let locationContext = restaurant.neighborhood;
+  if (restaurant.borough && restaurant.neighborhood !== restaurant.borough) {
+    locationContext += ` in ${restaurant.borough}`;
+  }
+  
+  // Start with diverse, natural-sounding intros
+  const intros = [
+    `${restaurant.name} is a perfect match for`,
+    `You'll love ${restaurant.name} for`,
+    `${restaurant.name} is ideal for`,
+    `For ${extractedPrefs?.scenario || "your dining experience"}, ${restaurant.name} stands out`
+  ];
+  const intro = intros[Math.floor(Math.random() * intros.length)];
+  
+  // Build a tailored reason that focuses on user's specific needs
+  let reason = `${intro} ${extractedPrefs?.scenario || "your meal"}. Located in ${locationContext}, `;
+  
+  // Add specific matching elements that matter to the user
+  const highlights = [];
+  
+  // Cuisine match
+  if (extractedPrefs?.cuisines?.some(c => 
+      restaurant.cuisine_type.toLowerCase().includes(c.toLowerCase()))) {
+    highlights.push(`it offers excellent ${restaurant.cuisine_type} cuisine`);
+  }
+  
+  // Dietary accommodation
+  if (extractedPrefs?.dietary && extractedPrefs.dietary.length > 0) {
+    const applicableDietary = restaurant.dietary_options?.filter((opt) => 
+      extractedPrefs?.dietary?.includes(opt));
+    if (applicableDietary && applicableDietary.length > 0) {
+      highlights.push(`accommodates ${applicableDietary.join(", ")} diets`);
+    }
+  }
+  
+  // Scenario-specific highlights
+  if (extractedPrefs?.scenario) {
+    const scenario = extractedPrefs.scenario.toLowerCase();
+    if (scenario.includes("romantic") || scenario.includes("date")) {
+      highlights.push(`provides an intimate atmosphere`);
+    } else if (scenario.includes("business")) {
+      highlights.push(`offers a professional setting`);
+    } else if (scenario.includes("family") || scenario.includes("kids")) {
+      highlights.push(`welcomes families`);
+    } else if (scenario.includes("group") || scenario.includes("friends")) {
+      highlights.push(`can accommodate groups`);
+    }
+  }
+  
+  // Add the highlights
+  if (highlights.length > 0) {
+    reason += highlights.join(" and ");
+  }
+  
+  // Add description highlight
+  if (restaurant.description) {
+    // Extract the most relevant sentence from description
+    const sentences = restaurant.description.split('.');
+    const relevantSentence = sentences[0]; // Just use first sentence
+    reason += `. ${relevantSentence}.`;
+  }
+  
+  // Always include a specific menu recommendation if available
+  if (restaurant.popular_items && restaurant.popular_items.length > 0) {
+    const recommendedItem = restaurant.popular_items[Math.floor(Math.random() * restaurant.popular_items.length)];
+    reason += ` Their "${recommendedItem}" is highly recommended!`;
+  }
+  
+  return reason;
+}
