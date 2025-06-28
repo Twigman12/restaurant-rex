@@ -1,0 +1,27 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Add SSH key setup
+[build.processing]
+  skip_processing = false
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Setup SSH key before build
+[[plugins]]
+  package = "netlify-plugin-inline-functions-env"
+
+[context.production]
+  command = """
+    mkdir -p ~/.ssh
+    echo "$SSH_KEY" > ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa
+    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+    git submodule update --init --recursive
+    npm run build
+  """ 
