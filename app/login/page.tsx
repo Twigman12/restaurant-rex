@@ -25,6 +25,11 @@ export default function LoginPage() {
   const { toast } = useToast()
   const supabase = createClientSupabaseClient()
 
+  const fillTestUser = () => {
+    setEmail("testuser@test.com")
+    setPassword("12345")
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
@@ -146,6 +151,14 @@ export default function LoginPage() {
                   required
                 />
               </div>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={fillTestUser}
+              >
+                Fill Test User
+              </Button>
             </CardContent>
             <CardFooter className="p-6 border-t border-border flex flex-col space-y-4">
               <Button type="submit" className="w-full rex-button" disabled={isLoading}>
