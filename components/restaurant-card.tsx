@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, DollarSign } from "lucide-react"
+import { MapPin, DollarSign, Sparkles } from "lucide-react"
 import Link from "next/link"
 import type { Restaurant } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
@@ -62,9 +62,20 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
           <Button 
             size="sm" 
             asChild 
-            className="w-full rex-button rounded-md"
+            className="flex-1 rex-button rounded-md"
           >
             <Link href={`/experiences?restaurant=${restaurant.id}`}>Log Experience</Link>
+          </Button>
+          <Button 
+            size="sm" 
+            variant="outline"
+            asChild 
+            className="flex-1"
+          >
+            <Link href={`/restaurants/${restaurant.id}`}>
+              <Sparkles className="h-4 w-4 mr-2" />
+              Vibe Check
+            </Link>
           </Button>
         </CardFooter>
       )}

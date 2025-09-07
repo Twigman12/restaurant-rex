@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
 import { getRecommendations, type RecommendationResult } from "@/app/chat/actions"
 import { Badge } from "@/components/ui/badge"
+import { ChatRestaurantCard } from "@/components/chat-restaurant-card"
 
 // Sample suggestions for quick prompts
 const suggestionCategories = {
@@ -77,6 +78,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [initialQueryProcessed, setInitialQueryProcessed] = useState(false)
   const [followUpCount, setFollowUpCount] = useState(0);
+  const [currentRecommendations, setCurrentRecommendations] = useState<RecommendationResult[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { toast } = useToast()
@@ -121,6 +123,7 @@ export default function ChatPage() {
               setFollowUpCount(prevCount => prevCount + 1);
             } else if (result.recommendations.length > 0) {
               setFollowUpCount(0);
+              setCurrentRecommendations(result.recommendations);
               if (result.recommendations[0].reason.includes("couldn't find an exact match")) {
                 setMessages((prev) => [
                   ...prev,
@@ -135,13 +138,6 @@ export default function ChatPage() {
                   { role: "assistant", content: "Based on your preferences, here are my top picks:" },
                 ])
               }
-              
-              result.recommendations.forEach((rec) => {
-                setMessages((prev) => [
-                  ...prev,
-                  { role: "assistant", content: formatRecommendationMessage(rec) },
-                ])
-              })
               
               setTimeout(() => {
                 setMessages(prev => [
@@ -198,6 +194,7 @@ export default function ChatPage() {
 
     const userMessage = input.trim()
     setInput("")
+    setCurrentRecommendations([]) // Clear previous recommendations
     const updatedMessages: ChatMessage[] = [...messages, { role: "user", content: userMessage }];
     setMessages(updatedMessages);
     setIsLoading(true)
@@ -219,6 +216,7 @@ export default function ChatPage() {
         setFollowUpCount(prevCount => prevCount + 1);
       } else if (result.recommendations.length > 0) {
         setFollowUpCount(0);
+        setCurrentRecommendations(result.recommendations);
         if (result.recommendations[0].reason.includes("couldn't find an exact match")) {
           setMessages((prev) => [
             ...prev,
@@ -233,13 +231,6 @@ export default function ChatPage() {
             { role: "assistant", content: "Based on your preferences, here are my top picks:" },
           ])
         }
-        
-        result.recommendations.forEach((rec) => {
-          setMessages((prev) => [
-            ...prev,
-            { role: "assistant", content: formatRecommendationMessage(rec) },
-          ])
-        })
         
         setTimeout(() => {
           setMessages(prev => [
@@ -355,6 +346,25 @@ export default function ChatPage() {
                 </Card>
               </div>
             ))}
+            
+            {/* Display restaurant recommendations as cards */}
+            {currentRecommendations.length > 0 && (
+              <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-rex-black mb-4">Restaurant Recommendations</h3>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {currentRecommendations.map((restaurant) => (
+                    <ChatRestaurantCard 
+                      key={restaurant.id} 
+                      restaurant={restaurant} 
+                      showActions={true}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            
             <div ref={messagesEndRef} />
           </div>
 

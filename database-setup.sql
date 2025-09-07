@@ -60,12 +60,26 @@ CREATE TABLE IF NOT EXISTS recommendations (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create vibe_checks table (for AI Vibe Check feature)
+CREATE TABLE IF NOT EXISTS vibe_checks (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  restaurant_id UUID REFERENCES restaurants(id) NOT NULL,
+  ambiance TEXT NOT NULL,
+  must_orders TEXT[] NOT NULL,
+  watch_outs TEXT[] NOT NULL,
+  raw_reviews TEXT, -- Store original review data for debugging
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  expires_at TIMESTAMP WITH TIME ZONE DEFAULT (NOW() + INTERVAL '24 hours'),
+  UNIQUE(restaurant_id)
+);
+
 -- Enable Row Level Security
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE restaurants ENABLE ROW LEVEL SECURITY;
 ALTER TABLE scenarios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experiences ENABLE ROW LEVEL SECURITY;
 ALTER TABLE recommendations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vibe_checks ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies
 
@@ -116,6 +130,13 @@ CREATE POLICY "Users can view own recommendations" ON recommendations
 CREATE POLICY "Users can insert own recommendations" ON recommendations
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
+-- Vibe checks policies (public read, service role write)
+CREATE POLICY "Anyone can view vibe checks" ON vibe_checks
+  FOR SELECT USING (true);
+
+CREATE POLICY "Service role can manage vibe checks" ON vibe_checks
+  FOR ALL USING (auth.role() = 'service_role');
+
 -- Insert some default scenarios
 INSERT INTO scenarios (name, description) VALUES
   ('Date Night', 'Romantic dinner for two'),
@@ -135,3 +156,5 @@ CREATE INDEX IF NOT EXISTS idx_experiences_visited_at ON experiences(visited_at)
 CREATE INDEX IF NOT EXISTS idx_restaurants_neighborhood ON restaurants(neighborhood);
 CREATE INDEX IF NOT EXISTS idx_restaurants_cuisine_type ON restaurants(cuisine_type);
 CREATE INDEX IF NOT EXISTS idx_recommendations_user_id ON recommendations(user_id);
+CREATE INDEX IF NOT EXISTS idx_vibe_checks_restaurant_id ON vibe_checks(restaurant_id);
+CREATE INDEX IF NOT EXISTS idx_vibe_checks_expires_at ON vibe_checks(expires_at);

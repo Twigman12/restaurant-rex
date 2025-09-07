@@ -70,3 +70,27 @@ export type RecommendationRequest = {
 export type RecommendationResponse = {
   restaurants: (Restaurant & { reason: string })[]
 }
+
+export type VibeCheck = {
+  id: string
+  restaurant_id: string
+  ambiance: string
+  must_orders: string[]
+  watch_outs: string[]
+  raw_reviews?: string
+  created_at: string
+  expires_at: string
+}
+
+export type VibeCheckRequest = {
+  restaurant_id: string
+  force_refresh?: boolean
+}
+
+export type VibeCheckResponse = {
+  ambiance: string
+  must_orders: string[]
+  watch_outs: string[]
+  cached: boolean
+  expires_at?: string
+}

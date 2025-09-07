@@ -320,11 +320,12 @@ Example response for "looking for pasta in Brooklyn for date night":
           // Mapping Google Place data to your Restaurant type
           id: placeData?.place_id || new Date().toISOString(), // Use place_id as a unique ID
           name: placeData?.name || 'N/A',
-          cuisine_type: placeData?.types?.join(", ") || 'N/A',
+          cuisine_type: formatCuisineType(placeData?.types || []),
           address: placeData?.vicinity || placeData?.formatted_address || 'N/A',
-          neighborhood: placeData?.vicinity?.split(',')[1]?.trim() || 'N/A',
-          borough: placeData?.vicinity?.split(',')[2]?.trim() || 'N/A',
+          neighborhood: parseNeighborhood(placeData?.vicinity || placeData?.formatted_address || ''),
+          borough: parseBorough(placeData?.vicinity || placeData?.formatted_address || ''),
           price_range: placeData?.price_level || null,
+          rating: placeData?.rating || null, // Add the missing rating field
           dietary_options: null, // Google Places API doesn't provide this directly
           description: null, // Not directly available, could be fetched
           image_url: placeData?.photos?.[0]?.photo_reference || null, // Need another API call for full URL
@@ -366,6 +367,47 @@ function mapPriceSymbolToValue(symbol: string): number | null {
     $$$$: 4,
   }
   return priceMap[symbol] || null
+}
+
+// Helper function to format cuisine type from Google Places types
+function formatCuisineType(types: string[]): string {
+  // Filter out generic types and focus on cuisine-specific ones
+  const cuisineTypes = types.filter(type => 
+    !['restaurant', 'food', 'point_of_interest', 'establishment', 'store'].includes(type)
+  )
+  
+  if (cuisineTypes.length === 0) {
+    return 'Restaurant'
+  }
+  
+  // Capitalize and format the cuisine type
+  return cuisineTypes[0].split('_').map(word => 
+    word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ')
+}
+
+// Helper function to parse neighborhood from address
+function parseNeighborhood(address: string): string {
+  if (!address) return 'Unknown'
+  
+  const parts = address.split(',')
+  if (parts.length >= 2) {
+    return parts[1].trim()
+  }
+  return 'Unknown'
+}
+
+// Helper function to parse borough from address
+function parseBorough(address: string): string {
+  if (!address) return 'Unknown'
+  
+  const parts = address.split(',')
+  if (parts.length >= 3) {
+    const boroughPart = parts[2].trim()
+    // Extract just the borough name (e.g., "Brooklyn, NY" -> "Brooklyn")
+    return boroughPart.split(',')[0].trim()
+  }
+  return 'Unknown'
 }
 
 // Make a more comprehensive fix to the fallback mechanism
