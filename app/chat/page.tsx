@@ -349,11 +349,15 @@ export default function ChatPage() {
             
             {/* Display restaurant recommendations as cards */}
             {currentRecommendations.length > 0 && (
-              <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out">
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-rex-black mb-4">Restaurant Recommendations</h3>
+              <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out">
+                <div className="flex justify-start">
+                  <Card className="bg-rex-black text-rex-cream max-w-[85%] rounded-xl shadow-sm">
+                    <CardContent className="p-4">
+                      <h3 className="text-sm font-medium text-rex-cream mb-3">Here are my recommendations:</h3>
+                    </CardContent>
+                  </Card>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="space-y-3">
                   {currentRecommendations.map((restaurant) => (
                     <ChatRestaurantCard 
                       key={restaurant.id} 
