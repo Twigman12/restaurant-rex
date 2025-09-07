@@ -108,23 +108,6 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
             
             <TabsContent value="overview" className="mt-6 sm:mt-8">
               <div className="flex flex-col gap-8 lg:gap-12">
-                {/* Actions */}
-                <div className="space-y-6">
-                  <h2 className="text-lg sm:text-xl font-semibold">Actions</h2>
-                  <div className="space-y-4">
-                    <Button asChild className="w-full h-12 sm:h-10">
-                      <Link href={`/experiences?restaurant=${restaurant.id}`}>
-                        Log Your Experience
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="w-full h-12 sm:h-10">
-                      <Link href={`/chat?restaurant=${restaurant.name}`}>
-                        Ask REX About This Place
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-
                 {/* Restaurant Info */}
                 <div className="space-y-6 sm:space-y-8">
                   <RestaurantCard restaurant={restaurant} showActions={false} />
@@ -181,6 +164,23 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                         </div>
                       </div>
                     )}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="space-y-6">
+                  <h2 className="text-lg sm:text-xl font-semibold">Actions</h2>
+                  <div className="space-y-4">
+                    <Button asChild className="w-full h-12 sm:h-10">
+                      <Link href={`/experiences?restaurant=${restaurant.id}`}>
+                        Log Your Experience
+                      </Link>
+                    </Button>
+                    <Button variant="outline" asChild className="w-full h-12 sm:h-10">
+                      <Link href={`/chat?restaurant=${restaurant.name}`}>
+                        Ask REX About This Place
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
