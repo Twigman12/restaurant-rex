@@ -61,7 +61,7 @@ const getCurrentSuggestions = (messages: ChatMessage[]) => {
 function formatRecommendationMessage(rec: RecommendationResult): string {
   return `**${rec.name}** (${rec.cuisine_type} in ${rec.neighborhood})${
     rec.price_range ? ` - ${Array(rec.price_range).fill("$").join("")}` : ""
-  }\n*Reason:* ${rec.reason}\n[View Details](/restaurants/${rec.id})`
+  }\n*Reason:* ${rec.reason}`
 }
 
 export default function ChatPage() {

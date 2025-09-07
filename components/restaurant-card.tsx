@@ -59,20 +59,12 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
 
       {showActions && (
         <CardFooter className="p-4 border-t border-border flex gap-3 mt-auto">
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="flex-1 rounded-md focus-visible:ring-ring"
-          >
-            <Link href={`/restaurants/${restaurant.id}`}>View Details</Link>
-          </Button>
           <Button 
             size="sm" 
             asChild 
-            className="flex-1 rex-button rounded-md"
+            className="w-full rex-button rounded-md"
           >
-            <Link href={`/experiences/add?restaurant=${restaurant.id}`}>Log Experience</Link>
+            <Link href={`/experiences?restaurant=${restaurant.id}`}>Log Experience</Link>
           </Button>
         </CardFooter>
       )}

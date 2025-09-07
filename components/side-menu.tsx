@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { MessageSquare, Star, User, LogOut, LogIn, UserPlus, Home, Search } from "lucide-react"
+import { MessageSquare, Star, User, LogOut, LogIn, UserPlus, Home } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type NavItem = {
@@ -37,11 +37,6 @@ export function SideMenu({ isOpen, setIsOpen }: SideMenuProps) {
       label: "Get Recommendations",
       icon: <MessageSquare className="h-5 w-5 mr-2" />,
       authRequired: true,
-    },
-    {
-      href: "/restaurants",
-      label: "Browse Restaurants",
-      icon: <Search className="h-5 w-5 mr-2" />,
     },
     {
       href: "/experiences",

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
-import { MessageSquare, Star, User, LogOut, LogIn, UserPlus, Home, Search, PlusSquare } from "lucide-react"
+import { MessageSquare, Star, User, LogOut, LogIn, UserPlus, Home } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 type NavItem = {
@@ -23,9 +23,7 @@ export function AppSidebar() {
   const navItems: NavItem[] = [
     { href: "/", label: "Home", icon: Home },
     { href: "/chat", label: "Chat", icon: MessageSquare, authRequired: true },
-    { href: "/restaurants", label: "Browse", icon: Search },
     { href: "/experiences", label: "Experiences", icon: Star, authRequired: true },
-    { href: "/restaurants/add", label: "Add Restaurant", icon: PlusSquare, authRequired: true },
     { href: "/profile", label: "Profile", icon: User, authRequired: true },
     { href: "#", label: "Sign Out", icon: LogOut, authRequired: true, isAction: true },
   ]

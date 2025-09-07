@@ -6,14 +6,18 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
-import { Loader2, Plus, Star, Calendar, MapPin, Utensils, Search } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { Loader2, Plus, Star, Calendar, MapPin, Utensils, Search, Edit, Eye } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createClientSupabaseClient } from "@/lib/supabase"
-import type { Experience, Restaurant } from "@/lib/types"
+import type { Experience, Restaurant, Scenario } from "@/lib/types"
 import Link from "next/link"
 import { format } from "date-fns"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 
 type ExperienceWithRestaurant = Experience & {
   restaurants: Restaurant
@@ -22,16 +26,50 @@ type ExperienceWithRestaurant = Experience & {
   } | null
 }
 
+// NYC neighborhoods for restaurant selection
+const nycNeighborhoods = [
+  "Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island",
+  "Midtown", "Downtown", "Upper East Side", "Upper West Side",
+  "East Village", "West Village", "SoHo", "Tribeca", "Chelsea",
+  "Williamsburg", "Astoria", "Long Island City", "Harlem",
+  "Financial District", "Greenwich Village", "Chinatown", "Little Italy",
+  "Lower East Side", "Gramercy", "Murray Hill", "Hell's Kitchen",
+  "Times Square", "Flatiron", "Dumbo", "Park Slope", "Bushwick",
+  "Fort Greene", "Crown Heights", "Bed-Stuy", "Flushing",
+  "Jackson Heights", "Forest Hills"
+].sort();
+
+const cuisineTypes = [
+  "Italian", "Chinese", "Japanese", "Mexican", "American", "Indian",
+  "Thai", "French", "Mediterranean", "Korean", "Vietnamese", "Greek",
+  "Spanish", "Middle Eastern", "Other"
+].sort();
+
 export default function ExperiencesPage() {
   const { user, isLoading: authLoading } = useAuth()
   const [experiences, setExperiences] = useState<ExperienceWithRestaurant[]>([])
-  const [filteredExperiences, setFilteredExperiences] = useState<ExperienceWithRestaurant[]>([])
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
+  const [scenarios, setScenarios] = useState<Scenario[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [sortBy, setSortBy] = useState("date-desc")
-  const [ratingFilter, setRatingFilter] = useState("all")
+  const [isSaving, setIsSaving] = useState(false)
+  const [showExistingExperiences, setShowExistingExperiences] = useState(false)
+  
+  // Form state
+  const [restaurantName, setRestaurantName] = useState("")
+  const [neighborhood, setNeighborhood] = useState("")
+  const [cuisine, setCuisine] = useState("")
+  const [address, setAddress] = useState("")
+  const [description, setDescription] = useState("")
+  const [priceRange, setPriceRange] = useState<number>(0)
+  const [selectedRestaurantId, setSelectedRestaurantId] = useState("")
+  const [scenarioId, setScenarioId] = useState("")
+  const [rating, setRating] = useState<number | null>(null)
+  const [notes, setNotes] = useState("")
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  
   const { toast } = useToast()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClientSupabaseClient()
 
   useEffect(() => {
@@ -41,13 +79,14 @@ export default function ExperiencesPage() {
   }, [user, authLoading, router])
 
   useEffect(() => {
-    const fetchExperiences = async () => {
+    const fetchData = async () => {
       if (!user) return
 
       setIsLoading(true)
 
       try {
-        const { data, error } = await supabase
+        // Fetch user's experiences
+        const { data: experiencesData, error: experiencesError } = await supabase
           .from("experiences")
           .select(`
             *,
@@ -57,15 +96,45 @@ export default function ExperiencesPage() {
           .eq("user_id", user.id)
           .order("visited_at", { ascending: false })
 
-        if (error) throw error
+        if (experiencesError) throw experiencesError
+        setExperiences(experiencesData || [])
 
-        setExperiences(data || [])
-        setFilteredExperiences(data || [])
-      } catch (error) {
-        console.error("Error fetching experiences:", error)
+        // Fetch restaurants for selection
+        const { data: restaurantsData, error: restaurantsError } = await supabase
+          .from("restaurants")
+          .select("*")
+          .order("name")
+
+        if (restaurantsError) throw restaurantsError
+        setRestaurants(restaurantsData || [])
+
+        // Fetch scenarios
+        const { data: scenariosData, error: scenariosError } = await supabase
+          .from("scenarios")
+          .select("*")
+          .order("name")
+
+        if (scenariosError) throw scenariosError
+        setScenarios(scenariosData || [])
+
+        // Check for restaurant ID in URL parameters and set it if present
+        const restaurantParam = searchParams.get('restaurant')
+        if (restaurantParam) {
+          setSelectedRestaurantId(restaurantParam)
+        }
+
+      } catch (error: any) {
+        console.error("Error fetching data:", error)
+        console.error("Fetch error details:", {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code,
+          fullError: error
+        })
         toast({
           title: "Error",
-          description: "Failed to load experiences.",
+          description: error.message || error.details || "Failed to load data.",
           variant: "destructive",
         })
       } finally {
@@ -73,54 +142,165 @@ export default function ExperiencesPage() {
       }
     }
 
-    fetchExperiences()
-  }, [user, supabase, toast])
+    fetchData()
+  }, [user, supabase, toast, searchParams])
 
-  // Filter and sort experiences
-  useEffect(() => {
-    let filtered = [...experiences]
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
 
-    // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        (exp) =>
-          exp.restaurants.name.toLowerCase().includes(query) ||
-          exp.restaurants.cuisine_type.toLowerCase().includes(query) ||
-          exp.restaurants.neighborhood.toLowerCase().includes(query) ||
-          exp.notes?.toLowerCase().includes(query) ||
-          exp.scenarios?.name.toLowerCase().includes(query),
-      )
-    }
-
-    // Apply rating filter
-    if (ratingFilter !== "all") {
-      const rating = Number.parseInt(ratingFilter)
-      filtered = filtered.filter((exp) => exp.rating === rating)
-    }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "date-desc":
-          return new Date(b.visited_at || b.created_at).getTime() - new Date(a.visited_at || a.created_at).getTime()
-        case "date-asc":
-          return new Date(a.visited_at || a.created_at).getTime() - new Date(b.visited_at || b.created_at).getTime()
-        case "rating-desc":
-          return (b.rating || 0) - (a.rating || 0)
-        case "rating-asc":
-          return (a.rating || 0) - (b.rating || 0)
-        case "name-asc":
-          return a.restaurants.name.localeCompare(b.restaurants.name)
-        case "name-desc":
-          return b.restaurants.name.localeCompare(a.restaurants.name)
-        default:
-          return 0
-      }
+    console.log("Form submission started", {
+      user: !!user,
+      date: !!date,
+      selectedRestaurantId,
+      restaurantName,
+      neighborhood,
+      cuisine,
+      priceRange
     })
 
-    setFilteredExperiences(filtered)
-  }, [experiences, searchQuery, sortBy, ratingFilter])
+    if (!user) {
+      toast({ 
+        title: "Not logged in", 
+        description: "Please log in to add experiences.", 
+        variant: "destructive" 
+      })
+      return
+    }
+
+    if (!date) {
+      toast({ 
+        title: "Missing date", 
+        description: "Please select a date for your visit.", 
+        variant: "destructive" 
+      })
+      return
+    }
+
+    // Check if we have restaurant information
+    if (!selectedRestaurantId && (!restaurantName || !neighborhood || !cuisine || priceRange === 0)) {
+      toast({ 
+        title: "Missing restaurant information", 
+        description: "Please select an existing restaurant or provide restaurant details.", 
+        variant: "destructive" 
+      })
+      return
+    }
+
+    setIsSaving(true)
+
+    try {
+      let restaurantId = selectedRestaurantId
+
+      console.log("Starting restaurant creation/selection", { restaurantId, restaurantName, neighborhood, cuisine, priceRange })
+
+      // If no existing restaurant selected, create a new one
+      if (!restaurantId && restaurantName && neighborhood && cuisine && priceRange > 0) {
+        console.log("Creating new restaurant...")
+        const { data: newRestaurant, error: restaurantError } = await supabase
+          .from("restaurants")
+          .insert({
+            name: restaurantName,
+            neighborhood,
+            cuisine_type: cuisine,
+            address: address || null,
+            description: description || null,
+            price_range: priceRange,
+          })
+          .select()
+          .single()
+
+        if (restaurantError) {
+          console.error("Restaurant creation error:", restaurantError)
+          throw restaurantError
+        }
+        restaurantId = newRestaurant.id
+        console.log("Restaurant created successfully:", restaurantId)
+      }
+
+      if (!restaurantId) {
+        toast({ 
+          title: "Missing restaurant information", 
+          description: "Please select an existing restaurant or provide restaurant details.", 
+          variant: "destructive" 
+        })
+        return
+      }
+
+      // Create the experience
+      console.log("Creating experience with data:", {
+        user_id: user.id,
+        restaurant_id: restaurantId,
+        scenario_id: scenarioId || null,
+        rating,
+        notes,
+        visited_at: date.toISOString(),
+      })
+
+      const { data: experienceData, error } = await supabase.from("experiences").insert({
+        user_id: user.id,
+        restaurant_id: restaurantId,
+        scenario_id: scenarioId || null,
+        rating,
+        notes,
+        visited_at: date.toISOString(),
+      }).select()
+
+      if (error) {
+        console.error("Experience creation error:", error)
+        throw error
+      }
+
+      console.log("Experience created successfully:", experienceData)
+
+      toast({
+        title: "Success!",
+        description: "Experience added successfully.",
+      })
+
+      // Reset form
+      setRestaurantName("")
+      setNeighborhood("")
+      setCuisine("")
+      setAddress("")
+      setDescription("")
+      setPriceRange(0)
+      setSelectedRestaurantId("")
+      setScenarioId("")
+      setRating(null)
+      setNotes("")
+      setDate(new Date())
+
+      // Refresh experiences
+      const { data: updatedExperiences } = await supabase
+        .from("experiences")
+        .select(`
+          *,
+          restaurants(*),
+          scenarios(name)
+        `)
+        .eq("user_id", user.id)
+        .order("visited_at", { ascending: false })
+
+      setExperiences(updatedExperiences || [])
+
+    } catch (error: any) {
+      console.error("Error adding experience:", error)
+      console.error("Error details:", {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code,
+        fullError: error
+      })
+      toast({
+        title: "Error adding experience",
+        description: error.message || error.details || "An unexpected error occurred.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSaving(false)
+    }
+  }
 
   if (authLoading || isLoading) {
     return (
@@ -134,146 +314,265 @@ export default function ExperiencesPage() {
     <div className="bg-rex-cream min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h1 className="text-2xl font-bold text-rex-black">Your Restaurant Experiences</h1>
-          <Button asChild className="bg-rex-red hover:bg-red-700 text-white">
-            <Link href="/experiences/add">
-              <Plus className="mr-2 h-4 w-4" />
-              Add Experience
-            </Link>
+          <h1 className="text-2xl font-bold text-rex-black">Add New Experience</h1>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline" 
+              onClick={() => setShowExistingExperiences(!showExistingExperiences)}
+              className="border-rex-red text-rex-red hover:bg-rex-red/10"
+            >
+              <Eye className="mr-2 h-4 w-4" />
+              {showExistingExperiences ? "Hide" : "View"} Experiences
           </Button>
+          </div>
         </div>
 
-        {experiences.length > 0 && (
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-rex-black/50" />
-              <Input
-                placeholder="Search your experiences..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 border-rex-black/20 focus-visible:ring-rex-red"
-              />
+        {showExistingExperiences && experiences.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 text-rex-black">Your Recent Experiences</h2>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {experiences.slice(0, 6).map((experience) => (
+                <Card key={experience.id} className="border-none shadow-md overflow-hidden">
+                  <CardHeader className="bg-rex-black text-rex-cream pb-3">
+                    <CardTitle className="text-sm">{experience.restaurants.name}</CardTitle>
+                    <CardDescription className="flex items-center text-rex-cream/80 text-xs">
+                      <MapPin className="h-3 w-3 mr-1" />
+                      {experience.restaurants.neighborhood}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2 pt-3">
+                    {experience.rating && (
+                      <div className="flex items-center">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3 w-3 ${
+                              i < experience.rating! ? "text-rex-red fill-rex-red" : "text-rex-black/30"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {experience.visited_at && (
+                      <div className="flex items-center text-xs text-rex-black/70">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {format(new Date(experience.visited_at), "MMM d, yyyy")}
+                      </div>
+                    )}
+                    {experience.notes && (
+                      <p className="text-xs text-rex-black/70 line-clamp-2">{experience.notes}</p>
+                    )}
+                  </CardContent>
+                  <CardFooter className="pt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="w-full border-rex-red text-rex-red hover:bg-rex-red/10 text-xs"
+                    >
+                      <Link href={`/experiences/${experience.id}`}>
+                        <Edit className="mr-1 h-3 w-3" />
+                        Edit
+                      </Link>
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
             </div>
+          </div>
+        )}
 
-            <div className="flex gap-2">
-              <div className="w-40">
-                <Select value={ratingFilter} onValueChange={setRatingFilter}>
-                  <SelectTrigger className="border-rex-black/20 focus:ring-rex-red">
-                    <SelectValue placeholder="Filter by rating" />
+        <Card className="border-none shadow-lg">
+          <CardHeader className="p-6">
+            <CardTitle className="text-xl md:text-2xl font-semibold">Add a New Experience</CardTitle>
+            <CardDescription className="pt-1">
+              Share your dining experience and help others discover great restaurants.
+            </CardDescription>
+          </CardHeader>
+          <form onSubmit={handleSubmit}>
+            <CardContent className="p-6 space-y-5">
+              {/* Restaurant Selection */}
+              <div className="space-y-2">
+                <Label htmlFor="restaurant-select">Select Existing Restaurant (Optional)</Label>
+                <Select value={selectedRestaurantId} onValueChange={setSelectedRestaurantId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose from existing restaurants..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All Ratings</SelectItem>
-                    {[5, 4, 3, 2, 1].map((rating) => (
-                      <SelectItem key={rating} value={rating.toString()}>
-                        {rating} {rating === 1 ? "Star" : "Stars"}
+                    {restaurants.map((restaurant) => (
+                      <SelectItem key={restaurant.id} value={restaurant.id}>
+                        {restaurant.name} - {restaurant.neighborhood}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="w-48">
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="border-rex-black/20 focus:ring-rex-red">
-                    <SelectValue placeholder="Sort by" />
+              {/* Or Add New Restaurant */}
+              {!selectedRestaurantId && (
+                <>
+                  <div className="border-t pt-4">
+                    <h3 className="text-lg font-medium mb-4 text-rex-black">Or Add New Restaurant</h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-5">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="name">Restaurant Name <span className="text-destructive">*</span></Label>
+                      <Input 
+                        id="name" 
+                        value={restaurantName} 
+                        onChange={(e) => setRestaurantName(e.target.value)} 
+                        placeholder="e.g., Joe's Pizza" 
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="cuisine">Cuisine Type <span className="text-destructive">*</span></Label>
+                      <Select value={cuisine} onValueChange={setCuisine}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select cuisine..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {cuisineTypes.map((type) => (
+                            <SelectItem key={type} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-5">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="neighborhood">Neighborhood <span className="text-destructive">*</span></Label>
+                      <Select value={neighborhood} onValueChange={setNeighborhood}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select neighborhood..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {nycNeighborhoods.map((n) => (
+                            <SelectItem key={n} value={n}>{n}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="address">Address</Label>
+                      <Input 
+                        id="address" 
+                        value={address} 
+                        onChange={(e) => setAddress(e.target.value)} 
+                        placeholder="e.g., 123 Main St, New York, NY 10001" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea 
+                      id="description" 
+                      value={description} 
+                      onChange={(e) => setDescription(e.target.value)} 
+                      placeholder="Briefly describe the restaurant (optional)" 
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="price">Price Range <span className="text-destructive">*</span></Label>
+                    <Select value={priceRange > 0 ? priceRange.toString() : ""} onValueChange={(v) => setPriceRange(Number.parseInt(v || "0"))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select price range..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">$ (Inexpensive)</SelectItem>
+                        <SelectItem value="2">$$ (Moderate)</SelectItem>
+                        <SelectItem value="3">$$$ (Pricey)</SelectItem>
+                        <SelectItem value="4">$$$$ (Very Expensive)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </>
+              )}
+
+              {/* Experience Details */}
+              <div className="border-t pt-4">
+                <h3 className="text-lg font-medium mb-4 text-rex-black">Your Experience</h3>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="date">Date of Visit <span className="text-destructive">*</span></Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal"
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <CalendarComponent
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="scenario">Occasion</Label>
+                <Select value={scenarioId} onValueChange={setScenarioId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an occasion (optional)" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="date-desc">Newest First</SelectItem>
-                    <SelectItem value="date-asc">Oldest First</SelectItem>
-                    <SelectItem value="rating-desc">Highest Rated</SelectItem>
-                    <SelectItem value="rating-asc">Lowest Rated</SelectItem>
-                    <SelectItem value="name-asc">Name (A-Z)</SelectItem>
-                    <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                    {scenarios.map((scenario) => (
+                      <SelectItem key={scenario.id} value={scenario.id}>
+                        {scenario.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          </div>
-        )}
 
-        {filteredExperiences.length === 0 ? (
-          <Card className="border-none shadow-md">
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Utensils className="h-12 w-12 text-rex-red mb-4" />
-              <p className="text-lg font-medium mb-2 text-rex-black">
-                {experiences.length === 0 ? "No experiences yet" : "No matching experiences found"}
-              </p>
-              <p className="text-rex-black/70 mb-6">
-                {experiences.length === 0
-                  ? "Start logging your restaurant visits to build your dining history."
-                  : "Try adjusting your search or filters to see more results."}
-              </p>
-              <Button asChild className="bg-rex-red hover:bg-red-700 text-white">
-                {experiences.length === 0 ? (
-                  <Link href="/chat">Get Restaurant Recommendations</Link>
-                ) : (
+              <div className="space-y-2">
+                <Label htmlFor="rating">Rating</Label>
+                <div className="flex items-center space-x-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
                   <Button
-                    onClick={() => {
-                      setSearchQuery("")
-                      setRatingFilter("all")
-                      setSortBy("date-desc")
-                    }}
-                  >
-                    Clear Filters
-                  </Button>
-                )}
+                      key={star}
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className={`p-0 h-8 w-8 ${rating && star <= rating ? "text-rex-red" : "text-rex-black/50"}`}
+                      onClick={() => setRating(star)}
+                    >
+                      <Star className={`h-6 w-6 ${rating && star <= rating ? "fill-rex-red" : ""}`} />
               </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredExperiences.map((experience) => (
-              <Card key={experience.id} className="border-none shadow-md overflow-hidden">
-                <CardHeader className="bg-rex-black text-rex-cream pb-3">
-                  <CardTitle>{experience.restaurants.name}</CardTitle>
-                  <CardDescription className="flex items-center text-rex-cream/80">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {experience.restaurants.neighborhood}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2 pt-4">
-                  {experience.rating && (
-                    <div className="flex items-center">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < experience.rating! ? "text-rex-red fill-rex-red" : "text-rex-black/30"
-                          }`}
-                        />
                       ))}
                     </div>
-                  )}
-                  {experience.visited_at && (
-                    <div className="flex items-center text-sm text-rex-black/70">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {format(new Date(experience.visited_at), "MMMM d, yyyy")}
                     </div>
-                  )}
-                  {experience.scenarios && (
-                    <div className="text-sm">
-                      <span className="font-medium text-rex-black">Occasion:</span>{" "}
-                      <span className="text-rex-black/70">{experience.scenarios.name}</span>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Your Experience Notes</Label>
+                <Textarea
+                  id="notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Share your thoughts about the restaurant, food, service, atmosphere..."
+                  rows={4}
+                />
                     </div>
-                  )}
-                  {experience.notes && (
-                    <p className="text-sm mt-2 text-rex-black/70 line-clamp-3">{experience.notes}</p>
-                  )}
                 </CardContent>
-                <CardFooter>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    asChild
-                    className="w-full border-rex-red text-rex-red hover:bg-rex-red/10"
-                  >
-                    <Link href={`/experiences/${experience.id}`}>View Details</Link>
+            <CardFooter className="p-6 border-t border-border">
+              <Button type="submit" disabled={isSaving} className="w-full rex-button">
+                {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {isSaving ? "Saving..." : "Add Experience"}
                   </Button>
                 </CardFooter>
+          </form>
               </Card>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   )
