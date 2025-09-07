@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { createServerSupabaseClient } from '@/lib/supabase'
 import { VibeCheck } from '@/components/vibe-check'
 import { RestaurantCard } from '@/components/restaurant-card'
-import { MapPin, Clock, DollarSign, ArrowLeft } from 'lucide-react'
+import { MapPin, Clock, DollarSign, ArrowLeft, Star, Target, Users } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -20,13 +20,46 @@ async function fetchGooglePlacesRestaurant(placeId: string): Promise<Restaurant 
     const response = await googleMapsClient.placeDetails({
       params: {
         place_id: placeId,
-        fields: ['name', 'formatted_address', 'rating', 'price_level', 'types', 'geometry'],
+        fields: [
+          'name', 
+          'formatted_address', 
+          'rating', 
+          'user_ratings_total',
+          'price_level', 
+          'types', 
+          'geometry',
+          'opening_hours',
+          'editorial_summary',
+          'reviews'
+        ],
         key: process.env.GOOGLE_MAPS_API_KEY!
       }
     })
 
     const place = response.data.result
     if (!place) return null
+
+    // Extract popular menu items from reviews (first 3 reviews)
+    const popularItems: string[] = []
+    if (place.reviews && place.reviews.length > 0) {
+      const reviewTexts = place.reviews.slice(0, 3).map(review => review.text || '').join(' ')
+      // Simple extraction of food items mentioned in reviews
+      const foodKeywords = ['pizza', 'burger', 'pasta', 'salad', 'sushi', 'tacos', 'sandwich', 'steak', 'chicken', 'fish', 'soup', 'appetizer', 'dessert', 'cocktail', 'wine', 'beer']
+      foodKeywords.forEach(keyword => {
+        if (reviewTexts.toLowerCase().includes(keyword) && !popularItems.includes(keyword)) {
+          popularItems.push(keyword.charAt(0).toUpperCase() + keyword.slice(1))
+        }
+      })
+    }
+
+    // Format opening hours
+    const openingHours: string[] = []
+    if (place.opening_hours?.weekday_text) {
+      openingHours.push(...place.opening_hours.weekday_text)
+    }
+
+    // Calculate matching score based on rating and review count
+    const matchingScore = place.rating ? Math.min(95, Math.round(place.rating * 18 + (place.user_ratings_total || 0) / 100)) : 75
 
     // Convert Google Places data to our Restaurant type
     const restaurant: Restaurant = {
@@ -38,13 +71,17 @@ async function fetchGooglePlacesRestaurant(placeId: string): Promise<Restaurant 
       borough: place.formatted_address?.split(',')[2]?.trim() || 'Unknown',
       price_range: place.price_level || null,
       dietary_options: null,
-      description: null,
+      description: place.editorial_summary?.overview || null,
       image_url: null,
-      popular_items: null,
+      popular_items: popularItems.length > 0 ? popularItems : null,
       vibe: null,
       scenario_tags: null,
       latitude: place.geometry?.location.lat || null,
       longitude: place.geometry?.location.lng || null,
+      opening_hours: openingHours.length > 0 ? openingHours : null,
+      rating: place.rating || null,
+      user_ratings_total: place.user_ratings_total || null,
+      matching_score: matchingScore,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }
@@ -130,12 +167,51 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                           ))}
                         </span>
                       </div>
+                      
+                      {/* Rating and Review Count */}
+                      {restaurant.rating && (
+                        <div className="flex items-center gap-3">
+                          <Star className="h-5 w-5 text-yellow-500 fill-current flex-shrink-0" />
+                          <span className="text-sm">
+                            {restaurant.rating.toFixed(1)} 
+                            {restaurant.user_ratings_total && (
+                              <span className="text-muted-foreground ml-1">
+                                ({restaurant.user_ratings_total.toLocaleString()} reviews)
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Matching Score */}
+                      {restaurant.matching_score && (
+                        <div className="flex items-center gap-3">
+                          <Target className="h-5 w-5 text-rex-red flex-shrink-0" />
+                          <span className="text-sm">
+                            <span className="font-medium">{restaurant.matching_score}%</span> match for your preferences
+                          </span>
+                        </div>
+                      )}
                     </div>
                     
                     {restaurant.description && (
                       <div className="pt-6">
                         <h3 className="font-medium mb-3">About</h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">{restaurant.description}</p>
+                      </div>
+                    )}
+
+                    {restaurant.opening_hours && restaurant.opening_hours.length > 0 && (
+                      <div className="pt-6">
+                        <h3 className="font-medium mb-3">Hours</h3>
+                        <div className="space-y-1">
+                          {restaurant.opening_hours.map((hours, index) => (
+                            <div key={index} className="flex items-center gap-3 text-sm">
+                              <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                              <span className="text-muted-foreground">{hours}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
 

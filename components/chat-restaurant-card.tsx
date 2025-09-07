@@ -3,7 +3,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Star, DollarSign, Sparkles } from "lucide-react"
+import { MapPin, Star, DollarSign, Sparkles, Target } from "lucide-react"
 import Link from "next/link"
 import type { RecommendationResult } from "@/app/chat/actions"
 
@@ -59,7 +59,7 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
               </Badge>
             </div>
 
-            {/* Rating and Price */}
+            {/* Rating, Price, and Match Score */}
             <div className="flex items-center gap-3 text-xs text-rex-black/70">
               {restaurant.rating && (
                 <div className="flex items-center gap-1">
@@ -71,6 +71,12 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
                 <DollarSign className="h-3 w-3 text-rex-red" />
                 <span>{formatPrice(restaurant.price_range)}</span>
               </div>
+              {restaurant.matching_score && (
+                <div className="flex items-center gap-1">
+                  <Target className="h-3 w-3 text-rex-red" />
+                  <span className="font-medium">{restaurant.matching_score}%</span>
+                </div>
+              )}
             </div>
 
             {/* Reason */}

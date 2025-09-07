@@ -24,6 +24,10 @@ export type Restaurant = {
   scenario_tags: string[] | null
   latitude: number | null
   longitude: number | null
+  opening_hours: string[] | null
+  rating: number | null
+  user_ratings_total: number | null
+  matching_score: number | null
   created_at: string
   updated_at: string
 }

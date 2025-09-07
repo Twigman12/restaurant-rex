@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, DollarSign, Sparkles } from "lucide-react"
+import { MapPin, DollarSign, Sparkles, Star, Target } from "lucide-react"
 import Link from "next/link"
 import type { Restaurant } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
@@ -38,6 +38,31 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
             ))}
           </div>
         </div>
+
+        {/* Rating */}
+        {restaurant.rating && (
+          <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm gap-1 sm:gap-0">
+            <span className="font-medium text-muted-foreground sm:w-16">Rating:</span>
+            <div className="flex items-center gap-1">
+              <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-current" />
+              <span className="text-foreground">{restaurant.rating.toFixed(1)}</span>
+              {restaurant.user_ratings_total && (
+                <span className="text-muted-foreground">({restaurant.user_ratings_total})</span>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Matching Score */}
+        {restaurant.matching_score && (
+          <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm gap-1 sm:gap-0">
+            <span className="font-medium text-muted-foreground sm:w-16">Match:</span>
+            <div className="flex items-center gap-1">
+              <Target className="h-3 w-3 sm:h-4 sm:w-4 text-rex-red" />
+              <span className="text-foreground font-medium">{restaurant.matching_score}%</span>
+            </div>
+          </div>
+        )}
 
         {restaurant.dietary_options && restaurant.dietary_options.length > 0 && (
           <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2">
