@@ -84,118 +84,120 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Restaurants
-            </Link>
-          </Button>
-          <h1 className="text-3xl font-bold">{restaurant.name}</h1>
-          <p className="text-muted-foreground mt-1">{restaurant.cuisine_type} • {restaurant.neighborhood}</p>
-        </div>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-4 sm:py-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="mb-4 sm:mb-6">
+            <Button variant="ghost" asChild className="mb-3 sm:mb-4">
+              <Link href="/" className="flex items-center gap-2 text-sm sm:text-base">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Restaurants
+              </Link>
+            </Button>
+            <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{restaurant.name}</h1>
+            <p className="text-muted-foreground mt-1 text-sm sm:text-base">{restaurant.cuisine_type} • {restaurant.neighborhood}</p>
+          </div>
 
-        {/* Main Content */}
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="vibe-check">✨ AI Vibe Check</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="overview" className="mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Restaurant Info */}
-              <div className="space-y-6">
-                <RestaurantCard restaurant={restaurant} showActions={false} />
-                
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Restaurant Details</h2>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <MapPin className="h-5 w-5 text-muted-foreground" />
-                      <span className="text-sm">{restaurant.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <DollarSign className="h-5 w-5 text-muted-foreground" />
-                      <span className="text-sm">
-                        {Array.from({ length: restaurant.price_range || 0 }).map((_, i) => (
-                          <DollarSign key={i} className="h-4 w-4 text-rex-red inline" />
-                        ))}
-                        {Array.from({ length: 4 - (restaurant.price_range || 0) }).map((_, i) => (
-                          <DollarSign key={i} className="h-4 w-4 text-muted-foreground/50 inline" />
-                        ))}
-                      </span>
-                    </div>
-                  </div>
+          {/* Main Content */}
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4 sm:mb-6">
+              <TabsTrigger value="overview" className="text-sm sm:text-base">Overview</TabsTrigger>
+              <TabsTrigger value="vibe-check" className="text-sm sm:text-base">✨ AI Vibe Check</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="overview" className="mt-4 sm:mt-6">
+              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8">
+                {/* Restaurant Info */}
+                <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
+                  <RestaurantCard restaurant={restaurant} showActions={false} />
                   
-                  {restaurant.description && (
-                    <div className="pt-4">
-                      <h3 className="font-medium mb-2">About</h3>
-                      <p className="text-sm text-muted-foreground">{restaurant.description}</p>
-                    </div>
-                  )}
-
-                  {restaurant.popular_items && restaurant.popular_items.length > 0 && (
-                    <div className="pt-4">
-                      <h3 className="font-medium mb-2">Popular Items</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {restaurant.popular_items.map((item, index) => (
-                          <span key={index} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm">
-                            {item}
-                          </span>
-                        ))}
+                  <div className="space-y-4">
+                    <h2 className="text-lg sm:text-xl font-semibold">Restaurant Details</h2>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                        <span className="text-sm leading-relaxed break-words">{restaurant.address}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <DollarSign className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                        <span className="text-sm">
+                          {Array.from({ length: restaurant.price_range || 0 }).map((_, i) => (
+                            <DollarSign key={i} className="h-4 w-4 text-rex-red inline" />
+                          ))}
+                          {Array.from({ length: 4 - (restaurant.price_range || 0) }).map((_, i) => (
+                            <DollarSign key={i} className="h-4 w-4 text-muted-foreground/50 inline" />
+                          ))}
+                        </span>
                       </div>
                     </div>
-                  )}
-
-                  {restaurant.dietary_options && restaurant.dietary_options.length > 0 && (
-                    <div className="pt-4">
-                      <h3 className="font-medium mb-2">Dietary Options</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {restaurant.dietary_options.map((option, index) => (
-                          <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                            {option}
-                          </span>
-                        ))}
+                    
+                    {restaurant.description && (
+                      <div className="pt-4">
+                        <h3 className="font-medium mb-2">About</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{restaurant.description}</p>
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                    {restaurant.popular_items && restaurant.popular_items.length > 0 && (
+                      <div className="pt-4">
+                        <h3 className="font-medium mb-2">Popular Items</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {restaurant.popular_items.map((item, index) => (
+                            <span key={index} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm">
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {restaurant.dietary_options && restaurant.dietary_options.length > 0 && (
+                      <div className="pt-4">
+                        <h3 className="font-medium mb-2">Dietary Options</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {restaurant.dietary_options.map((option, index) => (
+                            <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                              {option}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Actions */}
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Actions</h2>
-                  <div className="space-y-3">
-                    <Button asChild className="w-full">
-                      <Link href={`/experiences?restaurant=${restaurant.id}`}>
-                        Log Your Experience
-                      </Link>
-                    </Button>
-                    <Button variant="outline" asChild className="w-full">
-                      <Link href={`/chat?restaurant=${restaurant.name}`}>
-                        Ask REX About This Place
-                      </Link>
-                    </Button>
+                {/* Actions */}
+                <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
+                  <div className="space-y-4">
+                    <h2 className="text-lg sm:text-xl font-semibold">Actions</h2>
+                    <div className="space-y-3">
+                      <Button asChild className="w-full h-12 sm:h-10">
+                        <Link href={`/experiences?restaurant=${restaurant.id}`}>
+                          Log Your Experience
+                        </Link>
+                      </Button>
+                      <Button variant="outline" asChild className="w-full h-12 sm:h-10">
+                        <Link href={`/chat?restaurant=${restaurant.name}`}>
+                          Ask REX About This Place
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="vibe-check" className="mt-6">
-            <div className="max-w-2xl mx-auto">
-              <VibeCheck 
-                restaurantId={restaurant.id} 
-                restaurantName={restaurant.name} 
-              />
-            </div>
-          </TabsContent>
-        </Tabs>
+            </TabsContent>
+            
+            <TabsContent value="vibe-check" className="mt-4 sm:mt-6">
+              <div className="max-w-2xl mx-auto">
+                <VibeCheck 
+                  restaurantId={restaurant.id} 
+                  restaurantName={restaurant.name} 
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   )
