@@ -176,11 +176,6 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                         Log Your Experience
                       </Link>
                     </Button>
-                    <Button variant="outline" asChild className="w-full h-12 sm:h-10">
-                      <Link href={`/chat?restaurant=${restaurant.name}`}>
-                        Ask REX About This Place
-                      </Link>
-                    </Button>
                   </div>
                 </div>
               </div>
