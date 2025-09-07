@@ -106,15 +106,15 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
               <TabsTrigger value="vibe-check" className="text-sm sm:text-base">✨ AI Vibe Check</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="overview" className="mt-4 sm:mt-6">
-              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-8">
+            <TabsContent value="overview" className="mt-6 sm:mt-8">
+              <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12">
                 {/* Restaurant Info */}
-                <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
+                <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
                   <RestaurantCard restaurant={restaurant} showActions={false} />
                   
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <h2 className="text-lg sm:text-xl font-semibold">Restaurant Details</h2>
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div className="flex items-start gap-3">
                         <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                         <span className="text-sm leading-relaxed break-words">{restaurant.address}</span>
@@ -133,15 +133,15 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                     </div>
                     
                     {restaurant.description && (
-                      <div className="pt-4">
-                        <h3 className="font-medium mb-2">About</h3>
+                      <div className="pt-6">
+                        <h3 className="font-medium mb-3">About</h3>
                         <p className="text-sm text-muted-foreground leading-relaxed">{restaurant.description}</p>
                       </div>
                     )}
 
                     {restaurant.popular_items && restaurant.popular_items.length > 0 && (
-                      <div className="pt-4">
-                        <h3 className="font-medium mb-2">Popular Items</h3>
+                      <div className="pt-6">
+                        <h3 className="font-medium mb-3">Popular Items</h3>
                         <div className="flex flex-wrap gap-2">
                           {restaurant.popular_items.map((item, index) => (
                             <span key={index} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm">
@@ -153,8 +153,8 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                     )}
 
                     {restaurant.dietary_options && restaurant.dietary_options.length > 0 && (
-                      <div className="pt-4">
-                        <h3 className="font-medium mb-2">Dietary Options</h3>
+                      <div className="pt-6">
+                        <h3 className="font-medium mb-3">Dietary Options</h3>
                         <div className="flex flex-wrap gap-2">
                           {restaurant.dietary_options.map((option, index) => (
                             <span key={index} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
@@ -168,10 +168,10 @@ export default async function RestaurantPage({ params }: RestaurantPageProps) {
                 </div>
 
                 {/* Actions */}
-                <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
-                  <div className="space-y-4">
+                <div className="space-y-6 sm:space-y-8 order-1 lg:order-2">
+                  <div className="space-y-6">
                     <h2 className="text-lg sm:text-xl font-semibold">Actions</h2>
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <Button asChild className="w-full h-12 sm:h-10">
                         <Link href={`/experiences?restaurant=${restaurant.id}`}>
                           Log Your Experience
