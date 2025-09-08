@@ -83,7 +83,7 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
       </CardContent>
 
       {showActions && (
-        <CardFooter className="p-4 sm:p-5 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto">
+        <CardFooter className="p-4 pb-5 sm:p-5 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto">
           <Button 
             size="sm" 
             asChild 

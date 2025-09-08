@@ -39,7 +39,7 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
   return (
     <div className="flex justify-start">
       <Card className="bg-white border-rex-red/20 hover:shadow-md transition-shadow duration-200 max-w-[85%] rounded-xl">
-        <CardContent className="p-4">
+        <CardContent className="p-4 pb-6">
           <div className="space-y-3">
             {/* Header with name and location */}
             <div className="flex items-start justify-between gap-3">
@@ -86,7 +86,7 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
 
             {/* Actions */}
             {showActions && (
-              <div className="flex gap-2 pt-2">
+              <div className="flex gap-2 pt-3">
                 <Button
                   size="sm"
                   asChild
