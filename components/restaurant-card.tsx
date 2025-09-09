@@ -83,23 +83,25 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
       </CardContent>
 
       {showActions && (
-        <CardFooter className="p-4 pb-5 sm:p-5 border-t border-border flex flex-col sm:flex-row gap-3 sm:gap-4 mt-auto">
+        <CardFooter className="p-4 pb-5 sm:p-5 border-t border-border flex flex-col gap-3 mt-auto">
           <Button 
             size="sm" 
             asChild 
-            className="flex-1 rex-button rounded-md h-10 sm:h-9"
+            className="w-full rex-button rounded-md h-10 sm:h-9 px-3 min-w-0"
           >
-            <Link href={`/experiences?restaurant=${restaurant.id}`}>Log Experience</Link>
+            <Link href={`/experiences?restaurant=${restaurant.id}`} className="truncate">
+              Log Experience
+            </Link>
           </Button>
           <Button 
             size="sm" 
             variant="outline"
             asChild 
-            className="flex-1 h-10 sm:h-9"
+            className="w-full h-10 sm:h-9 px-3 min-w-0"
           >
-            <Link href={`/restaurants/${restaurant.id}`}>
-              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-              Vibe Check
+            <Link href={`/restaurants/${restaurant.id}`} className="truncate">
+              <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 mr-2 flex-shrink-0" />
+              <span className="truncate">Vibe Check</span>
             </Link>
           </Button>
         </CardFooter>

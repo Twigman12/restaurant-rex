@@ -38,8 +38,8 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
 
   return (
     <div className="flex justify-start">
-      <Card className="bg-white border-rex-red/20 hover:shadow-md transition-shadow duration-200 max-w-[85%] rounded-xl">
-        <CardContent className="p-4 pb-6">
+      <Card className="bg-white border-rex-red/20 hover:shadow-md transition-shadow duration-200 max-w-[85%] w-full rounded-xl overflow-hidden">
+        <CardContent className="p-4 pb-4">
           <div className="space-y-3">
             {/* Header with name and location */}
             <div className="flex items-start justify-between gap-3">
@@ -86,23 +86,25 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
 
             {/* Actions */}
             {showActions && (
-              <div className="flex gap-2 pt-3">
+              <div className="flex flex-col gap-2 pt-2">
                 <Button
                   size="sm"
                   asChild
-                  className="flex-1 rex-button rounded-md h-8 text-xs"
+                  className="w-full rex-button rounded-md h-8 text-xs px-3 min-w-0"
                 >
-                  <Link href={`/experiences?restaurant=${restaurant.id}`}>Log Experience</Link>
+                  <Link href={`/experiences?restaurant=${restaurant.id}`} className="truncate">
+                    Log Experience
+                  </Link>
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
                   asChild
-                  className="flex-1 h-8 text-xs"
+                  className="w-full h-8 text-xs px-3 min-w-0"
                 >
-                  <Link href={`/restaurants/${restaurant.id}`}>
-                    <Sparkles className="h-3 w-3 mr-1" />
-                    Vibe Check
+                  <Link href={`/restaurants/${restaurant.id}`} className="truncate">
+                    <Sparkles className="h-3 w-3 mr-1 flex-shrink-0" />
+                    <span className="truncate">Vibe Check</span>
                   </Link>
                 </Button>
               </div>
