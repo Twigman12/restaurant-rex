@@ -27,26 +27,55 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession()
-      if (error) {
-        console.error("Error getting session:", error)
-      }
+      try {
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession()
 
-      setSession(session)
-      setUser(session?.user ?? null)
-      setIsLoading(false)
+        if (error) {
+          console.error("Error getting session:", error)
+        }
+
+        setSession(session)
+        setUser(session?.user ?? null)
+      } catch (err: any) {
+        // Handle invalid refresh token by clearing auth state
+        const message = err?.message || "Unknown auth error"
+        if (message.includes("Invalid Refresh Token") || message.includes("Refresh Token Not Found")) {
+          try {
+            await supabase.auth.signOut({ scope: "local" })
+          } catch {}
+          setSession(null)
+          setUser(null)
+          router.replace("/login")
+        } else {
+          console.error("Unexpected error fetching session:", err)
+        }
+      } finally {
+        setIsLoading(false)
+      }
     }
 
     getSession()
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      // If session is null, make sure we clear and route to login
+      if (!session) {
+        try {
+          await supabase.auth.signOut({ scope: "local" })
+        } catch {}
+        setSession(null)
+        setUser(null)
+        setIsLoading(false)
+        router.replace("/login")
+        return
+      }
+
       setSession(session)
-      setUser(session?.user ?? null)
+      setUser(session.user ?? null)
       setIsLoading(false)
       router.refresh()
     })

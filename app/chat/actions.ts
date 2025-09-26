@@ -172,7 +172,7 @@ export async function getRecommendations(
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
     const formattedHistory = chatHistory
       .map((entry) => `${entry.role}: ${entry.parts}`)
@@ -265,7 +265,7 @@ Example response for "looking for pasta in Brooklyn for date night":
 
   // If we have results from Google, use them to generate recommendations
   if (googlePlacesResults.length > 0) {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
     const prompt = `
       You are REX, an expert NYC restaurant recommender.
@@ -326,6 +326,7 @@ Example response for "looking for pasta in Brooklyn for date night":
           borough: parseBorough(placeData?.vicinity || placeData?.formatted_address || ''),
           price_range: placeData?.price_level || null,
           rating: placeData?.rating || null, // Add the missing rating field
+          user_ratings_total: (placeData as any)?.user_ratings_total ?? null,
           dietary_options: null, // Google Places API doesn't provide this directly
           description: null, // Not directly available, could be fetched
           image_url: placeData?.photos?.[0]?.photo_reference || null, // Need another API call for full URL
@@ -334,6 +335,8 @@ Example response for "looking for pasta in Brooklyn for date night":
           scenario_tags: null,
           latitude: placeData?.geometry?.location.lat || null,
           longitude: placeData?.geometry?.location.lng || null,
+          opening_hours: (placeData as any)?.opening_hours?.weekday_text ?? null,
+          matching_score: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           reason: rec.reason, // The reason from Gemini
