@@ -47,6 +47,35 @@ function safeJsonParse(str: string): ExtractedPreferences | null {
   }
 }
 
+// Try multiple Gemini model identifiers to avoid regional/access 404s
+async function generateWithGeminiFallback(prompt: string) {
+  const candidateModels = [
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-8b",
+    "gemini-1.5-flash-001",
+  ]
+
+  let lastError: unknown = null
+  for (const modelName of candidateModels) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName })
+      const result = await model.generateContent(prompt)
+      return result
+    } catch (error: any) {
+      lastError = error
+      const message: string = error?.message || ""
+      const status: number | undefined = error?.status
+      // Continue to next candidate only on 404 model-not-found errors
+      if (status === 404 || message.includes("404") || message.includes("was not found")) {
+        continue
+      }
+      // For other errors (401/429/etc.), stop early
+      throw error
+    }
+  }
+  throw lastError
+}
+
 // Function to get Manhattan neighborhoods
 function getManhattanNeighborhoods(): string[] {
   return [
@@ -172,8 +201,6 @@ export async function getRecommendations(
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
-
     const formattedHistory = chatHistory
       .map((entry) => `${entry.role}: ${entry.parts}`)
       .join("\n")
@@ -238,7 +265,7 @@ Example response for "looking for pasta in Brooklyn for date night":
 }
 `
 
-    const result = await model.generateContent(prompt)
+    const result = await generateWithGeminiFallback(prompt)
     const response = result.response
     const text = response.text()
     console.log("Gemini Raw Response for preferences/follow-up:", text)
@@ -265,8 +292,6 @@ Example response for "looking for pasta in Brooklyn for date night":
 
   // If we have results from Google, use them to generate recommendations
   if (googlePlacesResults.length > 0) {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
-
     const prompt = `
       You are REX, an expert NYC restaurant recommender.
       Based on the user's preferences and a list of potential restaurants from Google Maps, your task is to select the top 3-5 best matches and provide a compelling, personalized reason for each recommendation.
@@ -304,7 +329,7 @@ Example response for "looking for pasta in Brooklyn for date night":
     `
 
     try {
-      const result = await model.generateContent(prompt)
+      const result = await generateWithGeminiFallback(prompt)
       const response = result.response
       const text = response.text()
       console.log("Gemini Raw Response for recommendations:", text)
