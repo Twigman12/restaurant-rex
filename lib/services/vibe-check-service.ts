@@ -58,8 +58,6 @@ export class VibeCheckService {
   }
 
   private async generateAISummary(reviews: string[], restaurant: Restaurant): Promise<Omit<VibeCheckResponse, 'cached' | 'expires_at'>> {
-    const model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" })
-    
     const prompt = `
 You are an expert food critic and data analyst. Your task is to synthesize the following user reviews for a restaurant into a concise, structured JSON object.
 
@@ -85,7 +83,7 @@ ${reviews.join('\n\n')}
 `
 
     try {
-      const result = await model.generateContent(prompt)
+      const result = await this.generateWithGeminiFallback(prompt)
       const response = result.response
       const text = response.text()
       
@@ -100,9 +98,34 @@ ${reviews.join('\n\n')}
       }
     } catch (error) {
       console.error('Error parsing AI response:', error)
-      console.error('Raw AI response:', text)
       return this.generateFallbackVibeCheck(restaurant)
     }
+  }
+
+  // Try multiple Gemini model identifiers to avoid regional/access 404s
+  private async generateWithGeminiFallback(prompt: string) {
+    const candidates = [
+      "gemini-1.5-flash",
+      "gemini-1.5-flash-8b",
+      "gemini-1.5-flash-001",
+    ]
+    let lastError: unknown = null
+    for (const modelName of candidates) {
+      try {
+        const model = this.genAI.getGenerativeModel({ model: modelName })
+        const result = await model.generateContent(prompt)
+        return result
+      } catch (err: any) {
+        lastError = err
+        const message: string = err?.message || ""
+        const status: number | undefined = err?.status
+        if (status === 404 || message.includes('404') || message.includes('was not found')) {
+          continue
+        }
+        throw err
+      }
+    }
+    throw lastError
   }
 
   async getCachedVibeCheck(restaurantId: string) {
