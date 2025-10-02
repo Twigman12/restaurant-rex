@@ -378,10 +378,12 @@ export default function ExperienceDetailPage() {
             <div className="border-t pt-4 space-y-3">
               <h3 className="text-md font-medium text-rex-black">Restaurant Information</h3>
               
-              <div className="flex items-center text-sm">
-                <span className="font-medium text-rex-black mr-2">Cuisine:</span>
-                <span className="text-rex-black/70">{experience.restaurants.cuisine_type}</span>
-              </div>
+              {experience.restaurants.description && (
+                <div className="text-sm">
+                  <span className="font-medium text-rex-black mr-2">About:</span>
+                  <p className="text-rex-black/70 mt-1 leading-relaxed">{experience.restaurants.description}</p>
+                </div>
+              )}
 
               <div className="flex items-center text-sm">
                 <span className="font-medium text-rex-black mr-2">Price:</span>

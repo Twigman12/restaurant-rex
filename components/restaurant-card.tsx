@@ -22,10 +22,12 @@ export function RestaurantCard({ restaurant, reason, showActions = true }: Resta
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4 sm:p-5 space-y-4 sm:space-y-5 flex-grow">
-        <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm gap-1 sm:gap-0">
-          <span className="font-medium text-muted-foreground sm:w-16">Cuisine:</span>
-          <span className="text-foreground break-words">{restaurant.cuisine_type}</span>
-        </div>
+        {restaurant.description && (
+          <div className="text-xs sm:text-sm">
+            <span className="font-medium text-muted-foreground">About:</span>
+            <p className="text-foreground mt-1 leading-relaxed">{restaurant.description}</p>
+          </div>
+        )}
 
         <div className="flex flex-col sm:flex-row sm:items-center text-xs sm:text-sm gap-1 sm:gap-0">
           <span className="font-medium text-muted-foreground sm:w-16">Price:</span>

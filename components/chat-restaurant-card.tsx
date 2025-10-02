@@ -54,9 +54,13 @@ export function ChatRestaurantCard({ restaurant, showActions = true }: ChatResta
                   </span>
                 </div>
               </div>
-              <Badge variant="secondary" className="bg-rex-red/10 text-rex-red border-rex-red/20 text-xs px-2 py-1 flex-shrink-0">
-                {restaurant.cuisine_type}
-              </Badge>
+              {restaurant.cuisine_type && 
+               !restaurant.cuisine_type.includes('establishment') && 
+               !restaurant.cuisine_type.includes('point_of_interest') && (
+                <Badge variant="secondary" className="bg-rex-red/10 text-rex-red border-rex-red/20 text-xs px-2 py-1 flex-shrink-0">
+                  {restaurant.cuisine_type}
+                </Badge>
+              )}
             </div>
 
             {/* Rating, Price, and Match Score */}
