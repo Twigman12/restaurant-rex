@@ -50,14 +50,19 @@ function safeJsonParse(str: string): ExtractedPreferences | null {
 // Try multiple Gemini model identifiers to avoid regional/access 404s
 async function generateWithGeminiFallback(prompt: string) {
   const candidateModels = [
-    "gemini-1.5-flash",
-    "gemini-1.5-flash-8b",
-    "gemini-1.5-flash-001",
+    // Prefer stable 2.x models returned by ListModels for this key
+    "gemini-2.5-flash",
+    "gemini-2.5-pro",
+    "gemini-flash-latest",
+    "gemini-pro-latest",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-001",
   ]
 
   let lastError: unknown = null
   for (const modelName of candidateModels) {
     try {
+      console.log("Attempting Gemini model:", modelName)
       const model = genAI.getGenerativeModel({ model: modelName })
       const result = await model.generateContent(prompt)
       return result
@@ -67,6 +72,7 @@ async function generateWithGeminiFallback(prompt: string) {
       const status: number | undefined = error?.status
       // Continue to next candidate only on 404 model-not-found errors
       if (status === 404 || message.includes("404") || message.includes("was not found")) {
+        console.warn(`Model not found or unsupported (${modelName}). Trying next…`)
         continue
       }
       // For other errors (401/429/etc.), stop early
@@ -104,10 +110,10 @@ function getQueensNeighborhoods(): string[] {
 // New Function: Search Google Places API
 async function searchGooglePlaces(
   preferences: ExtractedPreferences,
-): Promise<Place[]> {
+): Promise<{ results: Place[]; hadError: boolean }> {
   if (!preferences.cuisines?.length && !preferences.other?.length) {
     // Not enough information to search
-    return []
+    return { results: [], hadError: false }
   }
 
   // Build a query from user preferences
@@ -136,9 +142,9 @@ async function searchGooglePlaces(
   try {
     const response = await googleMapsClient.textSearch({ params: searchParams })
     if (response.data.results) {
-      return response.data.results as Place[]
+      return { results: response.data.results as Place[], hadError: false }
     }
-    return []
+    return { results: [], hadError: false }
   } catch (error: any) {
     console.error("Google Places API error. Full details below:");
     if (error.response) {
@@ -147,7 +153,7 @@ async function searchGooglePlaces(
     } else {
       console.error("Error Message:", error.message);
     }
-    return []
+    return { results: [], hadError: true }
   }
 }
 
@@ -278,7 +284,11 @@ Example response for "looking for pasta in Brooklyn for date night":
 
   } catch (error) {
     console.error("Error calling Gemini API for preference extraction:", error)
-    return { recommendations: [] } // Return empty recommendations on error
+    // Friendly fallback when the LLM is unavailable
+    return { 
+      recommendations: [], 
+      followUpQuestion: "Rex isn’t feeling the vibe right now—check back later." 
+    }
   }
 
   if (!extractedPrefs) {
@@ -288,7 +298,11 @@ Example response for "looking for pasta in Brooklyn for date night":
   }
 
   // --- NEW: Integrate Google Places Search ---
-  const googlePlacesResults = await searchGooglePlaces(extractedPrefs)
+  const { results: googlePlacesResults, hadError: placesHadError } = await searchGooglePlaces(extractedPrefs)
+
+  if (placesHadError) {
+    return { recommendations: [], followUpQuestion: "Rex isn’t feeling the vibe right now—check back later." }
+  }
 
   // If we have results from Google, use them to generate recommendations
   if (googlePlacesResults.length > 0) {

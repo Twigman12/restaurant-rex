@@ -66,17 +66,18 @@ Cuisine: ${restaurant.cuisine_type}
 Location: ${restaurant.address}
 
 Analyze the reviews provided below and extract the following information:
-1. "ambiance": A single sentence describing the restaurant's atmosphere, noise level, and ideal occasion.
-2. "must_orders": An array of 2-3 specific dishes or drinks that are most frequently praised.
-3. "watch_outs": An array of 1-2 common logistical challenges or criticisms (e.g., wait times, service, price-to-value).
+1. "ambiance": A single sentence describing the restaurant's atmosphere, noise level, and ideal occasion based on what reviewers say.
+2. "must_orders": An array of 3-5 specific dishes or drinks that are most frequently praised or recommended by reviewers. Include the actual dish names mentioned in reviews.
+3. "watch_outs": An array of 1-3 common logistical challenges or criticisms from reviews (e.g., wait times, service issues, price concerns, crowding).
 
 RULES:
 - Be objective and base your summary ONLY on the provided reviews.
-- If you cannot find a clear consensus on a point, omit it.
+- For must_orders, extract SPECIFIC dish/drink names that reviewers mention by name (e.g., "Spicy Tuna Roll", "Truffle Burger", "Margherita Pizza").
+- If reviewers mention multiple items positively, include up to 5 of the most popular ones.
+- For watch_outs, focus on practical concerns that appear in multiple reviews.
+- If you cannot find a clear consensus on a point, omit it or provide a generic statement.
 - The output must be valid JSON.
 - Keep responses concise and actionable.
-- For must_orders, only include items that are mentioned multiple times or with high praise.
-- For watch_outs, focus on practical concerns that would help diners prepare.
 
 REVIEWS:
 ${reviews.join('\n\n')}
@@ -105,21 +106,28 @@ ${reviews.join('\n\n')}
   // Try multiple Gemini model identifiers to avoid regional/access 404s
   private async generateWithGeminiFallback(prompt: string) {
     const candidates = [
-      "gemini-1.5-flash",
-      "gemini-1.5-flash-8b",
-      "gemini-1.5-flash-001",
+      // Use 2.x models that are available with the current key
+      "gemini-2.5-flash",
+      "gemini-2.5-pro",
+      "gemini-flash-latest",
+      "gemini-pro-latest",
+      "gemini-2.0-flash",
+      "gemini-2.0-flash-001",
     ]
     let lastError: unknown = null
     for (const modelName of candidates) {
       try {
+        console.log(`[VibeCheck] Attempting model: ${modelName}`)
         const model = this.genAI.getGenerativeModel({ model: modelName })
         const result = await model.generateContent(prompt)
+        console.log(`[VibeCheck] Successfully used model: ${modelName}`)
         return result
       } catch (err: any) {
         lastError = err
         const message: string = err?.message || ""
         const status: number | undefined = err?.status
         if (status === 404 || message.includes('404') || message.includes('was not found')) {
+          console.warn(`[VibeCheck] Model not found: ${modelName}, trying next...`)
           continue
         }
         throw err
