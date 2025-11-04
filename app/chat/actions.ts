@@ -23,6 +23,8 @@ interface ExtractedPreferences {
   dietary?: string[]
   scenario?: string
   price?: string // e.g., "$", "$$", "$$$", "$$$$"
+  mood?: string // NEW: User's current mood (e.g., "adventurous", "comfort", "celebratory")
+  vibe?: string // NEW: Desired restaurant vibe (e.g., "lively", "intimate", "chill", "fancy")
   other?: string[]
   followUpQuestion?: string // New field for follow-up questions
 }
@@ -31,6 +33,7 @@ interface ExtractedPreferences {
 export interface GetRecommendationsResponse {
   recommendations: RecommendationResult[]
   followUpQuestion?: string
+  extractedPreferences?: ExtractedPreferences // Return preferences so they can be reused
 }
 
 // Helper function to safely parse JSON
@@ -163,57 +166,79 @@ export async function getRecommendations(
   userId: string,
   chatHistory: Array<{ role: "user" | "model"; parts: string }> = [],
   followUpCount: number = 0, // New parameter for follow-up count
+  storedPreferences?: ExtractedPreferences, // For "more options" requests
+  resultOffset: number = 0, // For pagination
 ): Promise<GetRecommendationsResponse> {
   // Initialize variables
   const supabase = createServerSupabaseClient()
   let extractedPrefs: ExtractedPreferences | null = null
   let restaurants: any[] = []
 
-  // Check if user is asking about neighborhoods
-  const isAskingAboutNeighborhoods = 
-    message.toLowerCase().includes("neighborhood") || 
-    message.toLowerCase().includes("areas") || 
-    message.toLowerCase().includes("district") || 
-    message.toLowerCase().includes("where in");
-  
-  // Check if a borough is mentioned
-  const mentionsManhattan = message.toLowerCase().includes("manhattan");
-  const mentionsBrooklyn = message.toLowerCase().includes("brooklyn");
-  const mentionsQueens = message.toLowerCase().includes("queens");
-  
-  // If asking about neighborhoods, provide appropriate information
-  if (isAskingAboutNeighborhoods) {
-    if (mentionsManhattan) {
-      const neighborhoods = getManhattanNeighborhoods();
-      return {
-        recommendations: [],
-        followUpQuestion: `Popular neighborhoods in Manhattan include: ${neighborhoods.join(", ")}. Which one interests you?`
-      };
-    } 
-    else if (mentionsBrooklyn) {
-      const neighborhoods = getBrooklynNeighborhoods();
-      return {
-        recommendations: [],
-        followUpQuestion: `Popular neighborhoods in Brooklyn include: ${neighborhoods.join(", ")}. Which one interests you?`
-      };
-    }
-    else if (mentionsQueens) {
-      const neighborhoods = getQueensNeighborhoods();
-      return {
-        recommendations: [],
-        followUpQuestion: `Popular neighborhoods in Queens include: ${neighborhoods.join(", ")}. Which one interests you?`
-      };
+  // Check if user is asking for more options/details
+  const isAskingForMore = 
+    message.toLowerCase().includes("more option") || 
+    message.toLowerCase().includes("more detail") ||
+    message.toLowerCase().includes("show me more") ||
+    message.toLowerCase().includes("what else") ||
+    message.toLowerCase().includes("other option") ||
+    message.toLowerCase().includes("more suggestion") ||
+    message.toLowerCase().includes("something else");
+
+  // If asking for more and we have stored preferences, use them
+  if (isAskingForMore && storedPreferences) {
+    extractedPrefs = storedPreferences;
+    // Skip to the search section without re-extracting preferences
+  }
+  // Check if user is asking about neighborhoods (only if not asking for more)
+  else {
+    const isAskingAboutNeighborhoods = 
+      message.toLowerCase().includes("neighborhood") || 
+      message.toLowerCase().includes("areas") || 
+      message.toLowerCase().includes("district") || 
+      message.toLowerCase().includes("where in");
+    
+    // Check if a borough is mentioned
+    const mentionsManhattan = message.toLowerCase().includes("manhattan");
+    const mentionsBrooklyn = message.toLowerCase().includes("brooklyn");
+    const mentionsQueens = message.toLowerCase().includes("queens");
+    
+    // If asking about neighborhoods, provide appropriate information
+    if (isAskingAboutNeighborhoods) {
+      if (mentionsManhattan) {
+        const neighborhoods = getManhattanNeighborhoods();
+        return {
+          recommendations: [],
+          followUpQuestion: `Popular neighborhoods in Manhattan include: ${neighborhoods.join(", ")}. Which one interests you?`
+        };
+      } 
+      else if (mentionsBrooklyn) {
+        const neighborhoods = getBrooklynNeighborhoods();
+        return {
+          recommendations: [],
+          followUpQuestion: `Popular neighborhoods in Brooklyn include: ${neighborhoods.join(", ")}. Which one interests you?`
+        };
+      }
+      else if (mentionsQueens) {
+        const neighborhoods = getQueensNeighborhoods();
+        return {
+          recommendations: [],
+          followUpQuestion: `Popular neighborhoods in Queens include: ${neighborhoods.join(", ")}. Which one interests you?`
+        };
+      }
     }
   }
 
-  try {
-    const formattedHistory = chatHistory
-      .map((entry) => `${entry.role}: ${entry.parts}`)
-      .join("\n")
+  // Only extract preferences if we don't already have them (from "more options" request)
+  if (!extractedPrefs) {
+    try {
+      const formattedHistory = chatHistory
+        .map((entry) => `${entry.role}: ${entry.parts}`)
+        .join("\n")
 
-    const prompt = `
-You are REX, a knowledgeable NYC restaurant specialist. 
-Your primary goal is to understand the user's dining preferences and provide tailored restaurant recommendations.
+      const prompt = `
+You are REX, a witty, slightly snarky NYC restaurant expert with impeccable taste and zero patience for boring food.
+Your personality: Sharp-tongued but helpful. You throw shade before you throw recommendations. Think of yourself as the lovechild of a food critic and your sassiest friend.
+
 Analyze the CURRENT USER REQUEST in the context of CHAT HISTORY and FOLLOW_UP_QUESTION_COUNT.
 
 Chat History:
@@ -224,50 +249,76 @@ Current User request: "${message}"
 First, assess if you have enough information to recommend restaurants. You need:
 1. Food preference (cuisine type or specific dish)
 2. Location preference (borough or neighborhood)
+3. OPTIONAL but valuable: Mood/vibe they're going for
+
+MOOD INDICATORS to watch for:
+- "feeling adventurous", "want to try something new" → adventurous
+- "need comfort food", "had a rough day", "treating myself" → comfort
+- "celebrating", "special occasion", "date night" → celebratory
+- "don't care", "whatever", "hungry" → indifferent
+- "classy", "upscale", "impress someone" → sophisticated
+- "casual", "low-key", "chill" → relaxed
+
+VIBE INDICATORS to watch for:
+- "lively", "energetic", "buzzing", "scene" → lively
+- "quiet", "intimate", "romantic", "cozy" → intimate
+- "trendy", "Instagram-worthy", "hip" → trendy
+- "authentic", "traditional", "old-school" → classic
+- "fun", "casual", "no-frills" → casual
 
 IF the request lacks key information AND followUpQuestionCount < 2:
-  Ask ONE concise, conversational follow-up question focused on the MOST important missing information.
-  For unclear requests like "I'm hungry" or "find me a restaurant", ask about cuisine preferences first.
-  For requests with cuisine but no location, ask specifically about preferred borough or neighborhood.
-  For requests with location but no cuisine, ask about food preferences.
+  Ask ONE snarky but helpful follow-up question focused on the MOST important missing information.
+  Add personality - be playful, witty, maybe slightly judgy but never mean.
   
-  Respond ONLY with a JSON object: { "followUpQuestion": "Your specific, friendly question here" }
+  Respond ONLY with a JSON object: { "followUpQuestion": "Your snarky, specific question here" }
   
-  Examples:
-  - For vague requests: { "followUpQuestion": "What kind of food are you craving today?" }
-  - With cuisine only: { "followUpQuestion": "Great choice! Which area of NYC would you prefer to dine in?" }
-  - With location only: { "followUpQuestion": "What type of cuisine would you like to try in that area?" }
+  Snarky Examples:
+  - For vague "I'm hungry": { "followUpQuestion": "Okay, 'hungry' isn't exactly a cuisine type last time I checked. What kind of food are we talking about here? Pizza? Sushi? Something with truffle oil to feel fancy?" }
+  - For cuisine with no location: { "followUpQuestion": "Italian food in NYC? That's like asking for a bagel in New York—you gotta be more specific. What neighborhood, genius?" }
+  - For location with no cuisine: { "followUpQuestion": "Brooklyn's got like 2.7 million people and probably 10,000 restaurants. Help me out here—what kind of food actually sounds good?" }
+  - For "find me a restaurant": { "followUpQuestion": "Oh sure, let me just pick *any* random place in an 8-million-person city. 🙄 Give me something to work with—cuisine? Vibe? Price range? Literally anything?" }
 
 ELSE IF urgent keywords detected (e.g., "quick", "fast", "soon", "now", "immediately", "urgent"):
-  Extract ANY available preferences, even if minimal.
-  Skip follow-up questions and do your best with limited information.
-  Respond with a JSON object containing available preferences.
+  Extract ANY available preferences, even if minimal. Be snarky about the urgency.
+  Respond with a JSON object containing available preferences and add a snarky note.
 
 ELSE (either enough information OR we've already asked enough follow-ups):
   Extract the following specific preferences:
-  - cuisines: Array of desired cuisines or dishes.
-  - neighborhoods: Array of specific NYC neighborhoods, correctly spelled.
-  - boroughs: Array of NYC boroughs (Manhattan, Brooklyn, Queens, Bronx, Staten Island).
-  - dietary: Array of dietary restrictions (vegan, vegetarian, gluten-free, dairy-free, nut-free, halal, kosher).
-  - scenario: String describing the occasion (e.g., "romantic dinner", "business lunch", "family meal").
-  - price: Price range ("$", "$$", "$$$", or "$$$$").
-  - other: Other requirements (e.g., "outdoor seating", "view", "quiet").
+  - cuisines: Array of desired cuisines or dishes
+  - neighborhoods: Array of specific NYC neighborhoods, correctly spelled
+  - boroughs: Array of NYC boroughs (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
+  - dietary: Array of dietary restrictions (vegan, vegetarian, gluten-free, dairy-free, nut-free, halal, kosher)
+  - scenario: String describing the occasion (e.g., "romantic dinner", "business lunch", "family meal")
+  - price: Price range ("$", "$$", "$$$", or "$$$$")
+  - mood: User's current mood (adventurous, comfort, celebratory, indifferent, sophisticated, relaxed)
+  - vibe: Desired restaurant atmosphere (lively, intimate, trendy, classic, casual, upscale)
+  - other: Other requirements (e.g., "outdoor seating", "view", "quiet")
 
   Respond ONLY with a valid JSON object containing these fields.
 
 IMPORTANT:
-- Normalize neighborhood names to match standard NYC terminology
-- Correctly identify cuisines from dish names (e.g., "pizza" → "Italian")
-- When a user mentions a borough like "Brooklyn", include it as a borough, not a neighborhood
-- When in doubt between cuisine variations (e.g., "Chinese" vs "Sichuan"), include both
+- Capture emotional context and mood from the user's language
+- Note words like "rough day", "celebrating", "impress", "whatever" - these indicate mood
 - Always prioritize user's explicit preferences over implied ones
+- When extracting mood/vibe, be specific and confident
 
-Example response for "looking for pasta in Brooklyn for date night":
+Example response for "Had a rough day, need comfort food, thinking pasta in Brooklyn":
 {
   "cuisines": ["Italian", "Pasta"],
   "boroughs": ["Brooklyn"],
-  "scenario": "romantic dinner",
+  "mood": "comfort",
+  "vibe": "cozy",
+  "scenario": "comfort meal",
   "price": "$$"
+}
+
+Example response for "Want to impress a date, somewhere fancy in Manhattan":
+{
+  "boroughs": ["Manhattan"],
+  "mood": "sophisticated",
+  "vibe": "upscale",
+  "scenario": "romantic dinner",
+  "price": "$$$"
 }
 `
 
@@ -282,19 +333,20 @@ Example response for "looking for pasta in Brooklyn for date night":
       return { recommendations: [], followUpQuestion: extractedPrefs.followUpQuestion };
     }
 
-  } catch (error) {
-    console.error("Error calling Gemini API for preference extraction:", error)
-    // Friendly fallback when the LLM is unavailable
-    return { 
-      recommendations: [], 
-      followUpQuestion: "Rex isn’t feeling the vibe right now—check back later." 
+    } catch (error) {
+      console.error("Error calling Gemini API for preference extraction:", error)
+      // Friendly fallback when the LLM is unavailable
+      return { 
+        recommendations: [], 
+        followUpQuestion: "Rex isn't feeling the vibe right now—check back later." 
+      }
     }
-  }
 
-  if (!extractedPrefs) {
-    console.warn("Could not extract preferences or follow-up from message:", message)
-    // If Gemini didn't provide a follow-up and parsing failed, ask a generic question.
-    return { recommendations: [], followUpQuestion: "I'm sorry, I had a little trouble understanding that. Could you tell me a bit more about what you're looking for, like the type of cuisine or a neighborhood?" };
+    if (!extractedPrefs) {
+      console.warn("Could not extract preferences or follow-up from message:", message)
+      // If Gemini didn't provide a follow-up and parsing failed, ask a generic question.
+      return { recommendations: [], followUpQuestion: "I'm sorry, I had a little trouble understanding that. Could you tell me a bit more about what you're looking for, like the type of cuisine or a neighborhood?" };
+    }
   }
 
   // --- NEW: Integrate Google Places Search ---
@@ -306,40 +358,99 @@ Example response for "looking for pasta in Brooklyn for date night":
 
   // If we have results from Google, use them to generate recommendations
   if (googlePlacesResults.length > 0) {
+    // For "more options" requests, add a snarky reiteration message
+    let preferenceSummary = "";
+    if (isAskingForMore) {
+      const prefParts = [];
+      if (extractedPrefs.cuisines && extractedPrefs.cuisines.length > 0) {
+        prefParts.push(extractedPrefs.cuisines.join(" or "));
+      }
+      if (extractedPrefs.neighborhoods && extractedPrefs.neighborhoods.length > 0) {
+        prefParts.push(`in ${extractedPrefs.neighborhoods.join(" or ")}`);
+      } else if (extractedPrefs.boroughs && extractedPrefs.boroughs.length > 0) {
+        prefParts.push(`in ${extractedPrefs.boroughs.join(" or ")}`);
+      }
+      if (extractedPrefs.mood) {
+        prefParts.push(`${extractedPrefs.mood} vibes`);
+      }
+      if (extractedPrefs.price) {
+        prefParts.push(`${extractedPrefs.price} price range`);
+      }
+      preferenceSummary = prefParts.join(", ");
+    }
+
+    // Slice results based on offset to get different restaurants for "more options"
+    const startIdx = resultOffset;
+    const endIdx = Math.min(startIdx + 10, googlePlacesResults.length);
+    const resultsToUse = googlePlacesResults.slice(startIdx, endIdx);
+
     const prompt = `
-      You are REX, an expert NYC restaurant recommender.
-      Based on the user's preferences and a list of potential restaurants from Google Maps, your task is to select the top 3-5 best matches and provide a compelling, personalized reason for each recommendation.
+You are REX, a snarky, witty NYC restaurant expert who's seen it all and isn't afraid to share opinions.
+Based on the user's preferences and a list of potential restaurants from Google Maps, select the top 3 best matches.
 
-      User Preferences:
-      - Cuisines: ${extractedPrefs.cuisines?.join(", ") || "Any"}
-      - Location: ${[...(extractedPrefs.neighborhoods || []), ...(extractedPrefs.boroughs || [])].join(", ") || "Any"}
-      - Price Range: ${extractedPrefs.price || "Any"}
-      - Vibe/Scenario: ${extractedPrefs.scenario || "Any"}
-      - Dietary Needs: ${extractedPrefs.dietary?.join(", ") || "None"}
-      - Other: ${extractedPrefs.other?.join(", ") || "None"}
+${isAskingForMore ? `IMPORTANT: The user asked for MORE OPTIONS for their search: "${preferenceSummary}". 
+For the FIRST restaurant in your array, start the "reason" field with a snarky line like:
+"Okay okay, still looking for ${preferenceSummary}? Here are 3 MORE options for you..."
+OR
+"Alright, more ${preferenceSummary} coming right up. You're really making me work today..."
+OR
+"So the first batch wasn't enough? Fine, here are 3 more ${preferenceSummary} spots..."
 
-      Potential Restaurants from Google Places (first 10):
-      ${googlePlacesResults.slice(0, 10).map(p => `
-        - Name: ${p.name}
-        - Address: ${p.vicinity || p.formatted_address}
-        - Rating: ${p.rating} (${p.user_ratings_total} reviews)
-        - Price Level: ${p.price_level} (1-4 scale)
-        - Types: ${p.types?.join(", ")}
-      `).join("")}
+Then continue with normal snarky recommendations for all 3 restaurants.` : ""}
 
-      Your goal is to return a JSON array of recommended restaurants.
-      For each restaurant, include:
-      1. All original fields from the Google Places result.
-      2. A "reason" field: A 1-2 sentence, friendly, and persuasive explanation of WHY this specific restaurant is a great match for the user's stated preferences. Be specific. For example, mention the rating if it's high, or how the vibe fits their scenario.
+User Preferences:
+- Cuisines: ${extractedPrefs.cuisines?.join(", ") || "Any"}
+- Location: ${[...(extractedPrefs.neighborhoods || []), ...(extractedPrefs.boroughs || [])].join(", ") || "Any"}
+- Price Range: ${extractedPrefs.price || "Any"}
+- Vibe/Scenario: ${extractedPrefs.scenario || "Any"}
+- Mood: ${extractedPrefs.mood || "Not specified"}
+- Desired Vibe: ${extractedPrefs.vibe || "Not specified"}
+- Dietary Needs: ${extractedPrefs.dietary?.join(", ") || "None"}
+- Other: ${extractedPrefs.other?.join(", ") || "None"}
 
-      Respond ONLY with a valid JSON array in the following format:
-      [
-        {
-          "name": "Restaurant Name",
-          "reason": "This spot is perfect because..."
-        },
-        ...
-      ]
+Potential Restaurants from Google Places:
+${resultsToUse.map(p => `
+  - Name: ${p.name}
+  - Address: ${p.vicinity || p.formatted_address}
+  - Rating: ${p.rating} (${p.user_ratings_total} reviews)
+  - Price Level: ${p.price_level} (1-4 scale)
+  - Types: ${p.types?.join(", ")}
+`).join("")}
+
+Your task:
+1. Select 3-5 restaurants that BEST match the user's preferences, paying special attention to mood and vibe
+2. For EACH restaurant, provide a "reason" field with TWO parts:
+   a) SNARKY OPENING (1 sentence): A witty, playful, slightly sarcastic comment that shows personality
+   b) GENUINE RECOMMENDATION (1-2 sentences): Why this place actually matches their needs
+
+TONE GUIDELINES:
+- Be playful and sassy, not mean
+- Reference the user's mood or situation if it was mentioned
+- Make pop culture references, use humor, be conversational
+- Show you actually know NYC food culture
+- End on a genuinely helpful note
+
+Example format for reasons:
+- "Listen, if you're having a rough day, the last thing you need is pretentious small plates. This cozy Italian spot does pasta the way your nonna would—if she actually knew what she was doing. Perfect for drowning your sorrows in carbs and red wine."
+- "Oh, you want to impress someone? Bold move going to [Restaurant Name]. The 4.5-star rating and that swanky cocktail menu should do the trick—unless you spill something, which, no pressure. Great ambiance for acting like you've got your life together."
+- "I see you're going with [Restaurant Name]. Interesting choice for someone who just said 'whatever'. But honestly? Their ramen will slap you out of your apathy. Trust me on this one."
+
+Respond ONLY with a valid JSON array:
+[
+  {
+    "name": "Restaurant Name",
+    "reason": "[SNARKY OPENING] [GENUINE RECOMMENDATION]"
+  },
+  ...
+]
+
+Match the mood:
+- Comfort mood → emphasize warmth, familiar favorites, generous portions
+- Adventurous mood → highlight unique dishes, fusion concepts, bold flavors
+- Celebratory mood → focus on special atmosphere, standout experiences
+- Sophisticated mood → emphasize elegance, refined service, impressive details
+
+${isAskingForMore ? "Return exactly 3 recommendations since this is a 'more options' request." : "Return 3-5 recommendations."}
     `
 
     try {
@@ -382,21 +493,32 @@ Example response for "looking for pasta in Brooklyn for date night":
         }
       })
 
-      return { recommendations: finalRecommendations }
+      return { 
+        recommendations: finalRecommendations,
+        extractedPreferences: extractedPrefs // Return preferences for "more options" functionality
+      }
 
     } catch (error) {
       console.error("Error calling Gemini for final recommendations:", error)
       // Fallback or error handling
-      return { recommendations: [], followUpQuestion: "I found some places but had trouble deciding. Can you tell me more about what's important for you?" }
+      return { 
+        recommendations: [], 
+        followUpQuestion: "I found some places but had trouble deciding. Can you tell me more about what's important for you?",
+        extractedPreferences: extractedPrefs
+      }
     }
   }
   
   // What if google returns no results? We can fall back to a message.
   if (!extractedPrefs.followUpQuestion) {
-     return { recommendations: [], followUpQuestion: "I couldn't find any spots matching that criteria. Would you like to try a different neighborhood or cuisine?" }
+     return { 
+       recommendations: [], 
+       followUpQuestion: "I couldn't find any spots matching that criteria. Would you like to try a different neighborhood or cuisine?",
+       extractedPreferences: extractedPrefs
+     }
   }
 
-  return { recommendations: [] } // Should be unreachable if logic is correct
+  return { recommendations: [], extractedPreferences: extractedPrefs } // Should be unreachable if logic is correct
 }
 
 // Helper function to map price symbols ("$", "$$", etc.) to numeric values (1-4)

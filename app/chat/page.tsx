@@ -71,7 +71,7 @@ export default function ChatPage() {
     {
       role: "assistant",
       content:
-        "Hi! I'm REX, your NYC restaurant guide. Tell me what you're looking for! Mention things like cuisine, neighborhood, price range, or occasion (e.g., 'cheap Thai near Union Square' or 'fancy dinner for an anniversary').",
+        "Hey there, I'm REX—your brutally honest NYC restaurant guide who's eaten at more places than you have Instagram followers. Tell me what you're craving, what mood you're in, and where you want to eat. And please, be more specific than 'I'm hungry' because...obviously. 🙄",
     },
   ])
   const [input, setInput] = useState("")
@@ -79,6 +79,8 @@ export default function ChatPage() {
   const [initialQueryProcessed, setInitialQueryProcessed] = useState(false)
   const [followUpCount, setFollowUpCount] = useState(0);
   const [currentRecommendations, setCurrentRecommendations] = useState<RecommendationResult[]>([])
+  const [lastPreferences, setLastPreferences] = useState<any>(null) // Store last search preferences
+  const [resultOffset, setResultOffset] = useState(0) // Track offset for pagination
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { toast } = useToast()
@@ -107,7 +109,7 @@ export default function ChatPage() {
           setIsLoading(true)
 
           try {
-            setMessages((prev) => [...prev, { role: "assistant", content: "Okay, let me look for that..." }])
+            setMessages((prev) => [...prev, { role: "assistant", content: "Hold on, let me work my magic..." }])
 
             const historyForBackend = currentMessages.map(m => ({ 
               role: (m.role === "assistant" ? "model" : m.role) as "user" | "model", 
@@ -115,8 +117,14 @@ export default function ChatPage() {
             }));
             const relevantHistory = historyForBackend.slice(0, -2);
 
-            const result = await getRecommendations(initialQuery, user.id, relevantHistory, followUpCount)
+            const result = await getRecommendations(initialQuery, user.id, relevantHistory, followUpCount, undefined, 0)
             setMessages((prev) => prev.slice(0, -1))
+
+            // Store preferences if we got any
+            if (result.extractedPreferences) {
+              setLastPreferences(result.extractedPreferences)
+              setResultOffset(10) // Next "more options" will start from index 10
+            }
 
             if (result.followUpQuestion && typeof result.followUpQuestion === 'string') {
               setMessages((prev) => [...prev, { role: "assistant", content: result.followUpQuestion! }])
@@ -135,7 +143,7 @@ export default function ChatPage() {
               } else {
                 setMessages((prev) => [
                   ...prev,
-                  { role: "assistant", content: "Based on your preferences, here are my top picks:" },
+                  { role: "assistant", content: "Alright, alright, here's what I found for you:" },
                 ])
               }
               
@@ -154,7 +162,7 @@ export default function ChatPage() {
                 ...prev,
                 {
                   role: "assistant",
-                  content: "Hmm, I couldn't find anything matching that exactly. Could you try broadening your search a bit, maybe focusing on the cuisine or neighborhood?",
+                  content: "Well this is awkward... I got nothing for that combo. Either your standards are too high or your search is too vague. Wanna try again with different criteria?",
                 },
               ])
             }
@@ -162,14 +170,14 @@ export default function ChatPage() {
             console.error("Error getting recommendations:", error)
             setMessages((prev) => {
               const newMessages = [...prev]
-              if (newMessages[newMessages.length - 1]?.content === "Okay, let me look for that...") {
+              if (newMessages[newMessages.length - 1]?.content === "Hold on, let me work my magic...") {
                 newMessages.pop()
               }
               return [
                 ...newMessages,
                 {
                   role: "assistant",
-                  content: "Apologies, I couldn't fetch those recommendations right now. Sometimes rephrasing helps, or feel free to try again shortly.",
+                  content: "Oof, something broke on my end. Even I'm not perfect. 😤 Give it another shot in a sec?",
                 },
               ]
             })
@@ -194,13 +202,29 @@ export default function ChatPage() {
 
     const userMessage = input.trim()
     setInput("")
-    setCurrentRecommendations([]) // Clear previous recommendations
+    
+    // Check if user is asking for more options
+    const isAskingForMore = 
+      userMessage.toLowerCase().includes("more option") || 
+      userMessage.toLowerCase().includes("more detail") ||
+      userMessage.toLowerCase().includes("show me more") ||
+      userMessage.toLowerCase().includes("what else") ||
+      userMessage.toLowerCase().includes("other option") ||
+      userMessage.toLowerCase().includes("more suggestion") ||
+      userMessage.toLowerCase().includes("something else");
+
+    // Don't clear recommendations if asking for more
+    if (!isAskingForMore) {
+      setCurrentRecommendations([]) // Clear previous recommendations
+      setResultOffset(0) // Reset offset for new search
+    }
+
     const updatedMessages: ChatMessage[] = [...messages, { role: "user", content: userMessage }];
     setMessages(updatedMessages);
     setIsLoading(true)
 
     try {
-      setMessages((prev) => [...prev, { role: "assistant", content: "Okay, let me check..." }])
+      setMessages((prev) => [...prev, { role: "assistant", content: "Hold on, let me work my magic..." }])
 
       const historyForBackend = updatedMessages.map(m => ({ 
         role: (m.role === "assistant" ? "model" : m.role) as "user" | "model",
@@ -208,8 +232,21 @@ export default function ChatPage() {
       }));
       const relevantHistory = historyForBackend.slice(0, -2);
 
-      const result = await getRecommendations(userMessage, user.id, relevantHistory, followUpCount)
+      // Pass stored preferences and offset if asking for more options
+      const prefsToUse = isAskingForMore ? lastPreferences : undefined;
+      const offsetToUse = isAskingForMore ? resultOffset : 0;
+
+      const result = await getRecommendations(userMessage, user.id, relevantHistory, followUpCount, prefsToUse, offsetToUse)
       setMessages((prev) => prev.slice(0, -1))
+
+      // Store/update preferences if we got any
+      if (result.extractedPreferences) {
+        setLastPreferences(result.extractedPreferences)
+        if (result.recommendations.length > 0) {
+          // Increment offset for next "more options" request
+          setResultOffset(prev => isAskingForMore ? prev + 10 : 10)
+        }
+      }
 
       if (result.followUpQuestion && typeof result.followUpQuestion === 'string') {
         setMessages((prev) => [...prev, { role: "assistant", content: result.followUpQuestion! }])
@@ -228,7 +265,7 @@ export default function ChatPage() {
         } else {
           setMessages((prev) => [
             ...prev,
-            { role: "assistant", content: "Based on your preferences, here are my top picks:" },
+            { role: "assistant", content: "Alright, alright, here's what I found for you:" },
           ])
         }
         
@@ -247,7 +284,7 @@ export default function ChatPage() {
           ...prev,
           {
             role: "assistant",
-            content: "Hmm, I couldn't find anything matching that exactly. Could you try broadening your search a bit, maybe focusing on the cuisine or neighborhood?",
+            content: "Well this is awkward... I got nothing for that combo. Either your standards are too high or your search is too vague. Wanna try again with different criteria?",
           },
         ])
       }
@@ -255,14 +292,14 @@ export default function ChatPage() {
       console.error("Error getting recommendations:", error)
       setMessages((prev) => {
         const newMessages = [...prev]
-        if (newMessages[newMessages.length - 1]?.content === "Okay, let me check...") {
+        if (newMessages[newMessages.length - 1]?.content === "Hold on, let me work my magic...") {
           newMessages.pop()
         }
         return [
           ...newMessages,
           {
             role: "assistant",
-            content: "Apologies, I couldn't fetch those recommendations right now. Sometimes rephrasing helps, or feel free to try again shortly.",
+            content: "Oof, something broke on my end. Even I'm not perfect. 😤 Give it another shot in a sec?",
           },
         ]
       })
