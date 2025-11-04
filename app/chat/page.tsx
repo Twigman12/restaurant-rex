@@ -9,7 +9,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
-import { Send, Loader2, MapPin, ArrowLeft } from "lucide-react"
+import { Send, Loader2, MapPin, Plus } from "lucide-react"
 import type { ChatMessage } from "@/lib/types"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
@@ -319,130 +319,165 @@ export default function ChatPage() {
 
   if (authLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-rex-cream">
-        <Loader2 className="h-8 w-8 animate-spin text-rex-red" />
+      <div className="flex min-h-screen items-center justify-center bg-[#121212]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#e53935]" />
       </div>
     )
   }
 
   return (
-    <div className="bg-rex-cream h-full">
-      <div className="container mx-auto px-4 py-6 md:py-8 max-w-3xl h-full flex flex-col">
-        <div className="flex items-center justify-between mb-4 md:mb-6">
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => router.back()}
-              className="text-rex-black hover:bg-rex-red/10"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="sr-only">Go back</span>
-            </Button>
-            <h1 className="text-xl md:text-2xl font-bold text-rex-black rex-logo">Chat with REX</h1>
-          </div>
-          <div></div>
-        </div>
+    <div className="relative h-screen w-full bg-[#121212] flex flex-col overflow-hidden">
+      {/* Subtle red gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-10">
+        <div className="h-full w-full bg-gradient-to-b from-transparent via-[#e53935] to-transparent" />
+      </div>
 
-        <div className="flex flex-col flex-1 h-[calc(100%-4rem)]">
-          <div className="flex-1 overflow-y-auto mb-4 space-y-5 p-4 rounded-xl border border-rex-red/10 bg-white dark:bg-rex-black/50">
-            {messages.map((message, index) => (
-              <div 
-                key={index} 
-                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out`}
-              >
-                <Card
-                  className={`max-w-[85%] rounded-xl shadow-sm ${ 
-                    message.role === "user" 
-                      ? "bg-rex-red text-white" 
-                      : "bg-rex-black text-rex-cream"
-                  }`}
-                >
-                  <CardContent className="p-4 prose prose-base dark:prose-invert max-w-none prose-p:my-1 prose-a:text-rex-red hover:prose-a:text-rex-red/80">
-                    {message.content === "..." ? (
-                      <div className="flex items-center space-x-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>REX is thinking...</span>
-                      </div>
-                    ) : (
-                      <ReactMarkdown
-                        components={{
-                          a: ({ node, ...props }) => (
-                            <Link
-                              href={props.href || "#"}
-                              {...props}
-                              className="text-rex-red hover:text-rex-red/80 underline font-medium"
-                            />
-                          ),
-                        }}
-                      >
-                        {message.content}
-                      </ReactMarkdown>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-            
-            {/* Display restaurant recommendations as cards */}
-            {currentRecommendations.length > 0 && (
-              <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out">
-                <div className="flex justify-start">
-                  <Card className="bg-rex-black text-rex-cream max-w-[85%] rounded-xl shadow-sm">
-                    <CardContent className="p-4">
-                      <h3 className="text-sm font-medium text-rex-cream mb-3">Here are my recommendations:</h3>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className="space-y-3">
-                  {currentRecommendations.map((restaurant) => (
-                    <ChatRestaurantCard 
-                      key={restaurant.id} 
-                      restaurant={restaurant} 
-                      showActions={true}
-                    />
-                  ))}
+      {/* Header */}
+      <div className="relative bg-[#e53935] border-b-4 border-[beige] flex items-center gap-3 h-[68px] px-4 z-10">
+        {/* REX Logo */}
+        <div className="flex items-center gap-3">
+          <div className="bg-[beige] border-2 border-black w-10 h-10 flex items-center justify-center">
+            <span className="text-[#e53935] font-bold text-sm">REX</span>
+          </div>
+          <div className="flex flex-col">
+            <h1 className="text-[beige] text-base font-normal" style={{ textShadow: '0px 0px 16px #f5f5dc' }}>
+              REX
+            </h1>
+            <p className="text-black text-xs font-normal">
+              ⚡ ONLINE • NYC DINING ⚡
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Chat Messages Area */}
+      <div className="relative flex-1 overflow-y-auto px-4 py-4 space-y-4">
+        {messages.map((message, index) => (
+          <div 
+            key={index} 
+            className={`flex ${message.role === "user" ? "justify-end" : "justify-start items-start gap-2"} animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out`}
+          >
+            {/* REX Avatar for assistant messages */}
+            {message.role === "assistant" && (
+              <div className="flex-shrink-0 mt-8">
+                <div className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center">
+                  <span className="text-[#e53935] font-normal text-xs">R</span>
                 </div>
               </div>
             )}
             
-            <div ref={messagesEndRef} />
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <div className="bg-white dark:bg-rex-black rounded-lg p-2 border border-rex-red/10 shadow-sm">
-              <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                <Textarea
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask REX anything about NYC dining..."
-                  className="flex-1 min-h-10 resize-none border rounded-md px-3 py-2 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 placeholder:text-muted-foreground bg-transparent dark:bg-transparent"
-                  rows={1}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault()
-                      handleSubmit(e)
-                    }
-                  }}
-                />
-                <Button type="submit" size="icon" className="rex-button rounded-md w-10 h-10 flex-shrink-0" disabled={isLoading || !input.trim()}>
-                  {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
-                </Button>
-              </form>
+            <div className={`flex flex-col gap-1 ${message.role === "user" ? "items-end" : "items-start"} max-w-[75%]`}>
+              {/* Message Bubble */}
+              <div
+                className={`${
+                  message.role === "user" 
+                    ? "bg-[#e53935] border-4 border-[beige] text-white" 
+                    : "bg-[beige] border-4 border-black text-[#121212]"
+                } px-5 py-4`}
+              >
+                {message.content === "..." ? (
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-sm">REX is thinking...</span>
+                  </div>
+                ) : (
+                  <div className="text-sm leading-relaxed">
+                    <ReactMarkdown
+                      components={{
+                        p: ({ node, ...props }) => <p className="my-1" {...props} />,
+                        a: ({ node, ...props }) => (
+                          <Link
+                            href={props.href || "#"}
+                            {...props}
+                            className={`${message.role === "user" ? "text-[beige] underline" : "text-[#e53935] underline"} font-medium`}
+                          />
+                        ),
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </div>
+              
+              {/* Timestamp */}
+              <p className={`text-[beige] text-xs px-2 ${message.role === "user" ? "text-right" : "text-left"}`}>
+                {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+              </p>
             </div>
-            <div className="flex flex-wrap gap-2 pb-2">
-              {getCurrentSuggestions(messages).map((suggestion, index) => (
-                <Badge
-                  key={index}
-                  className="px-3 py-1.5 cursor-pointer rounded-full shadow-sm text-sm 
-                             bg-rex-red text-white hover:bg-red-600 transition-colors"
-                  onClick={() => handleSuggestionClick(suggestion)}
-                >
-                  {suggestion}
-                </Badge>
+          </div>
+        ))}
+        
+        {/* Display restaurant recommendations as cards */}
+        {currentRecommendations.length > 0 && (
+          <div className="space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out">
+            <div className="space-y-3">
+              {currentRecommendations.map((restaurant) => (
+                <ChatRestaurantCard 
+                  key={restaurant.id} 
+                  restaurant={restaurant} 
+                  showActions={true}
+                />
               ))}
             </div>
           </div>
+        )}
+        
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Suggestions Row */}
+      <div className="relative bg-[#121212] px-4 py-3 border-t-4 border-[beige]/10">
+        <div className="flex gap-3 overflow-x-auto pb-2">
+          {getCurrentSuggestions(messages).map((suggestion, index) => (
+            <button
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="bg-[beige] border-4 border-[#e53935] px-5 py-3 text-[#121212] text-base font-normal whitespace-nowrap hover:bg-[beige]/90 transition-colors flex-shrink-0"
+            >
+              ★ {suggestion}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Input Area */}
+      <div className="relative bg-[#e53935] border-t-4 border-[beige] px-4 py-4">
+        <div className="flex items-center gap-3">
+          {/* Plus Button */}
+          <button className="bg-[beige] border-2 border-black w-11 h-11 flex items-center justify-center hover:bg-[beige]/90 transition-colors flex-shrink-0">
+            <Plus className="w-5 h-5 text-black" />
+          </button>
+
+          {/* Input Container */}
+          <form onSubmit={handleSubmit} className="flex-1 flex items-center gap-2">
+            <div className="flex-1 bg-[#121212] border-4 border-[beige] px-5 py-3 flex items-center gap-2" style={{ boxShadow: '0px 0px 20px 0px inset rgba(245, 245, 220, 0.2)' }}>
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="ASK REX..."
+                className="flex-1 bg-transparent text-base text-white placeholder:text-[rgba(245,245,220,0.5)] outline-none border-none"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault()
+                    handleSubmit(e)
+                  }
+                }}
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading || !input.trim()}
+                className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center hover:bg-[beige]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 text-[#e53935] animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4 text-black" />
+                )}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
