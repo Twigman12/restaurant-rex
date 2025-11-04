@@ -9,7 +9,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
-import { Send, Loader2, MapPin, Plus } from "lucide-react"
+import { Send, Loader2, MapPin } from "lucide-react"
 import type { ChatMessage } from "@/lib/types"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
@@ -22,24 +22,43 @@ const suggestionCategories = {
   initial: [
     "Italian restaurant in SoHo",
     "Vegan food in Brooklyn",
-    "Business lunch in Midtown"
+    "Business lunch in Midtown",
+    "Late night tacos in East Village",
+    "Romantic dinner in West Village",
+    "Brunch spot in Williamsburg",
+    "Cheap eats in Chinatown",
+    "Pizza place in Greenwich Village",
+    "Sushi in Midtown",
+    "Mexican food in Hell's Kitchen"
   ],
   afterRecommendation: [
     "Something more casual",
     "A cheaper option",
-    "Similar but in a different neighborhood"
+    "Similar but in a different neighborhood",
+    "More upscale option",
+    "Quieter atmosphere",
+    "Something with outdoor seating"
   ],
   afterNoResults: [
     "Italian restaurants anywhere",
     "Casual dining options",
-    "Places good for groups"
+    "Places good for groups",
+    "Budget-friendly spots",
+    "Upscale restaurants",
+    "Family-friendly places"
   ]
+};
+
+// Function to shuffle and get random suggestions
+const getRandomSuggestions = (suggestions: string[], count: number = 3) => {
+  const shuffled = [...suggestions].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
 };
 
 // Function to determine which suggestions to show
 const getCurrentSuggestions = (messages: ChatMessage[]) => {
   // If no messages yet or just the greeting, show initial suggestions
-  if (messages.length <= 1) return suggestionCategories.initial;
+  if (messages.length <= 1) return getRandomSuggestions(suggestionCategories.initial);
   
   // Get the last assistant message
   const lastAssistantMsg = [...messages].reverse()
@@ -47,15 +66,15 @@ const getCurrentSuggestions = (messages: ChatMessage[]) => {
   
   // Check the content to determine context
   if (lastAssistantMsg?.content.includes("couldn't find")) {
-    return suggestionCategories.afterNoResults;
+    return getRandomSuggestions(suggestionCategories.afterNoResults);
   } else if (lastAssistantMsg?.content.includes("top picks") || 
              lastAssistantMsg?.content.includes("alternatives") ||
              lastAssistantMsg?.content.includes("Would you like more details")) {
-    return suggestionCategories.afterRecommendation;
+    return getRandomSuggestions(suggestionCategories.afterRecommendation);
   }
   
   // Default to initial suggestions
-  return suggestionCategories.initial;
+  return getRandomSuggestions(suggestionCategories.initial);
 };
 
 // Helper function to format a recommendation message using Markdown
@@ -326,24 +345,37 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="relative h-screen w-full bg-[#121212] flex flex-col overflow-hidden">
-      {/* Subtle red gradient overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-10">
-        <div className="h-full w-full bg-gradient-to-b from-transparent via-[#e53935] to-transparent" />
+    <div className="relative h-screen w-full flex flex-col overflow-hidden bg-[radial-gradient(circle_at_center,#1a1a1a_0%,#121212_100%)]">
+      {/* CRT Scan Lines Effect */}
+      <div className="absolute inset-0 pointer-events-none opacity-10 z-50">
+        <div 
+          className="h-full w-full bg-gradient-to-b from-transparent via-[#e53935] to-transparent animate-scan-lines"
+        />
       </div>
 
-      {/* Header */}
-      <div className="relative bg-[#e53935] border-b-4 border-[beige] flex items-center gap-3 h-[68px] px-4 z-10">
+      {/* Header with Neon Glow */}
+      <div 
+        className="relative bg-[#e53935] border-b-4 border-[beige] flex items-center gap-3 h-[68px] px-4 z-10"
+        style={{ boxShadow: '0 0 15px rgba(229, 57, 53, 0.6)' }}
+      >
         {/* REX Logo */}
         <div className="flex items-center gap-3">
-          <div className="bg-[beige] border-2 border-black w-10 h-10 flex items-center justify-center">
+          <div 
+            className="bg-[beige] border-2 border-black w-10 h-10 flex items-center justify-center transition-transform active:scale-95"
+            style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 1)' }}
+          >
             <span className="text-[#e53935] font-bold text-sm">REX</span>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-[beige] text-base font-normal" style={{ textShadow: '0px 0px 16px #f5f5dc' }}>
+            <h1 
+              className="text-[beige] text-base font-bold tracking-wide" 
+              style={{ 
+                textShadow: '0px 0px 15px rgba(245, 245, 220, 0.8), 0px 0px 30px rgba(245, 245, 220, 0.4)' 
+              }}
+            >
               REX
             </h1>
-            <p className="text-black text-xs font-normal">
+            <p className="text-black text-xs font-bold tracking-wider">
               ⚡ ONLINE • NYC DINING ⚡
             </p>
           </div>
@@ -355,33 +387,47 @@ export default function ChatPage() {
         {messages.map((message, index) => (
           <div 
             key={index} 
-            className={`flex ${message.role === "user" ? "justify-end" : "justify-start items-start gap-2"} animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out`}
+            className={`flex ${message.role === "user" ? "justify-end" : "justify-start items-start gap-2"} animate-in fade-in ${message.role === "user" ? "slide-in-from-right-5" : "slide-in-from-left-5"} duration-300 ease-out`}
           >
             {/* REX Avatar for assistant messages */}
             {message.role === "assistant" && (
               <div className="flex-shrink-0 mt-8">
-                <div className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center">
-                  <span className="text-[#e53935] font-normal text-xs">R</span>
+                <div 
+                  className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center"
+                  style={{ 
+                    boxShadow: '3px 3px 0px rgba(0, 0, 0, 1)',
+                  }}
+                >
+                  <span className="text-[#e53935] font-bold text-xs">R</span>
                 </div>
               </div>
             )}
             
             <div className={`flex flex-col gap-1 ${message.role === "user" ? "items-end" : "items-start"} max-w-[75%]`}>
-              {/* Message Bubble */}
+              {/* Message Bubble with Neon Glow and Hard Shadow */}
               <div
                 className={`${
                   message.role === "user" 
                     ? "bg-[#e53935] border-4 border-[beige] text-white" 
                     : "bg-[beige] border-4 border-black text-[#121212]"
-                } px-5 py-4`}
+                } px-5 py-4 transition-all duration-200`}
+                style={
+                  message.role === "user"
+                    ? {
+                        boxShadow: '6px 6px 0px rgba(0, 0, 0, 1), 0 0 20px rgba(229, 57, 53, 0.4)',
+                      }
+                    : {
+                        boxShadow: '6px 6px 0px rgba(0, 0, 0, 1), 0 0 15px rgba(245, 245, 220, 0.3)',
+                      }
+                }
               >
                 {message.content === "..." ? (
                   <div className="flex items-center space-x-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-sm">REX is thinking...</span>
+                    <span className="text-sm font-medium">REX is thinking...</span>
                   </div>
                 ) : (
-                  <div className="text-sm leading-relaxed">
+                  <div className="text-sm leading-relaxed font-normal">
                     <ReactMarkdown
                       components={{
                         p: ({ node, ...props }) => <p className="my-1" {...props} />,
@@ -389,7 +435,7 @@ export default function ChatPage() {
                           <Link
                             href={props.href || "#"}
                             {...props}
-                            className={`${message.role === "user" ? "text-[beige] underline" : "text-[#e53935] underline"} font-medium`}
+                            className={`${message.role === "user" ? "text-[beige] underline" : "text-[#e53935] underline"} font-bold hover:opacity-80 transition-opacity`}
                           />
                         ),
                       }}
@@ -400,8 +446,11 @@ export default function ChatPage() {
                 )}
               </div>
               
-              {/* Timestamp */}
-              <p className={`text-[beige] text-xs px-2 ${message.role === "user" ? "text-right" : "text-left"}`}>
+              {/* Timestamp with Glow */}
+              <p 
+                className={`text-[beige] text-xs px-2 font-medium ${message.role === "user" ? "text-right" : "text-left"}`}
+                style={{ textShadow: '0 0 10px rgba(245, 245, 220, 0.5)' }}
+              >
                 {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
               </p>
             </div>
@@ -428,12 +477,21 @@ export default function ChatPage() {
 
       {/* Suggestions Row */}
       <div className="relative bg-[#121212] px-4 py-3 border-t-4 border-[beige]/10">
-        <div className="flex gap-3 overflow-x-auto pb-2">
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {getCurrentSuggestions(messages).map((suggestion, index) => (
             <button
               key={index}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="bg-[beige] border-4 border-[#e53935] px-5 py-3 text-[#121212] text-base font-normal whitespace-nowrap hover:bg-[beige]/90 transition-colors flex-shrink-0"
+              className="bg-[beige] border-4 border-[#e53935] px-5 py-3 text-[#121212] text-base font-bold whitespace-nowrap hover:scale-105 active:translate-x-[2px] active:translate-y-[2px] transition-all flex-shrink-0 uppercase tracking-wide"
+              style={{ 
+                boxShadow: '4px 4px 0px rgba(0, 0, 0, 1), 0 0 10px rgba(229, 57, 53, 0.3)',
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.boxShadow = '2px 2px 0px rgba(0, 0, 0, 1), 0 0 10px rgba(229, 57, 53, 0.3)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.boxShadow = '4px 4px 0px rgba(0, 0, 0, 1), 0 0 10px rgba(229, 57, 53, 0.3)';
+              }}
             >
               ★ {suggestion}
             </button>
@@ -442,43 +500,53 @@ export default function ChatPage() {
       </div>
 
       {/* Input Area */}
-      <div className="relative bg-[#e53935] border-t-4 border-[beige] px-4 py-4">
-        <div className="flex items-center gap-3">
-          {/* Plus Button */}
-          <button className="bg-[beige] border-2 border-black w-11 h-11 flex items-center justify-center hover:bg-[beige]/90 transition-colors flex-shrink-0">
-            <Plus className="w-5 h-5 text-black" />
-          </button>
-
-          {/* Input Container */}
-          <form onSubmit={handleSubmit} className="flex-1 flex items-center gap-2">
-            <div className="flex-1 bg-[#121212] border-4 border-[beige] px-5 py-3 flex items-center gap-2" style={{ boxShadow: '0px 0px 20px 0px inset rgba(245, 245, 220, 0.2)' }}>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="ASK REX..."
-                className="flex-1 bg-transparent text-base text-white placeholder:text-[rgba(245,245,220,0.5)] outline-none border-none"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault()
-                    handleSubmit(e)
-                  }
-                }}
-              />
-              <button 
-                type="submit" 
-                disabled={isLoading || !input.trim()}
-                className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center hover:bg-[beige]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
-              >
-                {isLoading ? (
-                  <Loader2 className="w-4 h-4 text-[#e53935] animate-spin" />
-                ) : (
-                  <Send className="w-4 h-4 text-black" />
-                )}
-              </button>
-            </div>
-          </form>
-        </div>
+      <div 
+        className="relative bg-[#e53935] border-t-4 border-[beige] px-4 py-4"
+        style={{ boxShadow: '0 -4px 20px rgba(229, 57, 53, 0.4)' }}
+      >
+        {/* Input Container */}
+        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div 
+            className="flex-1 bg-[#121212] border-4 border-[beige] px-5 py-3 flex items-center gap-2" 
+            style={{ 
+              boxShadow: '0px 0px 20px 0px inset rgba(245, 245, 220, 0.2), 4px 4px 0px rgba(0, 0, 0, 1)',
+            }}
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="ASK REX..."
+              className="flex-1 bg-transparent text-base text-white placeholder:text-[rgba(245,245,220,0.5)] placeholder:font-bold placeholder:tracking-wider outline-none border-none font-normal"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault()
+                  handleSubmit(e)
+                }
+              }}
+            />
+            <button 
+              type="submit" 
+              disabled={isLoading || !input.trim()}
+              className="bg-[beige] border-2 border-black w-8 h-8 flex items-center justify-center hover:scale-110 active:translate-x-[2px] active:translate-y-[2px] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+              style={{ boxShadow: '3px 3px 0px rgba(0, 0, 0, 1)' }}
+              onMouseDown={(e) => {
+                if (!isLoading && input.trim()) {
+                  e.currentTarget.style.boxShadow = '1px 1px 0px rgba(0, 0, 0, 1)';
+                }
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.boxShadow = '3px 3px 0px rgba(0, 0, 0, 1)';
+              }}
+            >
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 text-[#e53935] animate-spin" />
+              ) : (
+                <Send className="w-4 h-4 text-black" />
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   )
