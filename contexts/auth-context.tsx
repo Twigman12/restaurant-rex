@@ -18,6 +18,24 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+function isInvalidRefreshTokenError(err: unknown): boolean {
+  const anyErr = err as any
+  const message: string = anyErr?.message || anyErr?.error_description || ""
+  const status: number | undefined = anyErr?.status
+  const code: string | undefined = anyErr?.code
+
+  // Supabase commonly returns 400 invalid_grant for refresh token failures.
+  if (status === 400 && (code === "invalid_grant" || code === "refresh_token_not_found")) return true
+
+  const normalized = message.toLowerCase()
+  return (
+    normalized.includes("invalid refresh token") ||
+    normalized.includes("refresh token not found") ||
+    normalized.includes("invalid_grant") ||
+    normalized.includes("token refresh failed")
+  )
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
@@ -34,6 +52,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } = await supabase.auth.getSession()
 
         if (error) {
+          // If the stored refresh token is invalid/stale, clear local auth and bounce to login.
+          if (isInvalidRefreshTokenError(error)) {
+            try {
+              await supabase.auth.signOut({ scope: "local" })
+            } catch {}
+            setSession(null)
+            setUser(null)
+            router.replace("/login")
+            return
+          }
+
           console.error("Error getting session:", error)
         }
 
@@ -41,8 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
       } catch (err: any) {
         // Handle invalid refresh token by clearing auth state
-        const message = err?.message || "Unknown auth error"
-        if (message.includes("Invalid Refresh Token") || message.includes("Refresh Token Not Found")) {
+        if (isInvalidRefreshTokenError(err)) {
           try {
             await supabase.auth.signOut({ scope: "local" })
           } catch {}
@@ -61,7 +89,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "TOKEN_REFRESH_FAILED") {
+        try {
+          await supabase.auth.signOut({ scope: "local" })
+        } catch {}
+        setSession(null)
+        setUser(null)
+        setIsLoading(false)
+        router.replace("/login")
+        return
+      }
+
       // If session is null, make sure we clear and route to login
       if (!session) {
         try {

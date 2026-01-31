@@ -16,66 +16,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { getRecommendations, type RecommendationResult } from "@/app/chat/actions"
 import { Badge } from "@/components/ui/badge"
 import { ChatRestaurantCard } from "@/components/chat-restaurant-card"
-
-// Sample suggestions for quick prompts
-const suggestionCategories = {
-  initial: [
-    "Italian restaurant in SoHo",
-    "Vegan food in Brooklyn",
-    "Business lunch in Midtown",
-    "Late night tacos in East Village",
-    "Romantic dinner in West Village",
-    "Brunch spot in Williamsburg",
-    "Cheap eats in Chinatown",
-    "Pizza place in Greenwich Village",
-    "Sushi in Midtown",
-    "Mexican food in Hell's Kitchen"
-  ],
-  afterRecommendation: [
-    "Something more casual",
-    "A cheaper option",
-    "Similar but in a different neighborhood",
-    "More upscale option",
-    "Quieter atmosphere",
-    "Something with outdoor seating"
-  ],
-  afterNoResults: [
-    "Italian restaurants anywhere",
-    "Casual dining options",
-    "Places good for groups",
-    "Budget-friendly spots",
-    "Upscale restaurants",
-    "Family-friendly places"
-  ]
-};
-
-// Function to shuffle and get random suggestions
-const getRandomSuggestions = (suggestions: string[], count: number = 3) => {
-  const shuffled = [...suggestions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-};
-
-// Function to determine which suggestions to show
-const getCurrentSuggestions = (messages: ChatMessage[]) => {
-  // If no messages yet or just the greeting, show initial suggestions
-  if (messages.length <= 1) return getRandomSuggestions(suggestionCategories.initial);
-  
-  // Get the last assistant message
-  const lastAssistantMsg = [...messages].reverse()
-    .find(m => m.role === "assistant");
-  
-  // Check the content to determine context
-  if (lastAssistantMsg?.content.includes("couldn't find")) {
-    return getRandomSuggestions(suggestionCategories.afterNoResults);
-  } else if (lastAssistantMsg?.content.includes("top picks") || 
-             lastAssistantMsg?.content.includes("alternatives") ||
-             lastAssistantMsg?.content.includes("Would you like more details")) {
-    return getRandomSuggestions(suggestionCategories.afterRecommendation);
-  }
-  
-  // Default to initial suggestions
-  return getRandomSuggestions(suggestionCategories.initial);
-};
+import { getChatSuggestions } from "@/app/chat/suggestions"
 
 // Helper function to format a recommendation message using Markdown
 function formatRecommendationMessage(rec: RecommendationResult): string {
@@ -86,6 +27,7 @@ function formatRecommendationMessage(rec: RecommendationResult): string {
 
 export default function ChatPage() {
   const { user, isLoading: authLoading } = useAuth()
+  const [hasMounted, setHasMounted] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -103,6 +45,10 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const { toast } = useToast()
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -450,8 +396,9 @@ export default function ChatPage() {
               <p 
                 className={`text-[beige] text-xs px-2 font-medium ${message.role === "user" ? "text-right" : "text-left"}`}
                 style={{ textShadow: '0 0 10px rgba(245, 245, 220, 0.5)' }}
+                suppressHydrationWarning
               >
-                {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                {hasMounted ? new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : ""}
               </p>
             </div>
           </div>
@@ -478,7 +425,7 @@ export default function ChatPage() {
       {/* Suggestions Row */}
       <div className="relative bg-[#121212] px-4 py-3 border-t-4 border-[beige]/10">
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-          {getCurrentSuggestions(messages).map((suggestion, index) => (
+          {getChatSuggestions(messages, { randomize: hasMounted }).map((suggestion, index) => (
             <button
               key={index}
               onClick={() => handleSuggestionClick(suggestion)}
