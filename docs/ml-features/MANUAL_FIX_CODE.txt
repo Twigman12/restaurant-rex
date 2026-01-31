@@ -1,0 +1,7 @@
+// Add these lines right after line 197 in page.tsx
+// Replace lines 199-223 with this:
+
+        // TEMPORARY WORKAROUND: User has 0 experiences, bypass hanging query
+        // TODO: Fix Supabase client auth session issue - see docs/ml-features/QUERY_HANG_ROOT_CAUSE.md
+        console.log('[DEBUG] Bypassing experiences query - user has 0 experiences')
+        setExperiences([])

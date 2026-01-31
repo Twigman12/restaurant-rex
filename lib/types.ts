@@ -1,3 +1,7 @@
+// =====================================================
+// User Profile Types
+// =====================================================
+
 export type Profile = {
   id: string
   username: string | null
@@ -7,6 +11,10 @@ export type Profile = {
   created_at: string
   updated_at: string
 }
+
+// =====================================================
+// Restaurant Types
+// =====================================================
 
 export type Restaurant = {
   id: string
@@ -39,7 +47,14 @@ export type Scenario = {
   created_at: string
 }
 
+// =====================================================
+// ML Enhancement Types
+// =====================================================
+
+export type PricePoint = 'budget' | 'moderate' | 'splurge'
+
 export type Experience = {
+  // Core fields
   id: string
   user_id: string
   restaurant_id: string
@@ -47,6 +62,51 @@ export type Experience = {
   rating: number | null
   notes: string | null
   visited_at: string | null
+  created_at: string
+  updated_at: string
+
+  // ML-enhanced fields (Phase 1) - Optional for backward compatibility
+  dish_tags?: string[]
+  taste_profile_tags?: string[]
+  atmosphere_score?: number | null
+  price_point?: PricePoint | null
+  party_size?: number
+  wait_time_minutes?: number | null
+  return_likelihood?: number | null
+  photo_urls?: string[]
+}
+
+export interface TagSuggestion {
+  tag: string
+  confidence: number // 0-1
+  category: 'dish' | 'taste_profile' | 'quality'
+}
+
+export interface MLFeatures {
+  id: string
+  experience_id: string
+  extracted_features: {
+    sentiment_score?: number
+    key_phrases?: string[]
+    cuisine_indicators?: string[]
+    quality_indicators?: string[]
+  }
+  confidence_scores: {
+    [key: string]: number
+  }
+  created_at: string
+}
+
+export interface UserTasteProfile {
+  id: string
+  user_id: string
+  preferred_tastes: string[]
+  avoided_tastes: string[]
+  preferred_price_points: string[]
+  favorite_dish_types: string[]
+  avg_rating: number | null
+  profile_confidence: number // 0-1
+  total_experiences: number
   created_at: string
   updated_at: string
 }

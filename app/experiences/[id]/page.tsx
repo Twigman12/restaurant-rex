@@ -44,13 +44,13 @@ export default function ExperienceDetailPage() {
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  
+
   // Edit form state
   const [editScenarioId, setEditScenarioId] = useState("")
   const [editRating, setEditRating] = useState<number | null>(null)
   const [editNotes, setEditNotes] = useState("")
   const [editDate, setEditDate] = useState<Date | undefined>(new Date())
-  
+
   const { toast } = useToast()
   const router = useRouter()
   const { user } = useAuth()
@@ -61,7 +61,7 @@ export default function ExperienceDetailPage() {
       router.push("/login")
       return
     }
-    
+
     const fetchData = async () => {
       if (!id) return
 
@@ -93,7 +93,7 @@ export default function ExperienceDetailPage() {
         }
 
         setExperience(data as unknown as ExperienceWithDetails)
-        
+
         // Initialize edit state
         setEditScenarioId((data.scenario_id as string) || "")
         setEditRating((data.rating as number) || null)
@@ -172,7 +172,7 @@ export default function ExperienceDetailPage() {
 
   const handleCancel = () => {
     if (!experience) return
-    
+
     // Reset edit state to original values
     setEditScenarioId(experience.scenario_id || "")
     setEditRating(experience.rating)
@@ -241,7 +241,7 @@ export default function ExperienceDetailPage() {
           Back
         </Button>
 
-        <Card className="border-none shadow-lg overflow-hidden">
+        <Card className="border-none shadow-lg overflow-hidden bg-rex-black text-rex-cream">
           <CardHeader className="bg-rex-black text-rex-cream">
             <div className="flex justify-between items-start">
               <div>
@@ -267,9 +267,8 @@ export default function ExperienceDetailPage() {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-5 w-5 ${
-                        i < (experience.rating || 0) ? "text-rex-red fill-rex-red" : "text-rex-cream/30"
-                      }`}
+                      className={`h-5 w-5 ${i < (experience.rating || 0) ? "text-rex-red fill-rex-red" : "text-rex-cream/30"
+                        }`}
                     />
                   ))}
                 </div>
@@ -280,19 +279,19 @@ export default function ExperienceDetailPage() {
           <CardContent className="space-y-4 p-6">
             {/* Date */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-rex-black">Date of Visit</Label>
+              <Label className="text-sm font-medium text-rex-cream">Date of Visit</Label>
               {isEditing ? (
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-left font-normal"
+                      className="w-full justify-start text-left font-normal border-rex-cream/20 bg-rex-black/40 text-rex-cream hover:bg-rex-black/60"
                     >
                       <Calendar className="mr-2 h-4 w-4" />
                       {editDate ? format(editDate, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-auto p-0 bg-rex-black text-rex-cream border border-rex-cream/10">
                     <CalendarComponent
                       mode="single"
                       selected={editDate}
@@ -302,7 +301,7 @@ export default function ExperienceDetailPage() {
                   </PopoverContent>
                 </Popover>
               ) : (
-                <div className="flex items-center text-sm text-rex-black/70">
+                <div className="flex items-center text-sm text-rex-cream/80">
                   <Calendar className="h-4 w-4 mr-2" />
                   {experience.visited_at
                     ? format(new Date(experience.visited_at), "MMMM d, yyyy")
@@ -313,14 +312,14 @@ export default function ExperienceDetailPage() {
 
             {/* Occasion */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-rex-black">Occasion</Label>
+              <Label className="text-sm font-medium text-rex-cream">Occasion</Label>
               {isEditing ? (
-                <Select value={editScenarioId} onValueChange={setEditScenarioId}>
-                  <SelectTrigger>
+                <Select value={editScenarioId || 'none'} onValueChange={(val) => setEditScenarioId(val === 'none' ? '' : val)}>
+                  <SelectTrigger className="border-rex-cream/20 bg-rex-black/40 text-rex-cream">
                     <SelectValue placeholder="Select an occasion (optional)" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">None</SelectItem>
+                  <SelectContent className="bg-rex-black text-rex-cream border border-rex-cream/10">
+                    <SelectItem value="none">None</SelectItem>
                     {scenarios.map((scenario) => (
                       <SelectItem key={scenario.id} value={scenario.id}>
                         {scenario.name}
@@ -332,11 +331,11 @@ export default function ExperienceDetailPage() {
                 <div className="text-sm">
                   {experience.scenarios ? (
                     <>
-                      <span className="font-medium text-rex-black">Occasion:</span>{" "}
-                      <span className="text-rex-black/70">{experience.scenarios.name}</span>
+                      <span className="font-medium text-rex-cream">Occasion:</span>{" "}
+                      <span className="text-rex-cream/80">{experience.scenarios.name}</span>
                     </>
                   ) : (
-                    <span className="text-rex-black/70">No occasion specified</span>
+                    <span className="text-rex-cream/70">No occasion specified</span>
                   )}
                 </div>
               )}
@@ -344,7 +343,7 @@ export default function ExperienceDetailPage() {
 
             {/* Rating */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-rex-black">Rating</Label>
+              <Label className="text-sm font-medium text-rex-cream">Rating</Label>
               {isEditing ? (
                 <div className="flex items-center space-x-1">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -353,7 +352,7 @@ export default function ExperienceDetailPage() {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className={`p-0 h-8 w-8 ${editRating && star <= editRating ? "text-rex-red" : "text-rex-black/50"}`}
+                      className={`p-0 h-8 w-8 ${editRating && star <= editRating ? "text-rex-red" : "text-rex-cream/50"}`}
                       onClick={() => setEditRating(star)}
                     >
                       <Star className={`h-6 w-6 ${editRating && star <= editRating ? "fill-rex-red" : ""}`} />
@@ -365,9 +364,8 @@ export default function ExperienceDetailPage() {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={`h-5 w-5 ${
-                        i < (experience.rating || 0) ? "text-rex-red fill-rex-red" : "text-rex-black/30"
-                      }`}
+                      className={`h-5 w-5 ${i < (experience.rating || 0) ? "text-rex-red fill-rex-red" : "text-rex-cream/30"
+                        }`}
                     />
                   ))}
                 </div>
@@ -376,23 +374,23 @@ export default function ExperienceDetailPage() {
 
             {/* Restaurant Info */}
             <div className="border-t pt-4 space-y-3">
-              <h3 className="text-md font-medium text-rex-black">Restaurant Information</h3>
-              
+              <h3 className="text-md font-medium text-rex-cream">Restaurant Information</h3>
+
               {experience.restaurants.description && (
                 <div className="text-sm">
-                  <span className="font-medium text-rex-black mr-2">About:</span>
-                  <p className="text-rex-black/70 mt-1 leading-relaxed">{experience.restaurants.description}</p>
+                  <span className="font-medium text-rex-cream mr-2">About:</span>
+                  <p className="text-rex-cream/80 mt-1 leading-relaxed">{experience.restaurants.description}</p>
                 </div>
               )}
 
               <div className="flex items-center text-sm">
-                <span className="font-medium text-rex-black mr-2">Price:</span>
+                <span className="font-medium text-rex-cream mr-2">Price:</span>
                 <div className="flex items-center">
                   {Array.from({ length: experience.restaurants.price_range || 0 }).map((_, i) => (
                     <DollarSign key={i} className="h-4 w-4 text-rex-red" />
                   ))}
                   {Array.from({ length: 4 - (experience.restaurants.price_range || 0) }).map((_, i) => (
-                    <DollarSign key={i} className="h-4 w-4 text-rex-black/30" />
+                    <DollarSign key={i} className="h-4 w-4 text-rex-cream/30" />
                   ))}
                 </div>
               </div>
@@ -400,7 +398,11 @@ export default function ExperienceDetailPage() {
               {experience.restaurants.dietary_options && experience.restaurants.dietary_options.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {experience.restaurants.dietary_options.map((option) => (
-                    <Badge key={option} variant="outline" className="px-2 py-0.5 text-xs rounded-full font-normal">
+                    <Badge
+                      key={option}
+                      variant="outline"
+                      className="px-2 py-0.5 text-xs rounded-full font-normal border-rex-cream/20 text-rex-cream/80 bg-rex-black/40"
+                    >
                       {option}
                     </Badge>
                   ))}
@@ -410,20 +412,21 @@ export default function ExperienceDetailPage() {
 
             {/* Notes */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-rex-black">Your Notes</Label>
+              <Label className="text-sm font-medium text-rex-cream">Your Notes</Label>
               {isEditing ? (
                 <Textarea
                   value={editNotes}
                   onChange={(e) => setEditNotes(e.target.value)}
                   placeholder="Share your thoughts about the restaurant, food, service, atmosphere..."
                   rows={4}
+                  className="border-rex-cream/20 bg-rex-black/40 text-rex-cream placeholder:text-rex-cream/50"
                 />
               ) : (
                 <div className="mt-2">
                   {experience.notes ? (
-                    <p className="text-rex-black/70 whitespace-pre-wrap">{experience.notes}</p>
+                    <p className="text-rex-cream/80 whitespace-pre-wrap">{experience.notes}</p>
                   ) : (
-                    <p className="text-rex-black/50 italic">No notes added</p>
+                    <p className="text-rex-cream/60 italic">No notes added</p>
                   )}
                 </div>
               )}
@@ -437,7 +440,7 @@ export default function ExperienceDetailPage() {
                   onClick={handleCancel}
                   variant="outline"
                   size="sm"
-                  className="flex-1 border-rex-black/20 text-rex-black hover:bg-rex-black/10"
+                  className="flex-1 border-rex-cream/20 text-rex-cream hover:bg-rex-cream/10"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel

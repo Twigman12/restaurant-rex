@@ -113,17 +113,25 @@ function getQueensNeighborhoods(): string[] {
 // New Function: Search Google Places API
 async function searchGooglePlaces(
   preferences: ExtractedPreferences,
-): Promise<{ results: Place[]; hadError: boolean }> {
+): Promise<{ results: Place[]; hadError: boolean; errorMessage?: string }> {
   if (!preferences.cuisines?.length && !preferences.other?.length) {
     // Not enough information to search
     return { results: [], hadError: false }
   }
 
+  const otherJoined = (preferences.other || []).join(" ").toLowerCase()
+  const cuisinesJoined = (preferences.cuisines || []).join(" ").toLowerCase()
+  const drinksSignals = ["drink", "drinks", "cocktail", "cocktails", "bar", "beer", "wine", "happy hour"]
+  const wantsDrinksOnly =
+    drinksSignals.some((s) => otherJoined.includes(s)) &&
+    (preferences.cuisines?.length ?? 0) === 0 &&
+    !cuisinesJoined.includes("restaurant")
+
   // Build a query from user preferences
   const queryParts = [
     ...(preferences.cuisines || []),
     ...(preferences.other || []),
-    "restaurant",
+    wantsDrinksOnly ? "bar" : "restaurant",
   ]
   if (preferences.neighborhoods?.length) {
     queryParts.push(`in ${preferences.neighborhoods.join(" or ")}`)
@@ -150,13 +158,20 @@ async function searchGooglePlaces(
     return { results: [], hadError: false }
   } catch (error: any) {
     console.error("Google Places API error. Full details below:");
+    let errorMessage = "Unknown error"
     if (error.response) {
       console.error("Response Status:", error.response.status);
       console.error("Response Data:", JSON.stringify(error.response.data, null, 2));
+      // Prefer the API-provided message where available (no secrets included)
+      errorMessage =
+        error.response.data?.error_message ||
+        error.response.data?.status ||
+        `HTTP ${error.response.status}`
     } else {
       console.error("Error Message:", error.message);
+      errorMessage = error?.message || errorMessage
     }
-    return { results: [], hadError: true }
+    return { results: [], hadError: true, errorMessage }
   }
 }
 
@@ -333,12 +348,16 @@ Example response for "Want to impress a date, somewhere fancy in Manhattan":
       return { recommendations: [], followUpQuestion: extractedPrefs.followUpQuestion };
     }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error calling Gemini API for preference extraction:", error)
       // Friendly fallback when the LLM is unavailable
-      return { 
-        recommendations: [], 
-        followUpQuestion: "Rex isn't feeling the vibe right now—check back later." 
+      const isDev = process.env.NODE_ENV !== "production"
+      const base =
+        "Rex can’t reach the AI brain right now. This is usually a **bad/expired API key**, **quota/rate-limit (429)**, or **model access** issue. Try again in a bit, or check your server logs."
+      const details = error?.message || error?.status ? `Dev details: ${error?.status ?? ""} ${error?.message ?? ""}`.trim() : null
+      return {
+        recommendations: [],
+        followUpQuestion: isDev && details ? `${base}\n\n(${details})` : base,
       }
     }
 
@@ -350,10 +369,88 @@ Example response for "Want to impress a date, somewhere fancy in Manhattan":
   }
 
   // --- NEW: Integrate Google Places Search ---
-  const { results: googlePlacesResults, hadError: placesHadError } = await searchGooglePlaces(extractedPrefs)
+  const { results: googlePlacesResults, hadError: placesHadError, errorMessage: placesErrorMessage } =
+    await searchGooglePlaces(extractedPrefs)
 
   if (placesHadError) {
-    return { recommendations: [], followUpQuestion: "Rex isn’t feeling the vibe right now—check back later." }
+    // Fallback: if Places is unavailable (billing/key/restrictions), use local Supabase restaurants
+    try {
+      const keywords = [...(extractedPrefs.cuisines || []), ...(extractedPrefs.other || [])]
+        .map((k) => (k || "").toLowerCase().trim())
+        .filter(Boolean)
+
+      // If the user asked for "bar/drinks", try to treat that as a keyword against our local data too
+      const wantsDrinks =
+        keywords.some((k) => ["bar", "bars", "drink", "drinks", "cocktail", "cocktails", "beer", "wine"].includes(k))
+
+      let q = supabase.from("restaurants").select("*")
+
+      // Location narrowing first (keeps the dataset small-ish)
+      if (extractedPrefs.boroughs?.length) {
+        q = q.in("borough", extractedPrefs.boroughs)
+      }
+
+      // If price symbol provided, map to numeric (1-4) and filter
+      if (extractedPrefs.price) {
+        const priceValue = mapPriceSymbolToValue(extractedPrefs.price)
+        if (priceValue) {
+          q = q.eq("price_range", priceValue)
+        }
+      }
+
+      // Pull a limited batch and refine in JS (Supabase OR filters get gnarly fast)
+      const { data: localRestaurants, error: localErr } = await q.limit(250)
+      if (localErr) throw localErr
+
+      const neighborhoods = (extractedPrefs.neighborhoods || []).map((n) => n.toLowerCase())
+
+      const filtered = (localRestaurants || [])
+        .filter((r) => {
+          if (!neighborhoods.length) return true
+          const nh = (r.neighborhood || "").toLowerCase()
+          return neighborhoods.some((n) => nh.includes(n))
+        })
+        .filter((r) => {
+          if (!keywords.length) return true
+          const haystack = `${r.name} ${r.cuisine_type} ${r.description || ""}`.toLowerCase()
+          // If we only have "bar/drinks" keywords, still try matching them; otherwise any keyword match is fine
+          if (wantsDrinks && keywords.length === 1) {
+            return haystack.includes("bar") || haystack.includes("cocktail") || haystack.includes("wine")
+          }
+          return keywords.some((k) => haystack.includes(k))
+        })
+        .sort((a, b) => {
+          const ar = a.rating ?? 0
+          const br = b.rating ?? 0
+          if (br !== ar) return br - ar
+          const au = a.user_ratings_total ?? 0
+          const bu = b.user_ratings_total ?? 0
+          return bu - au
+        })
+
+      const page = filtered.slice(resultOffset, resultOffset + 5)
+      if (page.length > 0) {
+        return {
+          recommendations: page.map((r) => ({
+            ...r,
+            reason: generateReasonForRestaurant(r, extractedPrefs),
+          })),
+          extractedPreferences: extractedPrefs,
+        }
+      }
+    } catch (e) {
+      console.error("Local fallback search failed:", e)
+      // continue to helpful error below
+    }
+
+    const isDev = process.env.NODE_ENV !== "production"
+    const helpful =
+      "I can’t reach Google Places right now. This is usually an API key / billing / enabled-API issue. " +
+      "Double-check that **Places API** is enabled for your Google Cloud project, billing is on, and your key restrictions allow server-side requests."
+    return {
+      recommendations: [],
+      followUpQuestion: isDev && placesErrorMessage ? `${helpful}\n\n(Dev details: ${placesErrorMessage})` : helpful,
+    }
   }
 
   // If we have results from Google, use them to generate recommendations
