@@ -2,6 +2,7 @@
 
 import { createServerSupabaseClient } from "@/lib/supabase"
 import type { Restaurant, Scenario } from "@/lib/types"
+import { buildRexSearchKey } from "@/lib/rex-gallery"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { Client, Place, TextSearchRequest } from "@googlemaps/google-maps-services-js"
 
@@ -590,9 +591,49 @@ ${isAskingForMore ? "Return exactly 3 recommendations since this is a 'more opti
         }
       })
 
-      return { 
+      // Best-effort persistence for rex-gallory (should NEVER break chat)
+      try {
+        const searchKey = buildRexSearchKey(extractedPrefs)
+        const { data: convo, error: convoErr } = await supabase
+          .from("rex_conversations")
+          .insert({
+            user_id: userId,
+            user_message: message,
+            is_more_options: isAskingForMore,
+            follow_up_count: followUpCount,
+            search_key: searchKey,
+            extracted_preferences: extractedPrefs as any,
+          })
+          .select("id")
+          .single()
+
+        if (convoErr) throw convoErr
+
+        if (convo?.id && finalRecommendations.length > 0) {
+          const recRows = finalRecommendations.map((r) => ({
+            conversation_id: convo.id,
+            user_id: userId,
+            restaurant_id: r.id,
+            restaurant_name: r.name,
+            neighborhood: r.neighborhood,
+            borough: r.borough,
+            cuisine_type: r.cuisine_type,
+            price_range: r.price_range,
+            rating: r.rating,
+            user_ratings_total: r.user_ratings_total,
+            reason: r.reason,
+          }))
+
+          const { error: recErr } = await supabase.from("rex_conversation_recommendations").insert(recRows as any)
+          if (recErr) throw recErr
+        }
+      } catch (e) {
+        console.warn("[rex-gallory] Failed to persist conversation/recs (non-blocking):", e)
+      }
+
+      return {
         recommendations: finalRecommendations,
-        extractedPreferences: extractedPrefs // Return preferences for "more options" functionality
+        extractedPreferences: extractedPrefs, // Return preferences for "more options" functionality
       }
 
     } catch (error) {
