@@ -101,15 +101,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      // If session is null, make sure we clear and route to login
-      if (!session) {
-        try {
-          await supabase.auth.signOut({ scope: "local" })
-        } catch {}
+      if (event === "SIGNED_OUT" || event === "USER_DELETED") {
         setSession(null)
         setUser(null)
         setIsLoading(false)
         router.replace("/login")
+        return
+      }
+
+      if (!session) {
+        // Avoid aggressive logout on transient null sessions (e.g. initial load).
+        setIsLoading(false)
         return
       }
 

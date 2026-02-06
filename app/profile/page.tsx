@@ -28,6 +28,18 @@ const dietaryOptions = [
   { label: "Paleo", value: "paleo" },
 ]
 
+function isAbortError(err: unknown): boolean {
+  const anyErr = err as any
+  const message: string = anyErr?.message || ""
+  const details: string = anyErr?.details || ""
+  const name: string = anyErr?.name || ""
+  return (
+    name === "AbortError" ||
+    message.includes("AbortError") ||
+    details.includes("AbortError")
+  )
+}
+
 export default function ProfilePage() {
   const { user, isLoading: authLoading } = useAuth()
   const [profile, setProfile] = useState<Profile | null>(null)
@@ -66,6 +78,7 @@ export default function ProfilePage() {
         setLocation(profileData?.location ?? "")
         setDietaryPreferences(profileData?.dietary_preferences ?? [])
       } catch (error) {
+        if (isAbortError(error)) return
         console.error("Error fetching profile:", error)
         toast({
           title: "Error",
