@@ -36,6 +36,18 @@ function isInvalidRefreshTokenError(err: unknown): boolean {
   )
 }
 
+function isAbortError(err: unknown): boolean {
+  const anyErr = err as any
+  const message: string = anyErr?.message || ""
+  const details: string = anyErr?.details || ""
+  const name: string = anyErr?.name || ""
+  return (
+    name === "AbortError" ||
+    message.includes("AbortError") ||
+    details.includes("AbortError")
+  )
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
@@ -45,6 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getSession = async () => {
+      let skipFinalize = false
       try {
         const {
           data: { session },
@@ -69,6 +82,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(session)
         setUser(session?.user ?? null)
       } catch (err: any) {
+        if (isAbortError(err)) {
+          // Abort can happen during navigation; wait for auth state change instead.
+          skipFinalize = true
+          return
+        }
         // Handle invalid refresh token by clearing auth state
         if (isInvalidRefreshTokenError(err)) {
           try {
@@ -81,7 +99,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           console.error("Unexpected error fetching session:", err)
         }
       } finally {
-        setIsLoading(false)
+        if (!skipFinalize) {
+          setIsLoading(false)
+        }
       }
     }
 
