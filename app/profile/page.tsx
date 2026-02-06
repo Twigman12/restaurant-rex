@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation"
 import { createClientSupabaseClient } from "@/lib/supabase"
 import type { Profile } from "@/lib/types"
 import { MultiSelect } from "@/components/multi-select"
+import { isAbortError } from "@/lib/error-utils"
 
 const dietaryOptions = [
   { label: "Vegan", value: "vegan" },
@@ -27,18 +28,6 @@ const dietaryOptions = [
   { label: "Keto", value: "keto" },
   { label: "Paleo", value: "paleo" },
 ]
-
-function isAbortError(err: unknown): boolean {
-  const anyErr = err as any
-  const message: string = anyErr?.message || ""
-  const details: string = anyErr?.details || ""
-  const name: string = anyErr?.name || ""
-  return (
-    name === "AbortError" ||
-    message.includes("AbortError") ||
-    details.includes("AbortError")
-  )
-}
 
 export default function ProfilePage() {
   const { user, isLoading: authLoading } = useAuth()

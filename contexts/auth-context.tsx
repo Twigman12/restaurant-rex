@@ -6,6 +6,7 @@ import { createClientSupabaseClient } from "@/lib/supabase"
 import type { Session, User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 import { createContext, useContext, useEffect, useState } from "react"
+import { isAbortError } from "@/lib/error-utils"
 
 type AuthContextType = {
   user: User | null
@@ -33,18 +34,6 @@ function isInvalidRefreshTokenError(err: unknown): boolean {
     normalized.includes("refresh token not found") ||
     normalized.includes("invalid_grant") ||
     normalized.includes("token refresh failed")
-  )
-}
-
-function isAbortError(err: unknown): boolean {
-  const anyErr = err as any
-  const message: string = anyErr?.message || ""
-  const details: string = anyErr?.details || ""
-  const name: string = anyErr?.name || ""
-  return (
-    name === "AbortError" ||
-    message.includes("AbortError") ||
-    details.includes("AbortError")
   )
 }
 

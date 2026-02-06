@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Badge } from "@/components/ui/badge"
 import { useTagSuggestions } from "@/hooks/useTagSuggestions"
+import { isAbortError } from "@/lib/error-utils"
 
 type ExperienceWithRestaurant = Experience & {
   restaurants: Restaurant
@@ -248,6 +249,10 @@ export default function ExperiencesPage() {
         console.log('[DEBUG] All data fetched successfully')
 
       } catch (error: any) {
+        if (isAbortError(error)) {
+          setIsLoading(false)
+          return
+        }
         console.error("[ERROR] Error fetching data:", error)
         console.error("[ERROR] Fetch error details:", {
           message: error.message,

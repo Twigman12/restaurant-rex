@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Loader2, Clock, MessageSquare, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { ChatRestaurantCard } from "@/components/chat-restaurant-card"
+import { isAbortError } from "@/lib/error-utils"
 
 type Days = 7 | 14 | 30
 
@@ -118,6 +119,7 @@ export default function RexGalloryPage() {
 
         setRows(merged)
       } catch (e: any) {
+        if (isAbortError(e)) return
         setError(e?.message ?? "Failed to load Rex Gallory.")
       } finally {
         setIsLoading(false)
